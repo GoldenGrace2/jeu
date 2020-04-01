@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle partie</h1>
+    <form action="" method="POST">
+        {% for i in 1..6 %}
+            <div class="row">
+                <div class="col-sm-4">
+                        <label for="joueur{{ i }}">Joueur {{ i }}</label>
+                        <select name="joueur{{ i }}" id="joueur{{ i }}">
+                            <option value=""></option>
+                            {% for joueur in joueurs %}
+                                <option value="{{ joueur.id }}">{{ joueur.username }}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="col-sm-4">
+                    <label for="pion{{ i }}">Pion {{ i }}</label>
+                    <select name="pion{{ i }}" id="pion{{ i }}">
+                        <option value=""></option>
+                        {% for i in 1..6 %} {# Pourrait provenir d'une table #}
+                            <option value="pion{{ i }}">pion {{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+        {% endfor %}
+        <div>
+            <button type="submit" class="btn btn-success">Créer la partie</button>
+        </div>
+
+    </form>
+{% endblock %}
+

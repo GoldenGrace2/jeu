@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+    <h1>Partie du {{ partie.dateDebut|date('d/m/Y') }}</h1>
+    <div class="row">
+        <div class="col-sm-10">
+            <div id="plateau" class="row">
+                <!--partie qui sera actualisée toutes les 2 secondes par exemple
+                Pour ne pas dupliquer le code, j'ai fait une méthode qui se charge d'afficher le plateau, cette
+                méthode je l'appelle ici pour le premier affichage, et ensuite dans la boucle pour la mise à jour.
+                -->
+                {{ render(path('affiche_plateau', {partie: partie.id})) }}
+
+            </div>
+        </div>
+        <div class="col-sm-2">
+            Annexe... tchat, ... ce que vous voulez
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      let montour = null
+      $(document).ready(function () {
+        //toutes les 3 secondes
+        setInterval(whoPlay, 3000)
+      })
+
+      function whoPlay () {
+        //cette fonction permet de scruter toutes les 3 secondes (a ajuster), l'état de la partie
+        // si ce n'est pas à moi de jouer, je mets le jeu en pause de mon coté, j'indique le joueur en train de jouer.
+        // si c'est à mon tour, je mets à jour le plateau, et j'enleve la pause
+        $.ajax({
+          url: "{{ path('update_game', {partie: partie.id}) }}",
+          success: function (data) {
+            console.log(data.monTour + ' ' + montour)
+            if (data.monTour !== montour) {
+              console.log('diff on refresh')
+              //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
+              if (data.monTour == true) {
+                $('#plateau').empty().load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
+                  $('#my-game-pause').hide()
+                  $('#my-game-play').show()
+                  montour = true
+                })
+
+              } else {
+                $('#my-game-pause').show()
+                $('#my-game-play').hide()
+                montour = false
+              }
+            }
+          }
+        })
+      }
+
+      $(document).on('click', '#fin-du-tour', function () {
+        $.ajax({
+          url: "{{ path('fin_de_tour', {partie: partie.id}) }}",
+          success: function (data) {
+            //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
+            $('#my-game-pause').show()
+            $('#my-game-play').hide()
+          }
+        })
+      })
+
+      $(document).on('click', '#lance_de', function () {
+        $.ajax({
+          url: "{{ path('lance_de', {partie: partie.id}) }}",
+          success: function (data) {
+            console.log(data);
+            $('#plateau').empty().load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
+              $('#my-game-pause').hide()
+              $('#my-game-play').show()
+              montour = true
+            })
+          }
+        })
+      })
+    </script>
+{% endblock %}
+

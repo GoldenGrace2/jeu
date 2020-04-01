@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+Mon Profil. {{ joueur.username }}
+
+    <h2>Mes parties</h2>
+    <ul>
+        {% for partie in parties %}
+            <li><a href="{{ path('affiche_partie', {partie:partie.id}) }}">Partie du {{ partie.datedebut|date('d/m/Y') }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

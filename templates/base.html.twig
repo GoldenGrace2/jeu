@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+
+        {% block head_css %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        {% endblock %}
+        {% block head_js %}
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+        {% endblock %}
+
+        </head>
+        <body>
+        {% block header %}
+        <nav style="height: 10vh;" class="navbar navbar-expand-lg navbar-dark bg-dark" style="color: white!important; ">
+                    <a class="navbar-brand" href="#accueil">
+                <img src="{{ asset('images/logo_trash.png') }}" width="50px" alt="logo du jeu">
+                </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+  	
+    	<ul class="navbar-nav mr-auto">
+     	 <li class="nav-item">
+        	<a class="nav-link" href="/">Accueil</a>
+      	</li>
+      	<li class="nav-item">
+        	<a class="nav-link" href="/inscription">Inscription</a>
+      	</li>
+        <li class="nav-item">
+        	<a class="nav-link" href="/jouer/creer-partie">Jouer</a>
+      	</li>
+      	<li class="nav-item">
+        	<a class="nav-link" href="/communaute">Communauté</a>
+      	</li>
+        <li class="nav-item">
+        	<a class="nav-link" href="/connexion">Connexion</a>
+      	</li>
+        <li class="nav-item">
+        	<a class="nav-link" href="/admin">Administration</a>
+      	</li>
+
+    	</ul>
+ 
+        </div>
+        </nav>
+
+        {% endblock %}
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+<h1>Attente de joueur</h1>
+    Code partie : {{ partie.id }}
+    <p>Joueurs inscrits : </p>
+    <ul>
+        {% for jouer in partie.jouers %}
+        <li>
+            {{ jouer.joueur.username }}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('affiche_partie',{partie:partie.id}) }}" class="btn btn-success">Commencer la partie</a>
+{% endblock %}
+

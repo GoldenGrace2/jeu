@@ -1,0 +1,5 @@
+easy_admin:
+    entities:
+        - App\Entity\Carte
+        - App\Entity\Cases
+        - App\Entity\Partie

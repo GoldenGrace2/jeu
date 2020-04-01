@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for case in cases %}
+        <p>{{ case.position }} / {{ case.effet }}</p>
+    {% endfor %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
