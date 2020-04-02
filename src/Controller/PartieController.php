@@ -220,7 +220,7 @@ class PartieController extends AbstractController
                     break;
                 case 'FinTour':
                     //jour de paye, payer les facture, verser le salaire, les interets eventuels
-                    $jouer->setArgent($jouer->getArgent() +1500);//jour de paye
+                    $jouer->setArgent($jouer->getArgent() +120);//jour de paye
                     $mesCartes = $jouer->getCartes();
                     while ($carte = array_pop($mesCartes['C'])) {
                         $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getCout());//paiement des factures

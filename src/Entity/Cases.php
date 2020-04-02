@@ -31,6 +31,10 @@ class Cases
      */
     private $effet;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $complement;
 
     public function getId(): ?int
     {
@@ -72,5 +76,35 @@ class Cases
 
         return $this;
     }
+
+    public function getJson()
+    {
+        //on pourrait le faire avec un sérializer... mais pas l'objet de ce module
+        $t['position'] = $this->getPosition();
+        $t['effet'] = $this->getEffet();
+        $t['image'] = $this->getImage();
+        $t['id'] = $this->getId();
+
+
+        return $t;
+    }
+
+    public function getComplement(): ?string
+    {
+        return $this->complement;
+    }
+
+    public function setComplement(string $complement): self
+    {
+        $this->complement = $complement;
+
+        return $this;
+    }
+
+    public function getComplementArray()
+    {
+        return json_decode($this->complement, true);
+    }
+
 
 }
