@@ -1,0 +1,139 @@
+
+
+.button {
+    position: relative;
+    margin-top: 50px;
+    left: 50%;
+    width:80px;
+    text-align: center;
+    transform: translate(-50%);
+    border: solid #8eb19a 3px;
+    padding: 10px 30px;
+    transition: border 0.3s;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 10;
+}
+.back_button{
+    position: absolute;
+    height: 100%;
+    width:100%;
+    background-color:#aed6bb;
+    top:0;
+    left:-100%;
+    transition: all 0.3s;
+    z-index: -1;
+}
+.txt_button{
+    transition: color 0.3s;
+}
+.button:hover .back_button{
+    left:0;
+}
+.button:hover .txt_button{
+    color: #38483b;
+}
+.button:hover{
+    border: solid #aed6bb 3px;
+}
+
+
+#wrapper_carte{
+    position: absolute;
+    display: none;
+    height:90vh;
+    top:50%;
+    transform: translate(0,-50%);
+    z-index: 11;
+}
+#carte_tas{
+    display: block;
+    position: absolute;
+    left:50%;
+    transform: translate(-50%) rotate3d(1, 0, 0, 45deg);
+    width:25vw;
+    height:100vh;
+    margin-top: 30px;
+    overflow: hidden;
+    /*animation: repand 1s;*/
+    z-index: 2;
+    cursor: pointer;
+}
+#carte{
+    display: block;
+    position: absolute;
+    left:50%;
+    transform: translate(-50%) rotate3d(0, 1, 0, 90deg);
+    width:25vw;
+    height:100vh;
+    margin-top: 30px;
+    overflow: hidden;
+    top:100vh;
+    cursor: pointer;
+    /*animation: expand 1s;*/
+}
+#wrapper_carte img{
+    position: relative;
+    width: 100%;
+  }
+#shdw_carte{
+    position: absolute;
+    height:35vw;
+    width: 200%;
+    left:100%;
+    top:0;
+    background-image: linear-gradient(to right,transparent, rgba(255, 255, 255, 0.5) 5%,transparent 15%, rgba(15, 15, 15, 0.8) 50%);
+    /*animation: ombre 1s;*/
+    z-index: 2;
+}
+@keyframes ombre {
+    0%{
+        left:-100%;
+    }
+    20%{
+        left:-100%;
+    }
+    100%{
+        left:100%;
+    }
+}
+
+/*@keyframes expand {
+    from{
+        top:100vh;
+        transform: translate(-50%) rotate3d(0, 1, 0, 90deg);
+    }
+    to{
+        top:0;
+        transform: translate(-50%);
+    }
+}*/
+
+/*@keyframes repand {
+    from{
+        transform: translate(-50%) rotate3d(1, 0, 0, 45deg);
+    }
+    to{
+        transform: translate(-50%) rotate3d(1, 0, 0, 45deg) translate3d(0,100vh,0);
+    }
+}*/
+
+#pile_cartes{
+    display: block;
+    position: absolute;
+    left:50%;
+    transform: translate(-50%) rotate3d(1, 0, 0, 45deg);
+    width:25vw;
+    height: 100vh;
+    margin-top: 30px;
+    overflow: hidden;
+    transition-delay: 0.1s;
+}
+#bloc_tas{
+    position: relative;
+    perspective: 145vh;
+    width:100vw;
+    height: 100vh;
+    top:100vh;
+    left:0;
+}

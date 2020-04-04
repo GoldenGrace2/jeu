@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900i&display=swap');
+
+@font-face {
+    font-family: 'Gigame';
+    src: url('../fonts/Gigame.woff') format('woff'),
+    url('../fonts/Gigame.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+html,body {
+    background-color: #b6dee6;
+    font-family: "Gigame",sans-serif;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+
+
+#wrapper{
+    display: grid;
+    grid-template-rows:80px 3fr 1fr 4fr ;
+    height:100vh;
+}
+/*HEADER*/
+
+header{
+    display: flex;
+    justify-content: space-between;
+}
+header ul{
+    position: relative;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding:0 20px;
+}
+header ul li{
+    display: flex;
+    align-items: center;margin: 0 10px;
+}
+header img{
+    height:40px;
+    margin-right: 10px;
+}
+#logoJ{
+    height: 60px;
+}
+/*FIN HEADER*/
+#shdw{
+    position: absolute;
+    z-index: 10;
+    top:0;
+    height: 100vh;
+    width:100vw;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    transition: all 0.5s;
+}
+#bloc_plateau{
+    position: relative;
+    width:100vw;
+    display: flex;
+    overflow-x: scroll;
+    height:18vw;
+}
+.bloc_case{
+    height:15vw;
+    width:15vw;
+    display: flex;
+    align-items: flex-start;
+}
+.case{
+    position: relative;
+    width:15vw;
+    height: 15vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.case>img{
+    position: absolute;
+    width:120%;
+}
+.calendar_case{
+    position: absolute;
+    width:70px;
+    height: 70px;
+    background-color: white;
+    border: solid 2px black;
+    top:100%;
+    left:100%;
+    transform: translate(-90%,-100%) rotate(-20deg);
+}
+.calendar_case p{
+    margin: 0;
+    text-align: center;
+}
+.calendar_case>p{
+    font-size: 30px;
+}
+.calendar_header{
+    background-color: red;
+    height: 30%;
+    border-bottom: solid 2px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calendar_header>p{
+    color:white;
+    font-size: 10px;
+}
+
+
+/*BOTTOM*/
+
+#arrows{
+
+}
+#bloc_playerContent{
+    display: grid;
+    grid-template-columns: 2fr 40vw 2fr;
+    background-color: #3f4253;
+    width:100vw;
+}
+#B_sideG{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+#B_sideG>img{
+    height:25vh;
+}
+#bloc_chat{
+    position: absolute;
+    width:90%;
+    height: 70vh;
+    top:100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+    transform: translate(0,-50px);
+    transition: transform 0.5s;
+    overflow: hidden;
+}
+#bloc_chat:hover{
+    transform: translate(0,-100%);
+}
+#chat_header{
+    position: absolute;
+    width:100%;
+    height:50px;
+    background-color: #98bcc4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -10px 10px 10px #364e49;
+    z-index: 1;
+}
+#chat_header>p{
+    margin: 0;
+    font-size: 25px;
+    color: #3f4253;
+}
+#messages{
+    position: absolute;
+    overflow-y: scroll;
+    padding: 50px 0 ;
+    bottom: 0;
+    width:100%;
+    max-height: 100%;
+    box-sizing: border-box;
+}
+.bloc_msg, .msg_remove{
+    margin:10px 50px 10px 5px;
+}
+.msg_name{
+    font-size: 1vw;
+    margin: 0;
+    color: #909090;
+}
+.msg_out .msg_name{
+    text-align: right;
+}
+.msg{
+    padding: 5px 10px;
+}
+.msg p {
+    font-size: 1em;
+    margin: 0;
+    font-family: 'Poppins',futura,sans-serif;
+}
+.msg_in div{
+    background-color: #b4dde6;
+}
+.msg_out div{
+    background-color: #fbbc1c;
+}
+.msg_in{
+    margin:10px 50px 10px 5px;
+}
+.msg_out{
+    margin:10px 5px 10px 50px;
+}
+#new_msg{
+    display: flex;
+}
+#text_msg{
+    box-sizing: border-box;
+    resize: none;
+    outline: none;
+    border: none;
+    font-family: 'Poppins',futura,sans-serif;
+    max-height: 50px;
+    padding: 10px 15px;
+    width:100%;
+    font-size: 15px;
+}
+#new_msg{
+    position: absolute;
+    background-color: white;
+    min-height:50px;
+    width:100%;
+    bottom:0;
+    box-shadow: 0 15px 10px 10px #364e49;
+}
+#new_msg svg{
+    height:20px;
+}
+#send_msg{
+    height:50px;
+    width:50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    cursor: pointer;
+}
+#new_msg path{
+    fill:#98bcc4;
+    transition: all 0.3s;
+}
+#send_msg:hover #send_path{
+    fill: #718d95;
+}
+
+#B_C{
+    display: flex;
+    justify-content: center;
+}
+#B_assets{
+    display: flex;
+    transform: translate(0,-50%);
+    height:150px;
+}
+#B_assets div{
+    height:150px;
+    width:150px;
+    border-radius: 100%; ;
+    cursor: pointer;
+    background-position: center;
+    background-size: contain;
+}
+#asset_de{
+    background-image: url('../img/home/dé.png');
+}
+#asset_robot{
+    background-image: url('../img/home/robot.png');
+}
+#asset_cagnotte{
+    background-image: url('../img/home/cagnotte.png');
+}
+#score{
+    text-align: center;
+    color: white;
+    font-family: 'Poppins',sans-serif;
+    font-size: 2em;
+    margin: 0;
+}
+#B_pioche{
+    top:100%;
+    transform: translate(0,-70%);
+    display: flex;
+    position: absolute;
+}
+.carte_pioche{
+
+}
+.carte_pioche img{
+    width:12vw;
+    margin: 0 3px;
+    transform: translate(0,0);
+    transition: transform 0.3s;
+    cursor:pointer;
+}
+.carte_pioche img:hover{
+    transform: translate(0,-20%);
+}
+#B_other_player{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3,1fr);
+    list-style: none;
+    padding: 0;
+}
+#B_other_player li{
+    position: relative;
+    background: white;
+    margin: 5px 10px;
+    height:70%;
+    display: flex;
+    padding: 0 10px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    border: solid 2px black;
+    cursor: pointer;
+    font-size: 1.2vw;
+}
+#B_other_player li>img{
+    height:50px;
+}
+#B_other_player li p{
+    margin: 0;
+}
+#B_other_player span{
+    display: flex;
+}
+#B_other_player span img{
+    height:20px;
+    margin-right: 5px;
+}
+
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #98bcc4;
+    border-radius: 50px;
+    cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color:#3f4253;
+}

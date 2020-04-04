@@ -36,6 +36,11 @@ class Cases
      */
     private $complement;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Journee;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Cases
     public function getComplementArray()
     {
         return json_decode($this->complement, true);
+    }
+
+    public function getJournee(): ?string
+    {
+        return $this->Journee;
+    }
+
+    public function setJournee(string $Journee): self
+    {
+        $this->Journee = $Journee;
+
+        return $this;
     }
 
 

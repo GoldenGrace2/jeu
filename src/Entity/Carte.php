@@ -19,11 +19,6 @@ class Carte
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $titre;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
     private $image;
 
     /**
@@ -32,17 +27,12 @@ class Carte
     private $typeDeCarte;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $effet;
-
-    /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $cout;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $prixVente;
 
@@ -51,21 +41,14 @@ class Carte
      */
     private $valeur;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $titre;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTitre(): ?string
-    {
-        return $this->titre;
-    }
-
-    public function setTitre(string $titre): self
-    {
-        $this->titre = $titre;
-
-        return $this;
     }
 
     public function getImage(): ?string
@@ -88,18 +71,6 @@ class Carte
     public function setTypeDeCarte(string $typeDeCarte): self
     {
         $this->typeDeCarte = $typeDeCarte;
-
-        return $this;
-    }
-
-    public function getEffet(): ?string
-    {
-        return $this->effet;
-    }
-
-    public function setEffet(string $effet): self
-    {
-        $this->effet = $effet;
 
         return $this;
     }
@@ -136,6 +107,23 @@ class Carte
     public function setValeur(int $valeur): self
     {
         $this->valeur = $valeur;
+
+        return $this;
+    }
+
+    public function getValeurArray()
+    {
+        return json_decode($this->valeur, true);
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
 
         return $this;
     }

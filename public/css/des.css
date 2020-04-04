@@ -1,0 +1,135 @@
+html,body{
+    height:100vh;
+    width:100vw;
+}
+.button{
+    height:30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dé_wrap {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    perspective: 800px;
+    perspective-origin: 50% 100px;
+    margin: 50px;
+    cursor: pointer;
+}
+.dé_cube {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+   /* animation: spin 3s linear;
+    animation-iteration-count: 1;*/
+    transform:rotate3d(0, 0, 0,0deg);
+    transition: transform 0.2s ease-out;
+}
+.dé_back {
+    transform: translateZ(-100px) rotateY(180deg);
+}
+.dé_right {
+    transform: rotateY(-270deg) translateX(100px);
+    transform-origin: top right;
+}
+.dé_left {
+    transform: rotateY(270deg) translateX(-100px);
+    transform-origin: left center;
+}
+.dé_top {
+    transform: rotateX(-90deg) translateY(-100px);
+    transform-origin: top center;
+}
+.dé_bottom {
+    transform: rotateX(90deg) translateY(100px);
+    transform-origin: bottom center;
+}
+.dé_front {
+    transform: translateZ(100px);
+}
+/*@keyframes spin {
+    0% {
+        transform:rotate3d(0, 0, 0,0deg);
+    }
+    20% {
+        transform: rotate3d(1, 0, -1,180deg);
+    }
+    40%{
+        transform: rotate3d(0, -1, 1,360deg);
+    }
+    60%{
+        transform:rotate3d(1, 1, 0,540deg);
+    }
+    80%{
+        transform:rotate3d(1, 0, 0,630deg);
+    }
+    100%{
+        transform:rotate3d(0, 0, 1,900deg);
+    }
+}*/
+.dé_face{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-image: radial-gradient(#ebebeb 70%, #d7d7d7);
+    display: grid;
+    grid-template: 1fr 1fr 1fr 1fr 1fr/ 1fr 1fr 1fr 1fr 1fr;
+}
+.dé_point{
+    background-color: black;
+    height:20px;
+    width:20px;
+    align-self: center;
+    justify-self: center;
+    border-radius: 100%;
+}
+.dé_hg{
+    grid-area: 2/2;
+}
+.dé_hm{
+    grid-area: 2/3;
+}
+.dé_hd{
+    grid-area: 2/4;
+}
+.dé_mg{
+    grid-area: 3/2;
+}
+.dé_mm{
+    grid-area: 3/3;
+}
+.dé_md{
+    grid-area: 3/4;
+}
+.dé_bg{
+    grid-area: 4/2;
+}
+.dé_bm{
+    grid-area: 4/3;
+}
+.dé_bd{
+    grid-area: 4/4;
+}
+#losdos{
+    position: relative;
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left:0;
+    top:0;
+}
+#wrapper_des{
+    position: absolute;
+    width:100%;
+    top:100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    height:90vh;
+    transition: top 0.5s;
+    left:0;
+    z-index: 11;
+}

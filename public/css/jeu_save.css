@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+}
+
+#jeu_nav {
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+}
+#plateau {
+    display: flex;
+    flex-direction: column;
+    height: 90vh!important;
+    overflow-X: auto;
+    white-space: nowrap;
+}
+
+.cartes {
+    height: 60vh;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.separation {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.separationcases {
+    height: 80%;
+    overflow-x: auto;
+}
+.separationpion{
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+
+}
+#plateau-cases {
+    height: 60vh;
+    padding: 0!important;
+    overflow-X: auto;
+    width: 100%;
+    flex-direction: column;
+}
+
+.cartes img {
+    height: 100%;
+    width: auto;
+}
+.pion1, .pion2, .pion3, .pion4, .pion5, .pion6 { width: 100%;}

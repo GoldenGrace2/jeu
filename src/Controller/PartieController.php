@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Jouer;
 use App\Entity\User;
 use App\Entity\Partie;
+use App\Entity\Chat;
+
 use App\Repository\CarteRepository;
 use App\Repository\CasesRepository;
 use App\Repository\JouerRepository;
@@ -40,8 +42,9 @@ class PartieController extends AbstractController
             foreach ($cartes as $carte) {
                 $tableauDeCartes[$carte->getTypeDeCarte()][] = $carte->getId();
             }
-            shuffle($tableauDeCartes['T']);
-            shuffle($tableauDeCartes['C']);
+            shuffle($tableauDeCartes['I']);
+            shuffle($tableauDeCartes['A']);
+            shuffle($tableauDeCartes['M']);
 
             $partie = new Partie();
             $partie->setPioche($tableauDeCartes);
@@ -54,21 +57,19 @@ class PartieController extends AbstractController
                 if ($j !== '') {
                     $joueur = $userRepository->find($j);
                     $jouer = new Jouer();
-                    $jouer->setCartes(["C" => [], "T" => []]);
+                    $jouer->setCartes(["I" => [], "A" => [], "M" => []]);
                     $jouer->setPartie($partie);
                     $jouer->setPion($request->request->get('pion' . $i)); //a gérer peut être autrement si provient d'une table
                     $jouer->setClassement($i);
                     $jouer->setJoueur($joueur);
+                    $jouer->setJPO(-5);
+
                     $em->persist($jouer);
                 }
             }
-
-
             $em->flush();
-
             return $this->redirectToRoute('affiche_code_partie', ['partie' => $partie->getId()]);
         }
-
         return $this->render('partie/creerpartie.html.twig',
             [
                 'joueurs' => $userRepository->findAll()
@@ -91,15 +92,17 @@ class PartieController extends AbstractController
 
     /**
      * @Route("/affiche-partie/{partie}", name="affiche_partie")
-     * @param Partie $partie
-     *
+     * @param Jouer  $jouer
+     * 
      * @return Response
      */
     public function affichePartie(Partie $partie)
     {
         return $this->render('partie/affichePartie.html.twig',
             [
-                'partie' => $partie
+                'partie' => $partie,
+                'joueur' => $this->getUser(),
+
             ]);
     }
 
@@ -151,12 +154,16 @@ class PartieController extends AbstractController
         JouerRepository $jouerRepository,
         Partie $partie
     ) {
+        
         $jouer = $jouerRepository->findByJoueurAndPartie($partie, $this->getUser());
         $cartes = $carteRepository->findByArray();
         $nbCases = count($casesRepository->findAll());
         if ($jouer !== null) {
-            $de = 1; //rand(0, 6);
+            $de = 3; //rand(0, 6);
+            //Fabien, tu pourrais tester lors de ton lancé de dès 
+            //en fonction de ta case départ et de ta case d'arrivée, si la case en question est comprise entre ceux deux valeurs, donc tu ne t'es pas arreté
             $position = $jouer->getPosition() + $de;
+       
             $finTour = false;
             $data = '';
             if ($position >= $nbCases) {
@@ -171,8 +178,8 @@ class PartieController extends AbstractController
             switch ($case->getEffet()) {
                 //le champs effet doit permettre de savoir quoi faire sur la case
                 //j'ai ajouté un champs "complement" pour avoir des infos sur la valeur de l'action de la case: exemple 2 cartes courriers
-                case 'Courrier':
-                    //il faut piocher des cartes courriers et les mettre dans la main du joueur
+                case 'Mail':
+                    //il faut piocher des cartes mails et les mettre dans la main du joueur
                     $tabCartes = $partie->getPioche(); //je récupère les cartes courriers de la pioche
                     $mesCartes = $jouer->getCartes(); //je récupère mes cartes
                     $data = [];
@@ -180,8 +187,8 @@ class PartieController extends AbstractController
                     for ($i = 0; $i < $case->getComplement(); $i++) {
                         //on dépile le nombre de carte de la pioche, et on empile dans joueur.
                         //pour l'affichage,
-                        $carte = array_pop($tabCartes['C']);
-                        $mesCartes['C'][] = $carte;
+                        $carte = array_pop($tabCartes['M']);
+                        $mesCartes['M'][] = $carte;
                         $data[] = $carte; //je sauvegarde aussi dans un tableau intermédiaire pour afficher en JS plus facilement
                     }
                     //mise à jour de partie pour la pioche, et de jouer pour mes cartes
@@ -196,38 +203,81 @@ class PartieController extends AbstractController
                 case 'Loterie':
                     //lancement de la loterie entre joueur
                     break;
-                case 'Caution':
+                case 'Imprevu':
+                    $jouer->setArgent($jouer->getArgent() + $case->getComplementArray()['valeur']);
+                     break;
+                case 'JPO':
+                    //Pour ajouter ou retirer des points avec une case
+                    if ( $jouer->getJPO() === -5) {$jouer->setJPO(0);}
+               
+                    //$jouer->setArgent($jouer->getArgent() + $case->getComplement());
+                     break;
+                case 'Acquisition':
                     //on pioche une carte transaction qu'on propose au joueur
                     //il faut piocher des cartes courriers et les mettre dans la main du joueur
                     $tabCartes = $partie->getPioche(); //je récupère les cartes courriers de la pioche
                     $mesCartes = $jouer->getCartes(); //je récupère mes cartes
                     //todo: il faudrait tester si j'ai assez de carte...
                         //on dépile la carte transaction de la pioche, et on empile dans joueur.
-                        $carte = array_pop($tabCartes['T']);
-                        $mesCartes['T'][] = $carte;
+                        $carte = array_pop($tabCartes['A']);
+                        $mesCartes['A'][] = $carte;
                         $data = $carte; //je sauvegarde aussi dans un tableau intermédiaire pour afficher en JS plus facilement
                     //mise à jour de partie pour la pioche, et de jouer pour mes cartes
                     $partie->setPioche($tabCartes);
                     $jouer->setCartes($mesCartes);
                     break;
-                case 'Dimanche':
+                case 'Glandeur':
                     //Dimanche, rien a faire ;)
                     break;
                 case 'Vente':
                     //Vente possible des transactions
                     //récupère toutes les cartes transaction du jour pour qu'il puisse choisir celle(s) à vendre
-                    $data = $jouer->getCartes()['T'];
+                    $data = $jouer->getCartes()['A'];
                     break;
                 case 'FinTour':
                     //jour de paye, payer les facture, verser le salaire, les interets eventuels
                     $jouer->setArgent($jouer->getArgent() +120);//jour de paye
-                    $mesCartes = $jouer->getCartes();
-                    while ($carte = array_pop($mesCartes['C'])) {
-                        $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getCout());//paiement des factures
-                    }
+                    $jouer->setJPO(-5); 
+                    //$mesCartes = $jouer->getCartes();
+                    //while ($carte = array_pop($mesCartes['C'])) {
+                    //    $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getCout());//paiement des factures
+                    //}
                     $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
                     break;
             }
+            
+            //Test pour la case JPO
+            switch ($jouer->getJPO()) {
+                case '-5':
+                        switch ($jouer->getPosition()) {
+                        case '5':
+                        $jouer->setArgent($jouer->getArgent() - 5); 
+                        $jouer->setJPO(0); 
+                        break;
+                        case '6':
+                        $jouer->setArgent($jouer->getArgent() - 5); 
+                        $jouer->setJPO(0); 
+                        break;
+                        case '7':
+                        $jouer->setArgent($jouer->getArgent() - 5); 
+                        $jouer->setJPO(0); 
+                        break;
+                        case '8':
+                        $jouer->setArgent($jouer->getArgent() - 5); 
+                        $jouer->setJPO(0);
+                        break;
+                        case '9':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        case '10':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        }
+                break;
+                }
+            
 
             $entityManager->persist($jouer);
             $entityManager->persist($partie);
@@ -299,6 +349,7 @@ class PartieController extends AbstractController
         CarteRepository $carteRepository,
         JouerRepository $jouerRepository,
         CasesRepository $casesRepository,
+
         Partie $partie
     ) {
         $jouers = $partie->getJouers();
@@ -313,6 +364,7 @@ class PartieController extends AbstractController
         return $this->render('partie/_affichePlateau.html.twig',
             [
                 'cases'     => $casesRepository->findBy([], ['position' => 'ASC']),
+                'jouer'     => $jouer,
                 'cartes'    => $carteRepository->findByArray(),
                 'partie'    => $partie,
                 'positions' => $positions,

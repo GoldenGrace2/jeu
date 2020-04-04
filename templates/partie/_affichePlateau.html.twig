@@ -1,92 +1,21 @@
-  <div class="col-md-10" id="my-game-play">
-    <div class="row" id="plateau-cases">
-      {% for case in cases %}
-        <div class="col-sm-3 case">
-          <h2>{{ case.position }}</h2>
-          <img src="{{ asset('images/cases/'~case.image|e) }}" alt="" width="50"/>
-          <p>
-              {% if case.effet=='Courrier' %}
-                Courrier ({{ case.complement }})
-                  {% elseif case.effet=='Courriel' %}
-                      {{ case.complementArray.texte }}. <br>
-                      <strpong>{{ case.complementArray.cout|number_format(2, ',',' ') }} €</strong>
-                  {% elseif case.effet=='Emprunt' %}
-                      Mise en vente !
-                  {% elseif case.effet=='JPO' %}
-                      -5 !
+  {% block head_js %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  {% endblock %}
 
-                  {% elseif case.effet=='Vente' %}
-                      Salle des ventes. <br>(vendez vos transactions)
-                  {% elseif case.effet=='Imprevu' %}
-                      Bon Dimanche !
-                  {% elseif case.effet=='Cagnotte' %}
-                      Loterie, tout le monde jouer !<br>
-                    Mise 100 €
-              {% endif %}         
-          </p>
-          <p>{% if positions[case.position] is defined %}
-            {% for joueur in positions[case.position] %}
-              <span class="pion {{ joueur.pion }}">{{ joueur.joueur.username }}</span>
-              {% endfor %}
-          {% endif %}
-          </p>
-        </div>
+  <section id="bloc_plateau">
+       {% for case in cases %}
+            <article class="bloc_case" id="caseId{{ loop.index }}">
+                    <section class="case">
+                        <img src="{{ asset('img/home/case/'~case.image|e) }}" alt="">
+                        {% if loop.index0 > 0 %}
+                        <div class="calendar_case">
+                            <div class="calendar_header"><p>{{ case.journee }}</p></div>
+                         
+                        </div>
+                        <p>{{loop.index}}</p>
+                        {% endif %}
+                    </section>
+            </article>
       {% endfor %}
-    </div>
-    <div class="row" id="plateau-infos">
-        <div class="col-sm-12">
-            <div class="alert alert-info">
-                ... Rappel de ce qui se passe ...
-            </div>
-        </div>
-    </div>
-    <div class="row" id="plateau-actions">
-      <div class="col-sm-3">
-        {{ mesdatas.argent|number_format(2, ',',' ') }} €
-      </div>
-      <div class="col-sm-3">
-          Mes courriers
-        <ul>
-        {% for carte in mesdatas.cartes['C'] %}
-            <li>{{ cartes[carte].titre }}, {{ cartes[carte].cout|number_format(2, ',',' ') }} €</li>
-        {% else %}
-            <li>Aucune Carte</li>
-        {% endfor %}
-        </ul>
-      </div>
-      <div class="col-sm-3">
-          Mes transactions
-          <ul>
-        {% for carte in mesdatas.cartes['T'] %}
-              <li>{{ cartes[carte].titre }}, {{ cartes[carte].cout|number_format(2, ',',' ') }} €, {{ cartes[carte]
-                  .prixVente|number_format(2, ',',' ') }} €</li>
-            {% else %}
-            <li>Aucune Carte</li>
-        {% endfor %}
-          </ul>
-      </div>
-      <div class="col-sm-3">
-          <button class="btn btn-block btn-info" id="lance_de">Lancé Dé</button>
-        <button class="btn btn-block btn-danger" id="fin-du-tour">Fin du tour</button>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-10" id="my-game-pause">
-    <div class="row">
-      Pause
-    </div>
-  </div>
-  <div class="col-md-2">
-    <h2>Joueurs</h2>
-    <div class="row">
-      {% for jouer in partie.jouers %}
-      <div class="col-sm-12 {{ jouer.pion}}" >
-          {% if jouer.joueur.id == app.user.id %}==>{% endif %}
-        <p>{{ jouer.joueur.username }}</p>
-        <p>{{ jouer.position }}</p>
-        <p>{{ jouer.argent }}</p>
-      </div>
-        <hr>
-      {% endfor %}
-    </div>
-  </div>
+  </section>

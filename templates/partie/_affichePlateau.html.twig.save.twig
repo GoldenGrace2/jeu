@@ -1,0 +1,76 @@
+  {% block head_js %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  {% endblock %}
+
+  <div class="col-md-12">
+    <div class="row" id="plateau-cases">
+      {% for case in cases|slice(0, 7) %}
+        <div class="cartes">
+
+          <div class="separation">
+
+          <div class="separationcases">
+          <img src="{{ asset('images/cases/'~case.image|e) }}" alt="" width="100" height="100"/>
+          </div>
+
+          <div class="separationpion">
+          {% if positions[case.position] is defined %}
+            {% for joueur in positions[case.position] %}
+            
+              <span class="{{ joueur.pion }}"><img width="auto" src="{{ asset('images/pions/'~ joueur.pion ~ '.png') }}"></span>
+              {% endfor %}
+          {% endif %}
+          </div>
+
+          </div> <!-- fermeture de la separation -->
+  
+        </div>
+      {% endfor %}
+    </div>
+    <div class="row" id="plateau-actions">
+      <div class="col-sm-3">
+        {{ mesdatas.argent|number_format(2, ',',' ') }} €
+      </div>
+      <div class="col-sm-3">
+          Mes courriers
+        <ul>
+        {% for carte in mesdatas.cartes['M'] %}
+            <li>{{ cartes[carte].titre }}, {{ cartes[carte].cout|number_format(2, ',',' ') }} €</li>
+        {% else %}
+            <li>Aucune Carte</li>
+        {% endfor %}
+        </ul>
+      </div>
+      <div class="col-sm-3">
+          Mes transactions
+          <ul>
+        {% for carte in mesdatas.cartes['A'] %}
+              <li>{{ cartes[carte].titre }}, {{ cartes[carte].cout|number_format(2, ',',' ') }} €, {{ cartes[carte]
+                  .prixVente|number_format(2, ',',' ') }} €</li>
+            {% else %}
+            <li>Aucune Carte</li>
+        {% endfor %}
+          </ul>
+      </div>
+      <div class="col-sm-3">
+          <button class="btn btn-block btn-info" id="lance_de">Lancé Dé</button>
+        <button class="btn btn-block btn-danger" id="fin-du-tour">Fin du tour</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <h2>Joueurs</h2>
+    <div class="row">
+      {% for jouer in partie.jouers %}
+      <div class="col-sm-12 {{ jouer.pion}}" >
+          {% if jouer.joueur.id == app.user.id %}==>{% endif %}
+        <p>{{ jouer.joueur.username }}</p>
+        <p>{{ jouer.position }}</p>
+        <p>{{ jouer.argent }}</p>
+      </div>
+        <hr>
+      {% endfor %}
+    </div>
+  </div>
+

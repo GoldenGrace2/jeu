@@ -29,7 +29,7 @@ class Jouer
     /**
      * @ORM\Column(type="float")
      */
-    private $argent = 1500;
+    private $argent = 120;
 
     /**
      * @ORM\Column(type="integer")
@@ -55,6 +55,11 @@ class Jouer
      * @ORM\Column(type="integer")
      */
     private $tour = 1;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $JPO;
 
     public function __toString()
     {
@@ -159,6 +164,18 @@ class Jouer
     public function setTour(int $tour): self
     {
         $this->tour = $tour;
+
+        return $this;
+    }
+
+    public function getJPO(): ?int
+    {
+        return $this->JPO;
+    }
+
+    public function setJPO(?int $JPO): self
+    {
+        $this->JPO = $JPO;
 
         return $this;
     }
