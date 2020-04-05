@@ -20,11 +20,7 @@ class InscriptionController extends AbstractController
       
         // creates a task and gives it some dummy data for this example
         $user = new User();
-        $user->setUsername('');
-        $user->setRoles(['ROLE_USER']);
-        $user->setScore([0]);
-        $user->setConfirmation([0]);
-        $user->setImg(["base.jpg"]);
+    
 
         $form = $this->createFormBuilder($user)
         ->add('username', TextType::class, ['label' => 'Pseudo'])

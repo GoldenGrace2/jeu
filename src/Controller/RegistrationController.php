@@ -15,9 +15,15 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/inscription", name="app_inscription")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, $name, \Swift_Mailer $mailer): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer): Response
     {
         $user = new User();
+        $user->setRoles(['ROLE_USER']);
+        $user->setScore(0);
+        $user->setConfirmation(0);
+        $user->setImg("base.jpg");
+        $user->setIa(false);
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -38,12 +44,12 @@ class RegistrationController extends AbstractController
 
             $message = (new \Swift_Message('Hello Email'))
                 ->setFrom('trashproject.gigame@gmail.com')
-                ->setTo('petittofu60@gmail.com')
+                ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
                         // templates/emails/registration.html.twig
                         'emails/registration.html.twig',
-                        ['name' => $name]
+                        ['name' => '']
                     ),
                     'text/html'
                 );

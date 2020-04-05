@@ -83,7 +83,7 @@ class User implements UserInterface
     private $jouers;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $ia;
 
