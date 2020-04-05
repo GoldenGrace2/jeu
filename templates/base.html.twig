@@ -32,18 +32,26 @@
      	 <li class="nav-item">
         	<a class="nav-link" href="/jeu/">Accueil</a>
       	</li>
-      	<li class="nav-item">
+        {% if app.user %}
+        <li class="nav-item">
+        	<a class="nav-link" href="/jeu/logout">Déconnexion</a>
+      	</li>
+        {% else %}
+        <li class="nav-item">
         	<a class="nav-link" href="/jeu/inscription">Inscription</a>
       	</li>
+        <li class="nav-item">
+        	<a class="nav-link" href="/jeu/connexion">Connexion</a>
+      	</li>
+        {% endif %}
+
         <li class="nav-item">
         	<a class="nav-link" href="/jeu/jouer/creer-partie">Jouer</a>
       	</li>
       	<li class="nav-item">
         	<a class="nav-link" href="/jeu/communaute">Communauté</a>
       	</li>
-        <li class="nav-item">
-        	<a class="nav-link" href="/jeu/connexion">Connexion</a>
-      	</li>
+       
         <li class="nav-item">
         	<a class="nav-link" href="/jeu/admin">Administration</a>
       	</li>

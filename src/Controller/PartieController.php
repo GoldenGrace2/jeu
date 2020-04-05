@@ -81,10 +81,8 @@ class PartieController extends AbstractController
 
         }
         else {
-            return $this->render('erreur.html.twig',
-                [
-                   
-                ]);
+            return $this->redirectToRoute('affiche_code_partie');
+
         }
 
     }
