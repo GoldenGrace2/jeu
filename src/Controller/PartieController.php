@@ -81,7 +81,7 @@ class PartieController extends AbstractController
 
         }
         else {
-            return $this->redirectToRoute('affiche_code_partie');
+            return $this->redirectToRoute('app_erreur');
 
         }
 
