@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
 
             $message = (new \Swift_Message('Hello Email'))
                 ->setFrom('trashproject.gigame@gmail.com')
-                ->setTo($form->get('email')->getData())
+                ->setTo('petittofu60@gmail.com')
                 ->setBody(
                     $this->renderView(
                         // templates/emails/registration.html.twig
