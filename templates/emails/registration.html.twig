@@ -1,0 +1,13 @@
+{# templates/emails/registration.html.twig #}
+<h3>Bienvenue!</h3>
+
+Merci de cliquez sur le lien ci-dessous pour valider votre inscription.
+
+{# example, assuming you have a route named "login" #}
+<a href="{{ url('login') }}">Confirmer son inscription</a>.
+
+Sincères salutations,
+
+L'équipe Trash Game
+{# Makes an absolute URL to the /images/logo.png file #}
+<img src="{{ absolute_url(asset('images/logo.png')) }}">

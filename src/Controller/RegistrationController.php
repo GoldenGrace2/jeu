@@ -15,7 +15,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/inscription", name="app_inscription")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, $name, \Swift_Mailer $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -36,7 +36,21 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_connexion');
+            $message = (new \Swift_Message('Hello Email'))
+                ->setFrom('trashproject.gigame@gmail.com')
+                ->setTo($form->get('email')->getData())
+                ->setBody(
+                    $this->renderView(
+                        // templates/emails/registration.html.twig
+                        'emails/registration.html.twig',
+                        ['name' => $name]
+                    ),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+            return $this->redirectToRoute('app_accueil');
         }
 
         return $this->render('registration/register.html.twig', [

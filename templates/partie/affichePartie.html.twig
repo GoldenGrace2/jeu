@@ -23,7 +23,7 @@
                 <li><img src="{{ asset('images/logo_trash.png') }}" alt="logo Trash Project" id="logoJ"/></li>
                 <li><img src="{{ asset('img/home/perso.svg') }}" alt="Avatar"/><p id="pseudo"> {{ user }}</p></li>
 
-                <li><img src="{{ asset('img/piece.svg') }}" alt="Pièce"/>                    
+                <li id="score_reload"><img src="{{ asset('img/piece.svg') }}" alt="Pièce"/>                    
                 <p>{% for jouer in partie.jouers %}{% if jouer.joueur.id == user.id %} {{jouer.argent}} {% endif %}{% endfor %}</p>
                 </li>
             </ul>
@@ -217,7 +217,7 @@
       let montour = null
       $(document).ready(function () {
         //toutes les 3 secondes
-        setInterval(whoPlay, 30000)
+        setInterval(whoPlay, 3000)
       })
 
       function whoPlay () {
@@ -229,6 +229,8 @@
           success: function (data) {
             console.log(data.monTour + ' ' + montour)
             if (data.monTour !== montour) {
+              $( "#score_reload" ).load(window.location.href + " #score_reload" );
+              $( "#score_each" ).load(window.location.href + " #score_each" );
               console.log('diff on refresh')
               //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
               if (data.monTour == true) {
