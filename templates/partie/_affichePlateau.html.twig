@@ -3,19 +3,33 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
   {% endblock %}
 
+
+
   <section id="bloc_plateau">
+  
+    <section id="players_plateau">
+
+      {% for jouer in partie.jouers %}
+        <article data-caseId="{{jouer.position - 2}}" data-playerId="{{jouer.joueur.id}}" class="player_plateau" title="{{ jouer.joueur.username }}" style="grid-row:{{ loop.index0 + 1}}/{{ loop.index0 + 2}}">
+                    <img src="{{ asset('img/home/perso.svg') }}" alt="Avatar"/>
+        </article>
+      {% endfor %}
+    </section>
+
        {% for case in cases %}
-            <article class="bloc_case" id="caseId{{ loop.index }}">
+            <article class="bloc_case" id="caseId{{ loop.index0 }}">
                     <section class="case">
-                        <img src="{{ asset('img/home/case/'~case.image|e) }}" alt="">
+                        <img src="{{ asset('img/home/case/'~ case.image|e) }}" alt="{{case.image}}">
                         {% if loop.index0 > 0 %}
                         <div class="calendar_case">
                             <div class="calendar_header"><p>{{ case.journee }}</p></div>
-                         
+                            <p>{{loop.index0}}</p>
                         </div>
-                        <p>{{loop.index}}</p>
+                        
                         {% endif %}
                     </section>
             </article>
       {% endfor %}
   </section>
+
+ 

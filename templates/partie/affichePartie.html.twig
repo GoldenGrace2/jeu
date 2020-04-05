@@ -5,28 +5,27 @@
         {% block stylesheets %}{% endblock %}
 
         {% block head_css %}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/jeu.css') }}" />
         {% endblock %}
         {% block head_js %}
-        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="{{ asset('css/carte.css') }}">
         <link rel="stylesheet" href="{{ asset('css/des.css') }}">
         {% endblock %}
 
 </head>
 {% block body %}
+
   <section id="wrapper">
-        <header>
+
+     <header>
             <ul>
 
                 <li><img src="{{ asset('images/logo_trash.png') }}" alt="logo Trash Project" id="logoJ"/></li>
-                <li><img src="img/home/perso.svg" alt="Avatar"/><p id="pseudo"> {{ joueur }}<br />
-       
+                <li><img src="{{ asset('img/home/perso.svg') }}" alt="Avatar"/><p id="pseudo"> {{ user }}</p></li>
 
-</p></li>
-
-                <li><img src="{{ asset('img/piece.svg') }}" alt="Pièce"/><p>120</p></li>
+                <li><img src="{{ asset('img/piece.svg') }}" alt="Pièce"/>                    
+                <p>{% for jouer in partie.jouers %}{% if jouer.joueur.id == user.id %} {{jouer.argent}} {% endif %}{% endfor %}</p>
+                </li>
             </ul>
             <h1>Tour 1</h1>
             <ul>
@@ -34,11 +33,12 @@
                 <li class="navtxt"><a href="#">Profil</a></li>
                 <li class="navtxt"><a href="#">Règles</a></li>
             </ul>
-        </header>
+    </header>
 
+    <div id="plateau">
         {{ render(path('affiche_plateau', {partie: partie.id})) }}
-
-        <section id="arrows"></section>
+    </div>
+   <section id="arrows"></section>
 
         <section id="bloc_playerContent">
             <section id="B_sideG">
@@ -79,7 +79,7 @@
             <section id="B_C">
                 <section id="B_assets">
                     <div id="asset_de"></div>
-                    <div id="asset_robot"></div>
+                    <div id="asset_pion"></div>
                     <div id="asset_cagnotte"></div>
                 </section>
                 <section id="B_pioche">
@@ -89,72 +89,24 @@
                 </section>
             </section>
             <ul id="B_other_player">
-                <li>
-                    <img src="img/home/perso.svg" alt="Avatar"/>
+                {% for jouer in partie.jouers %}
+               <li data-playerId="{{jouer.joueur.id}}" class="score_each">
+                    <img src="{{ asset('img/home/'~ jouer.joueur.img|e) }}" alt="Avatar"/>
                     <div>
-                        <p></p>
-                        <span>
-                            <img src="img/home/piece.svg" alt="Pièce">
-                             <p>120</p>
+                    <p>{% if jouer.joueur.id == app.user.id %}==>{% endif %}{{ jouer.joueur.username }}</p>
+                         <span>
+                            <img src="{{asset('img/home/piece.svg')}}" alt="Pièce">
+                            <p>{{ jouer.argent }}</p>
                         </span>
                     </div>
                 </li>
-                <li>
-                    <img src="img/home/perso.svg" alt="Avatar"/>
-                    <div>
-                        <p>Fabien</p>
-                        <span>
-                            <img src="img/home/piece.svg" alt="Pièce">
-                             <p>120</p>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <img src="img/home/perso.svg" alt="Avatar"/>
-                    <div>
-                        <p>Eurhone</p>
-                        <span>
-                            <img src="img/home/piece.svg" alt="Pièce">
-                             <p>120</p>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <img src="img/home/perso.svg" alt="Avatar"/>
-                    <div>
-                        <p>Billy</p>
-                        <span>
-                            <img src="img/home/piece.svg" alt="Pièce">
-                             <p>120</p>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <img src="img/home/perso.svg" alt="Avatar"/>
-                    <div>
-                        <p>Quentin</p>
-                        <span>
-                            <img src="img/home/piece.svg" alt="Pièce">
-                             <p>120</p>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <img src="img/home/perso.svg" alt="Avatar"/>
-                    <div>
-                        <p>Lucie</p>
-                        <span>
-                            <img src="img/home/piece.svg" alt="Pièce">
-                             <p>120</p>
-                        </span>
-                    </div>
-                </li>
+                </div>
+                {% endfor %}
             </ul>
         </section>
     </section>
-
-
-    <section id="wrapper_carte">
+    
+       <section id="wrapper_carte">
         <section id="bloc_tas">
             <section id="carte_tas">
                 <img src="" id="src_tasTop" >
@@ -174,44 +126,44 @@
         <section id="losdos">
             <div class="dé_wrap">
                 <div class="dé_cube" id="dé_cube1">
-                    <div class="dé_front dé_face">
-                        <article class="dé_point dé_hg"></article>
-                        <article class="dé_point dé_hm"></article>
-                        <article class="dé_point dé_hd"></article>
-                        <article class="dé_point dé_bg"></article>
-                        <article class="dé_point dé_bm"></article>
-                        <article class="dé_point dé_bd"></article>
+                    <div class="dé_front dé_face de_click">
+                        <article class="dé_point dé_hg de_click"></article>
+                        <article class="dé_point dé_hm de_click"></article>
+                        <article class="dé_point dé_hd de_click"></article>
+                        <article class="dé_point dé_bg de_click"></article>
+                        <article class="dé_point dé_bm de_click"></article>
+                        <article class="dé_point dé_bd de_click"></article>
                     </div>
-                    <div class="dé_back dé_face">
-                        <article class="dé_point dé_mm"></article>
+                    <div class="dé_back dé_face de_click">
+                        <article class="dé_point dé_mm de_click"></article>
                     </div>
-                    <div class="dé_top dé_face">
-                        <article class="dé_point dé_hg"></article>
-                        <article class="dé_point dé_hd"></article>
-                        <article class="dé_point dé_bg"></article>
-                        <article class="dé_point dé_bd"></article>
+                    <div class="dé_top dé_face de_click">
+                        <article class="dé_point dé_hg de_click"></article>
+                        <article class="dé_point dé_hd de_click"></article>
+                        <article class="dé_point dé_bg de_click"></article>
+                        <article class="dé_point dé_bd de_click"></article>
                     </div>
-                    <div class="dé_bottom dé_face">
-                        <article class="dé_point dé_hd"></article>
-                        <article class="dé_point dé_mm"></article>
-                        <article class="dé_point dé_bg"></article>
+                    <div class="dé_bottom dé_face de_click">
+                        <article class="dé_point dé_hd de_click"></article>
+                        <article class="dé_point dé_mm de_click"></article>
+                        <article class="dé_point dé_bg de_click"></article>
                     </div>
-                    <div class="dé_left dé_face">
-                        <article class="dé_point dé_hg"></article>
-                        <article class="dé_point dé_hd"></article>
-                        <article class="dé_point dé_mm"></article>
-                        <article class="dé_point dé_bg"></article>
-                        <article class="dé_point dé_bd"></article>
+                    <div class="dé_left dé_face de_click">
+                        <article class="dé_point dé_hg de_click"></article>
+                        <article class="dé_point dé_hd de_click"></article>
+                        <article class="dé_point dé_mm de_click"></article>
+                        <article class="dé_point dé_bg de_click"></article>
+                        <article class="dé_point dé_bd de_click"></article>
                     </div>
-                    <div class="dé_right dé_face">
-                        <article class="dé_point dé_hd"></article>
-                        <article class="dé_point dé_bg"></article>
+                    <div class="dé_right dé_face de_click">
+                        <article class="dé_point dé_hd de_click"></article>
+                        <article class="dé_point dé_bg de_click"></article>
                     </div>
                 </div>
             </div>
             <div class="dé_wrap" id="dé_2">
                 <div class="dé_cube" id="dé_cube2">
-                    <div class="dé_front dé_face">
+                    <div class="dé_front dé_face de_click">
                         <article class="dé_point dé_hg"></article>
                         <article class="dé_point dé_hm"></article>
                         <article class="dé_point dé_hd"></article>
@@ -219,30 +171,30 @@
                         <article class="dé_point dé_bm"></article>
                         <article class="dé_point dé_bd"></article>
                     </div>
-                    <div class="dé_back dé_face">
+                    <div class="dé_back dé_face de_click">
                         <article class="dé_point dé_mm"></article>
                     </div>
-                    <div class="dé_top dé_face">
+                    <div class="dé_top dé_face de_click">
                         <article class="dé_point dé_hg"></article>
                         <article class="dé_point dé_hd"></article>
                         <article class="dé_point dé_bg"></article>
                         <article class="dé_point dé_bd"></article>
                     </div>
-                    <div class="dé_bottom dé_face">
+                    <div class="dé_bottom dé_face de_click">
                         <article class="dé_point dé_hd"></article>
                         <article class="dé_point dé_mm"></article>
                         <article class="dé_point dé_bg"></article>
                     </div>
-                    <div class="dé_left dé_face">
-                        <article class="dé_point dé_hg"></article>
-                        <article class="dé_point dé_hd"></article>
-                        <article class="dé_point dé_mm"></article>
-                        <article class="dé_point dé_bg"></article>
-                        <article class="dé_point dé_bd"></article>
+                    <div class="dé_left dé_face de_click">
+                        <article class="dé_point dé_hg de_click"></article>
+                        <article class="dé_point dé_hd de_click"></article>
+                        <article class="dé_point dé_mm de_click"></article>
+                        <article class="dé_point dé_bg de_click"></article>
+                        <article class="dé_point dé_bd de_click"></article>
                     </div>
-                    <div class="dé_right dé_face">
-                        <article class="dé_point dé_hd"></article>
-                        <article class="dé_point dé_bg"></article>
+                    <div class="dé_right dé_face de_click">
+                        <article class="dé_point dé_hd de_click"></article>
+                        <article class="dé_point dé_bg de_click"></article>
                     </div>
                 </div>
             </div>
@@ -250,19 +202,22 @@
         </section>
         <p id="score"></p>
     </section>
-
+</section>
 
 
     <div id="shdw"></div>
+ 
 {% endblock %}
 
 
 {% block javascripts %}
+    <script src="{{ asset('js/des.js')}}"></script>
+
     <script>
       let montour = null
       $(document).ready(function () {
         //toutes les 3 secondes
-        setInterval(whoPlay, 3000)
+        setInterval(whoPlay, 30000)
       })
 
       function whoPlay () {
@@ -279,13 +234,13 @@
               if (data.monTour == true) {
                 $('#plateau').empty().load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
                   $('#my-game-pause').hide()
-                  $('#my-game-play').show()
+                  $('#asset_de').show()
                   montour = true
                 })
 
               } else {
                 $('#my-game-pause').show()
-                $('#my-game-play').hide()
+                $('#asset_de').hide()
                 montour = false
               }
             }
@@ -293,20 +248,23 @@
         })
       }
 
-      $(document).on('click', '#fin-du-tour', function () {
+      $(document).on('click', '#asset_pion', function () {
         $.ajax({
           url: "{{ path('fin_de_tour', {partie: partie.id}) }}",
           success: function (data) {
             //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
             $('#my-game-pause').show()
-            $('#my-game-play').hide()
+            $('#asset_de').hide()
           }
         })
       })
 
-      $(document).on('click', '#lance_de', function () {
+      $(document).on('click', '.de_click', function () {
         $.ajax({
           url: "{{ path('lance_de', {partie: partie.id}) }}",
+          type: "POST",
+          dataType: "json",
+          data: {de: score},
           success: function (data) {
             console.log(data);
             $('#plateau').empty().load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
@@ -319,8 +277,6 @@
       })
     </script>
 
-    <script src="{{ asset('js/des.js')}}"></script>
-    <script src="{{ asset('js/chat.js')}}"></script>
     <script>//CARTE PIOCH
         let src_id=$(this).attr('id');
         var assetsBaseDir = "{{asset('img/')}}";
@@ -330,7 +286,7 @@
             $('#src_tasTop').attr('src', assetsBaseDir + src_id+'D_top.png');
             $('#src_tas').attr('src', assetsBaseDir + src_id+'_tas.png');
             $('#src_carte').attr('src', assetsBaseDir + src_id+'F.png');
-            shdw_in();
+             shdw_in();
             setTimeout(intitTransition,500);
         });
 
@@ -395,10 +351,20 @@
         });
     </script>
     <script>
-        function playerFocus(caseId){
+        function playerFocus(){
             //console.log(score);
-            $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(score+1)).prop('offsetLeft')-window.innerWidth/2 + $("#caseId"+(score+1)).width()/2}, 1000);
+            $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(score)).prop('offsetLeft')-window.innerWidth/2 + $("#caseId"+(score)).width()/2}, 1000);
         }
+
+        function changement_check(){
+            $('.player_plateau').each(function(){
+                $(this).css('left', $('#caseId'+(parseInt($(this).attr('data-caseId'))+1)).prop('offsetLeft')+$('.bloc_case').width()/2);
+            })
+        }
+
+        $('.score_each').click(function(){
+            $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(parseInt($(".player_plateau[data-playerId='"+$(this).attr('data-playerId')+"']").attr('data-caseId'))+1)).prop('offsetLeft')-window.innerWidth/2 + $(".bloc_case").width()/2}, 1000);
+        });
     </script>
     <script>//drag —— Script de Ionut Daniel –– Merci <3
         const slider = document.querySelector('#bloc_plateau');
@@ -425,7 +391,8 @@
             slider.scrollLeft = scrollLeft - walk;
         });
         $('#players_plateau').css('width',$('#bloc_plateau').prop('scrollWidth')+'px');
-
+        changement_check();
     </script>
+
 {% endblock %}
 

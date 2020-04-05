@@ -92,20 +92,42 @@ class PartieController extends AbstractController
 
     /**
      * @Route("/affiche-partie/{partie}", name="affiche_partie")
+     * @param JouerRepository $jouerRepository
+     * @param CasesRepository $casesRepository
+     * @param Partie          $partie
      * @param Jouer  $jouer
-     * 
+     *
      * @return Response
+     * @throws NonUniqueResultException
      */
-    public function affichePartie(Partie $partie)
-    {
+    public function affichePartie(
+        CarteRepository $carteRepository,
+        JouerRepository $jouerRepository,
+        CasesRepository $casesRepository,
+
+        Partie $partie
+    ) {
+        $jouers = $partie->getJouers();
+        $positions = [];
+        foreach ($jouers as $jouer) {
+            if (!array_key_exists($jouer->getPosition(), $positions)) {
+                $positions[$jouer->getPosition()] = [];
+            }
+            $positions[$jouer->getPosition()][] = $jouer;
+        }
+
         return $this->render('partie/affichePartie.html.twig',
             [
-                'partie' => $partie,
-                'joueur' => $this->getUser(),
-
+                'cases'     => $casesRepository->findBy([], ['position' => 'ASC']),
+                'jouer'     => $jouer,
+                'user'      => $this->getUser(),
+                'cartes'    => $carteRepository->findByArray(),
+                'partie'    => $partie,
+                'positions' => $positions,
+                'mesdatas'  => $jouerRepository->findByJoueurAndPartie($partie, $this->getUser())
             ]);
     }
-
+ 
     /**
      * @Route("/update-partie/data/{partie}", name="update_game")
      * @param Partie $partie
@@ -158,8 +180,13 @@ class PartieController extends AbstractController
         $jouer = $jouerRepository->findByJoueurAndPartie($partie, $this->getUser());
         $cartes = $carteRepository->findByArray();
         $nbCases = count($casesRepository->findAll());
+        $partie->setEtatPartie('EC');
+
         if ($jouer !== null) {
-            $de = 3; //rand(0, 6);
+
+            $de = $_POST['de'];
+
+            //$de = 1; //rand(0, 6);
             //Fabien, tu pourrais tester lors de ton lancé de dès 
             //en fonction de ta case départ et de ta case d'arrivée, si la case en question est comprise entre ceux deux valeurs, donc tu ne t'es pas arreté
             $position = $jouer->getPosition() + $de;
@@ -169,6 +196,18 @@ class PartieController extends AbstractController
             if ($position >= $nbCases) {
                 $position = $nbCases; //fin du tour
                 $finTour = true;
+            }
+
+            if ($jouer->getPosition() == 32) {
+                $jouer->setArgent($jouer->getArgent() +120);//jour de paye
+                $jouer->setJPO(-5); 
+                $jouer->setPosition(1); 
+
+                $mesCartes = $jouer->getCartes();
+                while ($carte = array_pop($mesCartes['M'])) {
+                    $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getCout());//paiement des factures
+                }
+                $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
             }
 
             $jouer->setPosition($position);
@@ -195,16 +234,35 @@ class PartieController extends AbstractController
                     $partie->setPioche($tabCartes);
                     $jouer->setCartes($mesCartes);
                     break;
-                case 'Frais':
+                case 'Rapport':
                     //cette case preleve directement le montant au joueur
-                    $jouer->setArgent($jouer->getArgent() - $case->getComplementArray()['cout']);
+                    $de_alea= rand(1,6);
+                    switch ($de_alea) {
+                        case '1':
+
+                        break;
+                        case '2':
+
+                        break;
+                        case '3':
+
+                        break;
+                        case '4':
+
+                        break;
+                        case '5':
+
+                        break;
+                        case '6':
+
+                        break;
+                    }
                     //je sauvegarde rien de particulier pour le JS, toutes les infos sont dans la case
                     break;
-                case 'Loterie':
+                case 'Caution':
                     //lancement de la loterie entre joueur
                     break;
-                case 'Imprevu':
-                    $jouer->setArgent($jouer->getArgent() + $case->getComplementArray()['valeur']);
+                case 'Embrouille':
                      break;
                 case 'JPO':
                     //Pour ajouter ou retirer des points avec une case
@@ -212,7 +270,7 @@ class PartieController extends AbstractController
                
                     //$jouer->setArgent($jouer->getArgent() + $case->getComplement());
                      break;
-                case 'Acquisition':
+                case 'A':
                     //on pioche une carte transaction qu'on propose au joueur
                     //il faut piocher des cartes courriers et les mettre dans la main du joueur
                     $tabCartes = $partie->getPioche(); //je récupère les cartes courriers de la pioche
@@ -229,7 +287,7 @@ class PartieController extends AbstractController
                 case 'Glandeur':
                     //Dimanche, rien a faire ;)
                     break;
-                case 'Vente':
+                case '':
                     //Vente possible des transactions
                     //récupère toutes les cartes transaction du jour pour qu'il puisse choisir celle(s) à vendre
                     $data = $jouer->getCartes()['A'];
@@ -238,10 +296,12 @@ class PartieController extends AbstractController
                     //jour de paye, payer les facture, verser le salaire, les interets eventuels
                     $jouer->setArgent($jouer->getArgent() +120);//jour de paye
                     $jouer->setJPO(-5); 
-                    //$mesCartes = $jouer->getCartes();
-                    //while ($carte = array_pop($mesCartes['C'])) {
-                    //    $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getCout());//paiement des factures
-                    //}
+                    $jouer->setPosition(1); 
+
+                    $mesCartes = $jouer->getCartes();
+                    while ($carte = array_pop($mesCartes['M'])) {
+                        $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getCout());//paiement des factures
+                    }
                     $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
                     break;
             }
@@ -271,6 +331,30 @@ class PartieController extends AbstractController
                             $jouer->setJPO(0);
                         break;
                         case '10':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        case '11':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        case '12':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        case '13':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        case '14':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        case '15':
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
+                        break;
+                        case '16':
                             $jouer->setArgent($jouer->getArgent() - 5); 
                             $jouer->setJPO(0);
                         break;
@@ -365,6 +449,7 @@ class PartieController extends AbstractController
             [
                 'cases'     => $casesRepository->findBy([], ['position' => 'ASC']),
                 'jouer'     => $jouer,
+                'user'    => $this->getUser(),
                 'cartes'    => $carteRepository->findByArray(),
                 'partie'    => $partie,
                 'positions' => $positions,

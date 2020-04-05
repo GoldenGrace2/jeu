@@ -3,7 +3,8 @@ let deClicked=false;
 let AnimRandom1;
 let AnimRandom2;
 let AnimRandom3;
-let score
+let score;
+let test
 
 /*function deAnim(){
     if(!deClicked) {
@@ -62,13 +63,16 @@ $('.dé_wrap').click(function(){
 function random(){
     let rand1=Math.floor(Math.random()*6+1);
     let rand2=Math.floor(Math.random()*6+1);
-    score=rand1+rand2;
+    score=parseInt(rand1+rand2)
+    test = score;
     $('#dé_cube1').css({'transform':deResult[rand1-1]});
     $('#dé_cube2').css({'transform':deResult[rand2-1]});
+
     $('#score').text('BAM ! Ça fait '+score);
     if((rand1+rand2)==12){
         $('#score').text($('#score').text()+' ! GG ma couille');
     }
+    
 }
 function clickedTest(){
     if(!deClicked){
@@ -90,3 +94,4 @@ $(document).on('keydown',function(e){
         clickedTest();
     }
 });
+

@@ -19,33 +19,18 @@ class ChatRepository extends ServiceEntityRepository
         parent::__construct($registry, Chat::class);
     }
 
-    public function findByChatAndPartie(Partie $partie,Chat $chat) : ?Chat
+    public function findByJoueurAndPartie(Partie $partie,User $user) : ?Chat
     {
-        return $this->createQueryBuilder('c')
-                    ->where('c.partie = :partie')
+        return $this->createQueryBuilder('j')
+                    ->where('j.partie = :partie')
                     ->andWhere('j.joueur = :joueur')
                     ->setparameters([
                         'partie' => $partie->getId(),
-                        'chat' => $chat->getId()
+                        'joueur' => $user->getId()
                     ])
                     ->getQuery()
                     ->getOneOrNullResult();
     }
-
-    
-    public function findByChatAndUser(User $user,Chat $chat) : ?Chat
-    {
-        return $this->createQueryBuilder('c')
-                    ->where('c.partie = :partie')
-                    ->andWhere('j.joueur = :joueur')
-                    ->setparameters([
-                        'user' => $user->getId(),
-                        'chat' => $chat->getId()
-                    ])
-                    ->getQuery()
-                    ->getOneOrNullResult();
-    }
-
     // /**
     //  * @return Chat[] Returns an array of Chat objects
     //  */
