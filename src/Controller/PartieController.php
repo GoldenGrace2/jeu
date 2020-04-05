@@ -70,10 +70,25 @@ class PartieController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('affiche_code_partie', ['partie' => $partie->getId()]);
         }
-        return $this->render('partie/creerpartie.html.twig',
+
+        $userverify = $this->getUser(); //Vérifier si l'utilisateur à confirmé son mail
+        if ($confirmation == $userconfirmation->getConfirmation()){ 
+
+            return $this->render('partie/creerpartie.html.twig',
+                [
+                    'joueurs' => $userRepository->findAll()
+                ]);
+
+        }
+
+        else {
+
+            return $this->render('erreur/non_inscrit.html.twig',
             [
                 'joueurs' => $userRepository->findAll()
             ]);
+
+        }
     }
 
     /**
@@ -95,7 +110,7 @@ class PartieController extends AbstractController
      * @param JouerRepository $jouerRepository
      * @param CasesRepository $casesRepository
      * @param Partie          $partie
-     * @param Jouer  $jouer
+     * @param Jouer           $jouer
      *
      * @return Response
      * @throws NonUniqueResultException
