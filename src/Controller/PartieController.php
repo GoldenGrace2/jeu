@@ -72,7 +72,7 @@ class PartieController extends AbstractController
         }
 
         $userverify = $this->getUser(); //Vérifier si l'utilisateur à confirmé son mail
-        if ($confirmation == $userconfirmation->getConfirmation()){ 
+        if ( $userconfirmation->getConfirmation() == 0){ 
 
             return $this->render('partie/creerpartie.html.twig',
                 [
@@ -80,15 +80,13 @@ class PartieController extends AbstractController
                 ]);
 
         }
-
         else {
-
-            return $this->render('erreur/non_inscrit.html.twig',
-            [
-                'joueurs' => $userRepository->findAll()
-            ]);
-
+            return $this->render('erreur.html.twig',
+                [
+                   
+                ]);
         }
+
     }
 
     /**
