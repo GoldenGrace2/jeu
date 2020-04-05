@@ -72,7 +72,7 @@ class PartieController extends AbstractController
         }
 
         $userverify = $this->getUser(); //Vérifier si l'utilisateur à confirmé son mail
-        if ( $userconfirmation->getConfirmation() == 0){ 
+        if ( $userverify->getConfirmation() == 0){ 
 
             return $this->render('partie/creerpartie.html.twig',
                 [
