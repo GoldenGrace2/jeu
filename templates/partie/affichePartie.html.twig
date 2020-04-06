@@ -79,7 +79,11 @@
             <section id="B_C">
                 <section id="B_assets">
                     <div id="asset_de"></div>
-                    <div id="asset_pion"></div>
+                    {% for jouer in partie.jouers %} 
+                    {% if jouer.joueur.id == app.user.id %}
+                    <div id="asset_pion" style="background-image:url('{{ asset('img/home/pions/'~ jouer.pion ~ '.png')}}')"></div>
+                    {% endif %}
+                    {% endfor  %}
                     <div id="asset_cagnotte"></div>
                 </section>
                 <section id="B_pioche">
@@ -89,7 +93,7 @@
                 </section>
             </section>
             <ul id="B_other_player">
-                {% for jouer in partie.jouers %}
+                {% for jouer in partie.jouers %} 
                <li data-playerId="{{jouer.joueur.id}}" class="score_each">
                     <img src="{{ asset('img/home/'~ jouer.joueur.img|e) }}" alt="Avatar"/>
                     <div>

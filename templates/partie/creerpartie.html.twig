@@ -21,16 +21,18 @@
                             {% endfor %}
                         </select>
                 </div>
+                    {% if i < 6 %}
 
                 <div class="col-sm-6">
                     <label for="pion{{ i }}">Pion {{ i }}</label>
                     <select name="pion{{ i }}" id="pion{{ i }}">
                         <option value=""></option>
-                        {% for i in 1..6 %} {# Pourrait provenir d'une table #}
+                        {% for i in 1..5 %} {# Pourrait provenir d'une table #}
                             <option value="pion{{ i }}">pion {{ i }}</option>
                         {% endfor %}
                     </select>
                 </div>
+                    {% endif %}
             </section>
         {% endfor %}
         <div>
