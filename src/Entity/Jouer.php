@@ -61,6 +61,11 @@ class Jouer
      */
     private $JPO;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Log;
+
     public function __toString()
     {
         //cette méthode permet de retourner du texte dans easyadmin, pour les relations.
@@ -176,6 +181,18 @@ class Jouer
     public function setJPO(?int $JPO): self
     {
         $this->JPO = $JPO;
+
+        return $this;
+    }
+
+    public function getLog(): ?string
+    {
+        return $this->Log;
+    }
+
+    public function setLog(string $Log): self
+    {
+        $this->Log = $Log;
 
         return $this;
     }

@@ -2,68 +2,76 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Trash Project - Accueil{% endblock %}</title>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        
+        {% endblock %}
 
         {% block head_css %}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="{{ asset('css/style.css') }}">
 
         {% endblock %}
         {% block head_js %}
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         {% endblock %}
 
         </head>
         <body>
         {% block header %}
-        <nav style="height: 10vh;" class="navbar navbar-expand-lg navbar-dark bg-dark" style="color: white!important; ">
-                    <a class="navbar-brand" href="#accueil">
-                </a>
+  
+        <header>
+          <nav>
+              <input type="checkbox" id="check">
+              <label for="check" class="checkbtn">
+                  <i class="fas fa-bars"></i>
+              </label>
+              <a href="#" class="logo2"><img src="{{asset('img/logo_trashheader.png')}}" alt="logo trash project header" class="imglogo"/></a>
+              <ul>
+                  <li><a class="active" href="{{ path('app_accueil') }}">Accueil</a></li>
+                  <li><a href="{{ path('creer_partie') }}">Jouer</a></li>
+                  {% if app.user %}
+                  <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+        	        <li><a href="{{ path('joueur_profil') }}">Profil</a></li>
+                  {% else %}
+                  <li><a href="#popup1">Connexion</a></li>
+                  <li><a href="/jeu/inscription">Inscription</a></li>
+                  {% endif %}
+        	        <!-- <li><a href="/jeu/communaute">Communauté</a></li> -->
+                  <li><a href="jeu/admin">Administration</a></li>
+              </ul>
+          </nav>
+          <section></section>
+      </header>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
+      <div id="popup1" class="overlay">
+          <div class="popup">
+              <h2>Connexion</h2>
+              <a class="close" href="#">&times;</a>
+              <div class="content">
+                  <form action="" method="">
+                      <label>Pseudo</label>
+                      <input type="text" class="txtp" placeholder="Entrer le nom d'utilisateur" name="username" required>
 
-        <div class="collapse navbar-collapse" id="navbar">
-  	
-    	<ul class="navbar-nav mr-auto">
-     	 <li class="nav-item">
-        	<a class="nav-link" href="/jeu/">Accueil</a>
-      	</li>
-        {% if app.user %}
-        <li class="nav-item">
-        	<a class="nav-link" href="/jeu/logout">Déconnexion</a>
-      	</li>
-        {% else %}
-        <li class="nav-item">
-        	<a class="nav-link" href="/jeu/inscription">Inscription</a>
-      	</li>
-        <li class="nav-item">
-        	<a class="nav-link" href="/jeu/connexion">Connexion</a>
-      	</li>
-        {% endif %}
+                      <label class="mdpl">Mot de passe</label>
+                      <input type="password" class="txtp" placeholder="Entrer le mot de passe" name="password" required>
+                      <a href="" class="inscrit">Pas encore inscrit? inscrit toi!</a>
 
-        <li class="nav-item">
-        	<a class="nav-link" href="/jeu/jouer/creer-partie">Jouer</a>
-      	</li>
-      	<li class="nav-item">
-        	<a class="nav-link" href="/jeu/communaute">Communauté</a>
-      	</li>
-       
-        <li class="nav-item">
-        	<a class="nav-link" href="/jeu/admin">Administration</a>
-      	</li>
-
-    	</ul>
- 
+                      <input type="submit" id="submit" value="Connexion" class="connexion">
+                  </form>
+              </div>
+          </div>
         </div>
-        </nav>
-
+        <section style="margin-top: 100px">
         {% endblock %}
 
         {% block body %}{% endblock %}
+        {% block footer %}
+
+        </section>
+        {% endblock %}
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

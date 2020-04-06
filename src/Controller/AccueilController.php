@@ -46,15 +46,14 @@ class AccueilController extends AbstractController
         ->where("p.etatPartie = 'T'")
         ->getQuery()
         ->getSingleScalarResult();
-        
+
 
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
             'user' => $this->getUser(),
             'partie_total' => $totalpartie,
             'partie_total_en_cours' => $partie_en_cours_total,
-            'partie_terminee' => $partie_terminee
-
+            'partie_terminee' => $partie_terminee,
         ]);
     }
 }

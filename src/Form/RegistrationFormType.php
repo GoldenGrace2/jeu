@@ -21,11 +21,14 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('username', TextType::class, ['label' => 'Pseudo'])
-        ->add('password', PasswordType::class, [
+        ->add('username', TextType::class, ['label' => 'Pseudo*'])
+        ->add('password', RepeatedType::class, [
             // instead of being set onto the object directly,
             // this is read and encoded in the controller
-            'label' => 'Mot de passe',
+            'type' => PasswordType::class,
+            'first_options'  => ['label' => 'Mot de passe*'],
+            'second_options' => ['label' => 'Confirmation du mot de passe*'],
+            'required' => true,
             'mapped' => false,
             'constraints' => [
                 new NotBlank([
@@ -35,23 +38,14 @@ class RegistrationFormType extends AbstractType
                     'min' => 6,
                     'minMessage' => 'Votre mot de passe doit au moins contenir {{ limit }} caractères',
                     // max length allowed by Symfony for security reasons
-                    'max' => 4096,
+                    'max' => 18,
                 ]),
             ],
         ])
-        ->add('email', TextType::class, ['label' => 'Email'])
+        ->add('email', TextType::class, ['label' => 'E-mail*'])
         ->add('nom', TextType::class, ['label' => 'Nom'])
         ->add('prenom', TextType::class, ['label' => 'Prénom'])
         ->add('tel', TextType::class, ['label' => 'Téléphone'])
-        ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'label' => 'Veuillez accepter nos conditions d\'utilisation.',
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter nos conditions d\'utilisation.',
-                    ]),
-                ],
-            ])
         ->add('save', SubmitType::class, ['label' => 'Confirmer'])
 
         ;

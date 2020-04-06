@@ -1,11 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscrivez-vous{% endblock %}
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style_inscription.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+{% endblock %}
+
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
 
-    <h1>Inscrivez-vous</h1>
+       
 
-     {{ form(registrationForm) }}
+
+        <div class="formulaire">
+    <h1>Insciption</h1>
+    {{ form_start(registrationForm) }}
+     
+        <div class="reste">
+ 
+            {{ form_row(registrationForm.username, { 'attr': {'class': 'txtp'} }) }}    
+            {{ form_row(registrationForm.email, { 'attr': {'class': 'txtp'} }) }}    
+            {{ form_row(registrationForm.password.first, { 'attr': {'class': 'txtp'} }) }}    
+            {{ form_row(registrationForm.password.second, { 'attr': {'class': 'txtp'} }) }}    
+            {{ form_row(registrationForm.tel, { 'attr': {'class': 'txtp'} }) }}    
+
+        </div>
+
+           
+        <div class="np">
+            <div>
+                 {{ form_row(registrationForm.nom, { 'attr': {'class': 'txtp'} }) }}    
+            </div>
+            <div>
+                 {{ form_row(registrationForm.prenom, { 'attr': {'class': 'txtp'} }) }}    
+            </div>
+        </div>
+
+        {{ form_row(registrationForm.save, { 'attr': {'class': 'connexion'} }) }}
+
+     {{ form_end(registrationForm)   }}
+    <p>Les champs suivis de * sont obligatoires<br /><br />
+        <a href="" class="inscrit">Déjà un compte? Connectez-vous</a></p>
+</div>
 
 {% endblock %}
