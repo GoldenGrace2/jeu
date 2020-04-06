@@ -35,7 +35,7 @@
                   <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
         	        <li><a href="{{ path('joueur_profil') }}">Profil</a></li>
                   {% else %}
-                  <li><a href="#popup1">Connexion</a></li>
+                  <li><a href="#popup1" id="connexion" >Connexion</a></li>
                   <li><a href="{{ path('app_inscription') }}">Inscription</a></li>
                   {% endif %}
         	        <!-- <li><a href="/jeu/communaute">Communauté</a></li> -->
@@ -50,19 +50,21 @@
               <h2>Connexion</h2>
               <a class="close" href="#">&times;</a>
               <div class="content">
-                  <form action="" method="">
+                  <form action="{{ path('app_connexion')}}" method="POST">
                       <label>Pseudo</label>
-                      <input type="text" class="txtp" placeholder="Entrer le nom d'utilisateur" name="username" required>
+                      <input type="text" class="txtp" placeholder="Entrer le nom d'utilisateur" name="username" id="username" required>
 
                       <label class="mdpl">Mot de passe</label>
-                      <input type="password" class="txtp" placeholder="Entrer le mot de passe" name="password" required>
-                      <a href="" class="inscrit">Pas encore inscrit? inscrit toi!</a>
+                      <input type="password" class="txtp" placeholder="Entrer le mot de passe" name="password" id="password" required>
+                      <a href="{{ path('app_inscription') }}" class="inscrit">Pas encore inscrit? inscrit toi!</a>
+
+                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                       <input type="submit" id="submit" value="Connexion" class="connexion">
                   </form>
               </div>
           </div>
-        </div>
+        </div> 
         <section style="margin-top: 100px">
         {% endblock %}
 
@@ -72,6 +74,10 @@
         </section>
         {% endblock %}
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script>
+         
+        </script>
+        {% endblock %}
     </body>
 </html>
