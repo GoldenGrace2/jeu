@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class RegistrationController extends AbstractController
 {
@@ -17,6 +18,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer): Response
     {
+        
         $user = new User();
         $user->setRoles(['ROLE_USER']);
         $user->setScore(0);
@@ -59,6 +61,10 @@ class RegistrationController extends AbstractController
 
             $mailer->send($message);
 
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->container->get('security.token_storage')->setToken($token);
+            $this->container->get('session')->set('_security_main', serialize($token));
+
             return $this->redirectToRoute('app_accueil');
         }
 
@@ -78,7 +84,7 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($userconfirmation);
             $entityManager->flush();
-            
+
             return $this->render('inscription/confirmation.html.twig', [
                 'user' => $this->getUser()
             ]);
