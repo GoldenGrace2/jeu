@@ -48,6 +48,8 @@ class PartieController extends AbstractController
 
             $partie = new Partie();
             $partie->setPioche($tableauDeCartes);
+            $partie->setEtatPartie('EC');
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($partie);
 
@@ -191,7 +193,6 @@ class PartieController extends AbstractController
         $jouer = $jouerRepository->findByJoueurAndPartie($partie, $this->getUser());
         $cartes = $carteRepository->findByArray();
         $nbCases = count($casesRepository->findAll());
-        $partie->setEtatPartie('EC');
 
         if ($jouer !== null) {
 
