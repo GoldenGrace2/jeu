@@ -1,23 +1,27 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style_inscription.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+     <div class="formulaire">
+    <h1>Connection</h1>
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+    <div class="reste">
 
-    <h1 class="h3 mb-3 font-weight-normal">Connecte toi!</h1>
     <label for="inputUsername">Pseudo</label>
-    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="txtp" required autofocus>
     <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    <input type="password" name="password" id="inputPassword" class="txtp" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html
@@ -28,9 +32,13 @@
             </label>
         </div>
     #}
+    </div>
+    
+    <a href="{{ path('app_inscription') }}" class="inscrit">Pas encore inscrit? inscrit toi!</a>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Valider
+    <button class="connexion" type="submit">
+        Se connecter
     </button>
+    
 </form>
 {% endblock %}
