@@ -87,8 +87,6 @@ class User implements UserInterface
      */
     private $ia;
 
- 
-
     public function __construct()
     {
         $this->jouers = new ArrayCollection();
