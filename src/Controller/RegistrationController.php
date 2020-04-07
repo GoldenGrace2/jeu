@@ -80,6 +80,9 @@ class RegistrationController extends AbstractController
         
         $securityContext = $this->container->get('security.authorization_checker');
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+           
+   
+               
             // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
             $userconfirmation = $this->getUser();
             if ($confirmation == $userconfirmation->getConfirmation()){ 
@@ -93,13 +96,18 @@ class RegistrationController extends AbstractController
                     'user' => $this->getUser()
                 ]);
             } 
+
+            return $this->render('inscription/erreur.html.twig', [
+                ]);
     
         }
+
+        else {
    
         return $this->render('inscription/erreur.html.twig', [
         ]);
     
-
+        }
     }
 
 }
