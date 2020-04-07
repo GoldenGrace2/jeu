@@ -12,12 +12,12 @@
 {% endblock %}
 
 {% block body %}
-<section class="container-fluid" style="display: flex; flex-direction: row; margin-top: 150px;">
-    <div class="row col-sm-6">
-    <h2>Créer une nouvelle partie</h2>
-    <form class="col-sm-12" action="" method="POST">
-    
-        {% for i in 1..6 %}
+<div class="formulaire">
+
+    <h1 style="font-size: 32px;">Créer une nouvelle partie</h1>
+    <form action="" method="POST">
+
+          {% for i in 1..6 %}
             <section class="col-sm-12" style="display: flex; flex-direction: row;">
                 <div style="width: 25vw;">
                         <label for="joueur{{ i }}">Joueur {{ i }}</label>
@@ -42,22 +42,24 @@
                     {% endif %}
             </section>
         {% endfor %}
-        <div>
-            <button type="submit" class="btn btn-success">Créer la partie</button>
-        </div>
-    </div>
-    </form>
 
-    <div class="row col-sm-6">
 
-     <h2>Rejoindre une partie</h2>
-                    <div class="col-sm-3" id="app_partie">
+    <button class="connexion" type="submit">
+        Créer la partie
+    </button>
+    
+</form>
+</div>
+
+    <div class="formulaire">
+
+    <h1 style="font-size: 32px;">Rejoindre une partie</h1>
+                    <div id="app_partie" style="display: flex; flex-direction: column; width: 50%; margin-right: auto; margin-left: auto;">
                     <label for="code_partie">Entrer le code de la partie, puis validez</label>
                     <input v-model="code">
-                    <a v-bind:href="'/jouer/affiche-partie/' + code">Validez</a>
+                    <a v-bind:href="'/jouer/affiche-partie/' + code" class="connexion" style="text-decoration: none; color:black; text-align:center;">Rejoindre</a>
                     </div>
     </div>
-</section>    
 
 {% endblock %}
 {% block javascripts %}
