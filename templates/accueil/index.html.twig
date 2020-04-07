@@ -52,15 +52,16 @@
     </div>
 
 
-    <h2>Statistique</h2>
-    <div class="contenu">
+    <h1 style="margin-top: 30px; margin-bottom: 30px;">STATISTIQUES</h1>
+    <div class="contenu"  style="margin-bottom: 30px";>
+        <div class="expl">
 
-    <ul>
-        <li>Plus de {{partie_total}} parties au total</li>
-        <li>Plus de {{ partie_total_en_cours }} parties qui sont en cours</li>
-        <li>Et {{ partie_terminee }} parties qui sont terminées...</li>
-    </ul>
-
+            <p style="text-align: center;">
+                Il existe {{partie_total}} parties au total <br>
+                Et pas moins de {{ partie_total_en_cours }} parties qui sont en cours! <br>
+                Et enfin, c'est {{ partie_terminee }} partie(s) qui sont déjà terminées... <br>
+            </p>
+        </div>
     </div>
 </div>
 {% endblock %}

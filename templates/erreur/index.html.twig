@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
+
+{% endblock %}
+
 {% block body %}
-    <p> Votre compte n'est pas vérifié! Merci de confirmer votre compte avec l'email que vous avez reçu. </p>
+    <h1 style="margin-top: 100px"> Votre compte n'est pas vérifié! Merci de confirmer votre compte avec l'email que vous avez reçu. </h1>
 {% endblock %}
 
 {% block title %}

@@ -6,6 +6,7 @@
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('scss/style.scss') }}">
 
         {% endblock %}
 
@@ -65,17 +66,16 @@
               </div>
           </div>
         </div> 
-        <section style="margin-top: 100px">
         {% endblock %}
 
         {% block body %}{% endblock %}
-        {% block footer %}
 
+        {% block footer %}
         
         <footer>
             <div class="contenu_ftr">
                 <div class="logo_ftr">
-                    <img src="assets/img/logo_trash.png">
+                    <img src="{{ asset('img/logo_trash.png')}}">
                 </div>
                 <div class="info">
                     <ul>
@@ -95,15 +95,14 @@
                 </div>
                 <div class="reseaux">
                     <ul>
-                        <li><a target="_blank" href="https://www.instagram.com/trashproject_gigame/"><img src="assets/img/insta.svg"></a></li>
-                        <li><a target="_blank" href="https://twitter.com/ProjectTrash"><img src="assets/img/twitter.svg"></a></li>
-                        <li><a target="_blank" href=""><img src="assets/img/picto-youtube.png"></a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/trashproject_gigame/"><img src="{{ asset('img/insta.svg')}}"></a></li>
+                        <li><a target="_blank" href="https://twitter.com/ProjectTrash"><img src="{{ asset('img/twitter.svg')}}"></a></li>
+                        <li><a target="_blank" href=""><img src="{{ asset('img/picto-youtube.png')}}"></a></li>
                     </ul>
                 </div>
             </div>
         </footer>
 
-        </section>
         {% endblock %}
 
         {% block javascripts %}

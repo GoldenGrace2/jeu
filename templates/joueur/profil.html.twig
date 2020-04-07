@@ -1,17 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-Mon Profil. {{ joueur.username }}
+{% block title %}
 
-    <h2>Mes parties</h2>
-    <ul>
-        {% for partie in parties %}
-            <li><a href="{{ path('affiche_partie', {partie:partie.id}) }}">Partie du {{ partie.datedebut|date('d/m/Y') }}</a></li>
-        {% endfor %}
-    </ul>
+Profil de joueur
+
 {% endblock %}
 
-{% block title %}
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('scss/style.scss') }}">
+{% endblock %}
+
+{% block body %}
+        <div class="profil">
+                <div class="div1pro">
+                    <div id="moncercle" style="margin-top: 0;"><img href="{{ asset('img/pdp/'~ joueur.img)}}"/></div>
+                    <div>
+                        <div class="informationsp"><p>Nom: {{joueur.nom}} <span>Prénom: {{joueur.prenom}}</span><br /><br />
+                            Pseudo: {{joueur.username}} <span>E-mail: {{joueur.email}}</span><br /><br />
+                            Téléphone: {{joueur.tel}} <span>Mot de passe: ********</span></p></div>
+                        <a href="" class="modifprofil">Modifier ces informations</a>
+                    </div>
+                </div>
+
+                <div class="div2pro">
+                    <div>
+                        <p><span><u>Statistiques:</u></span><br /><br />
+                            Parties jouées: <br />
+                            Parties remportées: <br />
+                            maximum de points en une partie: {{joueur.score}}<br />
+                            Total de points remportés: {{joueur.score}}</p>
+                    </div>
+                    <div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th colspan="4">Score Board</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+
+                            {% for partie in parties %}
+                            <tr><td href="{{ path('affiche_partie', {partie:partie.id}) }}">{{ partie.datedebut|date('d/m/Y') }}</td></tr>
+                            {% endfor %}
+                                <td>10/03/2020</td>
+                                <td>21h54</td>
+                                <td>1/6</td>
+                                <td>405 pts</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
 {% endblock %}
 

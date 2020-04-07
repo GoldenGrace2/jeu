@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
+{% block title %} Création de partie Trash Project
+
+{% endblock %}
+
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style_inscription.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
 
 {% endblock %}
 
 {% block body %}
-<section class="container-fluid" style="display: flex; flex-direction: row">
+<section class="container-fluid" style="display: flex; flex-direction: row; margin-top: 150px;">
     <div class="row col-sm-6">
     <h2>Créer une nouvelle partie</h2>
     <form class="col-sm-12" action="" method="POST">

@@ -1,10 +1,10 @@
 {# templates/emails/registration.html.twig #}
-<h3>Bienvenue {{ name }}!</h3>
+<h1>Bienvenue {{ name }}!</h1>
 
-Merci de cliquez sur le lien ci-dessous pour valider votre inscription. Attention, vous devez être connecté sur le site avant de cliquer sur le lien!<br>
+Merci de cliquez sur le lien ci-dessous pour valider votre inscription. Vous devez être connecté sur le site avant de pouvoir utiliser le lien (ce qui est fait automatiquement lors de votre inscription)<br><br>
 
 {# example, assuming you have a route named "login" #}
-<a href="http://149.91.81.101/jeu/inscription/{{ confirmation }}">Confirmer son inscription</a>.<br>
+<a href="http://149.91.81.101/jeu/inscription/{{ confirmation }}">Confirmer son inscription</a>.<br><br>
 
 Sincères salutations,<br><br>
 
