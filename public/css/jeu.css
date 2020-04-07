@@ -69,6 +69,11 @@ header img{
     height:18vw;
     cursor: grab;
 }
+/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”STARTâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
+#bloc_plateau:active{
+    cursor: grabbing;
+}
+/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”FINâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
 .bloc_case{
     height:15vw;
     width:15vw;
@@ -203,6 +208,16 @@ header img{
     max-height: 100%;
     box-sizing: border-box;
 }
+/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”STARTâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
+.action_chat{
+    margin:0;
+    text-align: center;
+    color: #909090;
+    font-size: 1vw;
+    padding: 5px;
+    font-family: 'Poppins',sans-serif;
+}
+/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”FINâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
 .bloc_msg, .msg_remove{
     margin:10px 50px 10px 5px;
 }
@@ -294,9 +309,11 @@ header img{
     background-size: contain;
 }
 #asset_de{
-    background-image: url('../img/home/dé.png');
+    background-image: url('../img/home/dÃ©.png');
 }
-
+#asset_robot{
+    background-image: url('../img/home/robot.png');
+}
 #asset_cagnotte{
     background-image: url('../img/home/cagnotte.png');
 }
@@ -307,7 +324,13 @@ header img{
     font-size: 2em;
     margin: 0;
 }
-#B_pioche{
+/*#B_pioche{
+    top:100%;
+    transform: translate(0,-70%);
+    display: flex;
+    position: absolute;
+}*/
+#B_deck{
     top:100%;
     transform: translate(0,-70%);
     display: flex;

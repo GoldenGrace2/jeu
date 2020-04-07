@@ -33,6 +33,8 @@ class AccueilController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $partie = $em->getRepository(Partie::class);
+        $repository = $em->getRepository(User::class);
+        $user = $repository->findBy([], ['score' => 'DESC'],10);
 
         $totalpartie = $partie->createQueryBuilder('p')
         ->select('count(p.id)')
@@ -51,13 +53,13 @@ class AccueilController extends AbstractController
         ->getQuery()
         ->getSingleScalarResult();
 
-
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
             'user' => $this->getUser(),
             'partie_total' => $totalpartie,
             'partie_total_en_cours' => $partie_en_cours_total,
             'partie_terminee' => $partie_terminee,
+            'user_classement' => $user
         ]);
     }
 }

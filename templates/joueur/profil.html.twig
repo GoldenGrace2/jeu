@@ -42,7 +42,7 @@ Profil de joueur
                             
 
                             {% for partie in parties %}
-                            <tr><td href="{{ path('affiche_partie', {partie:partie.id}) }}">{{ partie.datedebut|date('d/m/Y') }}</td></tr>
+                            <tr><td><a href="{{ path('affiche_partie', {partie:partie.id}) }}">{{ partie.datedebut|date('d/m/Y') }}</a></td></tr>
                             {% endfor %}
                                 <td>10/03/2020</td>
                                 <td>21h54</td>

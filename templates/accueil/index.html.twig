@@ -56,12 +56,31 @@
     <div class="contenu"  style="margin-bottom: 30px";>
         <div class="expl">
 
-            <p style="text-align: center;">
+            <p style="text-align: center; font-size: 150%;">
                 Il existe {{partie_total}} parties au total <br>
                 Et pas moins de {{ partie_total_en_cours }} parties qui sont en cours! <br>
                 Et enfin, c'est {{ partie_terminee }} partie(s) qui sont déjà terminées... <br>
             </p>
         </div>
     </div>
+                <table style="border: 1px solid black; border-radius: 10px; margin-right: auto; margin-left: auto; margin-bottom: 15px; font-family: 'Anime Ace 2.0 BB'; line-height: 40px; width: 35%; text-align: center;">
+                            <thead style="background-color: #7ea4f8">
+                            <tr>
+                                <th style="font-size: 32px;" colspan="4">Classement top 10</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Pseudo</td>
+                                <td>Score</td>
+                            </tr>
+                            {% for users in user_classement %}
+                            <tr>
+                                <td>{{users.username}}</td>
+                                <td>{{users.score}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                </table>
 </div>
 {% endblock %}
