@@ -14,7 +14,7 @@
     <h1>Connexion</h1>
 <form method="post">
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
     <div class="reste">
 
@@ -43,4 +43,5 @@
     </button>
     
 </form>
+</div>
 {% endblock %}
