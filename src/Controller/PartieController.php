@@ -61,6 +61,7 @@ class PartieController extends AbstractController
                     $jouer = new Jouer();
                     $jouer->setCartes(["I" => [], "A" => [], "M" => []]);
                     $jouer->setPartie($partie);
+                    $jouer->setLog(["L" => []]);
                     $jouer->setPion($request->request->get('pion' . $i)); //a gérer peut être autrement si provient d'une table
                     $jouer->setClassement($i);
                     $jouer->setJoueur($joueur);

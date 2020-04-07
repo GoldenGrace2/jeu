@@ -176,6 +176,7 @@ class Partie
 
         return $this;
     }
+    
 
     /**
      * @return Collection|Jouer[]

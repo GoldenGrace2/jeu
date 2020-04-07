@@ -184,16 +184,17 @@ class Jouer
 
         return $this;
     }
-
-    public function getLog(): ?string
+    
+    public function getLog(): ?array
     {
-        return $this->Log;
+        return json_decode($this->log, true);
     }
 
-    public function setLog(string $Log): self
+    public function setLog(?array $log): self
     {
-        $this->Log = $Log;
+        $this->log = json_encode($log);
 
         return $this;
     }
+
 }

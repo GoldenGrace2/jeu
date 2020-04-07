@@ -34,7 +34,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
           - { path: ^/admin, roles: ROLE_ADMIN }
-          - { path: ^/profil, roles: ROLE_USER }
+          - { path: ^/joueur/profil, roles: ROLE_USER }
           - { path: ^/jouer, roles: ROLE_USER }
     encoders:
         # use your user class name here
