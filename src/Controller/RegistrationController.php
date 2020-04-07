@@ -77,23 +77,28 @@ class RegistrationController extends AbstractController
      * @Route("/inscription/{confirmation}", name="app_confirmation")
      */
     public function confirmation($confirmation){
-        $userconfirmation = $this->getUser();
-        if ($confirmation == $userconfirmation->getConfirmation()){ 
-            
-            $userconfirmation->setConfirmation(0); 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($userconfirmation);
-            $entityManager->flush();
-
-            return $this->render('inscription/confirmation.html.twig', [
-                'user' => $this->getUser()
-            ]);
-        } 
-
-        else {
-            return $this->render('inscription/erreur.html.twig', [
-            ]);
+        
+        $securityContext = $this->container->get('security.authorization_checker');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $userconfirmation = $this->getUser();
+            if ($confirmation == $userconfirmation->getConfirmation()){ 
+                
+                $userconfirmation->setConfirmation(0); 
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($userconfirmation);
+                $entityManager->flush();
+    
+                return $this->render('inscription/confirmation.html.twig', [
+                    'user' => $this->getUser()
+                ]);
+            } 
+    
         }
+   
+        return $this->render('inscription/erreur.html.twig', [
+        ]);
+    
 
     }
 
