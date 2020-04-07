@@ -1,0 +1,110 @@
+*{margin:0;padding:0}
+@font-face{font-family:'ErasLightITC';src:url("../font/ErasLightITC.ttf")}
+h1{font-size:350%;font-family:"Anime Ace 2.0 BB"}
+p{font-family:"ErasLightITC"}
+header{position:fixed;top:0;width:100%;z-index:10}
+header *{margin:0;padding:0;text-decoration:none;list-style:none;-webkit-box-sizing:border-box;box-sizing:border-box}
+header .imgpanier{height:20px}
+header .imglogo{height:75px;margin-top:5px}
+header nav{background:#7ca1f3;height:80px;width:100%;font-family:"Anime Ace 2.0 BB",arial;-webkit-box-shadow:0 1px 5px grey;box-shadow:0 1px 5px grey;z-index:20}
+header .logo2{color:black;font-size:35px;line-height:80px;padding:0 30px;font-weight:bold;-webkit-transition:.2s;transition:.2s}
+header .logo2:hover{padding:0 35px}
+header nav ul{float:right;margin-right:20px}
+header nav ul li{display:inline-block;line-height:80px;margin:0 5px}
+header nav ul li a{color:black;font-size:14px;padding:8px 0 20px;margin:0 14px;text-transform:uppercase;border-bottom:3px solid rgba(246,211,101,0);-webkit-transition:.2s;transition:.2s}
+header ul a.active,header ul a:hover{padding-bottom:10px;border-bottom:3px solid black}
+header .checkbtn{font-size:30px;color:black;float:right;line-height:80px;margin-right:40px;cursor:pointer;display:none}
+header #check{display:none}
+.overlay{position:fixed;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,0.7);-webkit-transition:opacity 500ms;transition:opacity 500ms;visibility:hidden;opacity:0;z-index:11;font-family:"Anime Ace 2.0 BB",arial}
+.overlay:target{visibility:visible;opacity:1}
+.popup{margin:70px auto;padding:20px;background:#8fcaa2;border-radius:5px;width:30%;position:relative;-webkit-transition:all 5s ease-in-out;transition:all 5s ease-in-out}
+.popup h2{margin-top:0;text-align:center;color:#333}
+.popup .close{position:absolute;top:20px;right:30px;-webkit-transition:all 200ms;transition:all 200ms;font-size:30px;font-weight:bold;text-decoration:none;color:#333;font-family:"Anime Ace 2.0 BB",arial}
+.popup .close:hover{color:#5e5e5e}
+.popup .content{max-height:30%;overflow:auto}
+.popup label{display:block;margin-bottom:5px}
+.popup .mdpl{margin-top:20px}
+.popup .inscrit{display:block;text-decoration:none;color:#000;-webkit-transition:.4s;transition:.4s;text-align:center;font-size:10px;margin-top:30px}
+.popup .inscrit:hover{color:#5e5e5e}
+.popup .connexion{margin-left:50%;-webkit-transform:translate(-50%);transform:translate(-50%);margin-top:20px;background-color:white;padding:5px 10px 5px 10px;border:1px solid black;border-radius:5px;-webkit-transition:.4s;transition:.4s}
+.popup .connexion:hover{background-color:lightslategrey}
+.popup .txtp{padding:5px 10px 5px 10px;width:90%;border-radius:5px;border:1px solid black}
+p{font-family:"ErasLightITC"}
+.banniere{height:105vh;background-image:url("../img/banniere.png");background-size:cover}
+.mid{height:85vh}
+.mid h1{text-align:center;margin-bottom:2%;padding-top:2%}
+.mid .contenu{height:60vh;display:grid;grid-template-rows:100%;grid-template-columns:7% 35% 5% 46% 7%}
+.mid .contenu .plateau{grid-column-start:2;grid-column-end:3}
+.mid .contenu .plateau img{width:80%;margin:auto;padding:auto}
+.mid .contenu .expl{font-size:150%;grid-column-start:4;grid-column-end:5;display:-webkit-box;display:-ms-flexbox;display:flex}
+.mid .contenu .expl button{font-family:"Anime Ace 2.0 BB";margin-top:10%;-ms-flex-line-pack:center;align-content:center;margin-left:45%;border:0;line-height:2.5;padding:6px 40px;font-size:1rem;text-align:center;color:black;border-radius:10px;background-color:#acd6b9;background-image:-webkit-gradient(linear,right bottom,left top,from(rgba(0,0,0,0.2)),color-stop(30%,rgba(0,0,0,0.2)),to(rgba(0,0,0,0)));background-image:linear-gradient(to top left,rgba(0,0,0,0.2),rgba(0,0,0,0.2) 30%,rgba(0,0,0,0));-webkit-box-shadow:inset 2px 2px 3px rgba(255,255,255,0.6),inset -2px -2px 3px rgba(0,0,0,0.6);box-shadow:inset 2px 2px 3px rgba(255,255,255,0.6),inset -2px -2px 3px rgba(0,0,0,0.6)}
+.mid .contenu .expl button:hover{cursor:-webkit-grab;cursor:grab}
+.regles{height:100vh;background-color:slateblue}
+.regles h1{text-align:center;margin-bottom:7%;padding-top:2%;color:white}
+.regles .contenu2{height:55vh;display:grid;grid-template-columns:5% 42.5% 5% 42.5% 5%;grid-template-rows:100%}
+.regles .contenu2 .regles_ecrit{font-size:150%;color:white;grid-column-start:2;grid-column-end:3}
+.regles .contenu2 .regles_ecrit button{font-family:"Anime Ace 2.0 BB";margin-top:10%;-ms-flex-line-pack:center;align-content:center;margin-left:45%;border:0;line-height:2.5;padding:6px 40px;font-size:1rem;text-align:center;color:black;border-radius:10px;background-color:#acd6b9;background-image:-webkit-gradient(linear,right bottom,left top,from(rgba(0,0,0,0.2)),color-stop(30%,rgba(0,0,0,0.2)),to(rgba(0,0,0,0)));background-image:linear-gradient(to top left,rgba(0,0,0,0.2),rgba(0,0,0,0.2) 30%,rgba(0,0,0,0));-webkit-box-shadow:inset 2px 2px 3px rgba(255,255,255,0.6),inset -2px -2px 3px rgba(0,0,0,0.6);box-shadow:inset 2px 2px 3px rgba(255,255,255,0.6),inset -2px -2px 3px rgba(0,0,0,0.6)}
+.regles .contenu2 .regles_ecrit button:hover{cursor:-webkit-grab;cursor:grab}
+.regles .contenu2 .vdo{font-size:250%;grid-column-start:4;grid-column-end:5;background-color:black}
+footer{background-color:black;height:40vh;width:100%}
+footer .contenu_ftr{height:100%;width:100%;display:grid;grid-template-columns:2% 22% 2% 24% 2% 22% 2% 22% 2%;grid-template-rows:8% 84% 8%}
+footer .contenu_ftr .logo_ftr{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:3}
+footer .contenu_ftr .logo_ftr img{width:100%}
+footer .contenu_ftr .info{grid-column-start:4;grid-column-end:5;grid-row-start:2;grid-row-end:3}
+footer .contenu_ftr .info ul{list-style:none}
+footer .contenu_ftr .info ul li{font-size:140%;color:white;font-family:"Anime Ace 2.0 BB";margin-top:10%}
+footer .contenu_ftr .info ul li a{color:white;text-decoration:none}
+footer .contenu_ftr .info ul li a:hover{color:#8fcaa2}
+footer .contenu_ftr .contact{grid-column-start:6;grid-column-end:7;grid-row-start:2;grid-row-end:3}
+footer .contenu_ftr .contact ul{list-style:none}
+footer .contenu_ftr .contact ul li{color:white;font-size:140%;margin-top:10%;font-family:"Anime Ace 2.0 BB"}
+footer .contenu_ftr .reseaux{grid-row-start:2;grid-row-end:3;grid-column-start:8;grid-column-end:9}
+footer .contenu_ftr .reseaux ul{list-style:none;margin-top:2%}
+footer .contenu_ftr .reseaux ul li{display:inline;padding-left:8%}
+footer .contenu_ftr .reseaux ul li a img{width:20%}
+.profil{height:100vh;width:100%;display:grid;grid-template-columns:10% 80% 10%;grid-template-rows:50% 50%}
+.profil .infoperso{grid-column-start:2;grid-column-end:3;grid-row-start:1;grid-row-end:2;display:inline}
+.profil .infoperso .pp{margin-top:10%;width:20%;height:60%;border-radius:50%;background:green}
+.profil .infoperso .perso{background-color:#8fcaa2;margin-left:25%;margin-top:-21%;border:2px solid black;border-radius:30px;width:70%;height:65%;display:flow;-ms-flex-wrap:nowrap;flex-wrap:nowrap}
+.profil .infoperso .perso ul{margin-top:5%}
+.profil .infoperso .perso ul li{margin-top:5%;display:inline;font-size:200%;margin-left:10%}
+.profil .infojeu{grid-column-start:2;grid-column-end:3;grid-row-start:2;grid-row-end:3;display:grid;grid-template-columns:50% 50%;grid-template-rows:100%}
+.profil .infojeu .stats{grid-column-start:1;grid-column-end:2;grid-row-start:1;grid-row-end:2}
+.profil .infojeu .stats h2{margin-top:15%;font-size:150%;font-family:"Anime Ace 2.0 BB"}
+.profil .infojeu .stats ul{list-style:none;margin-top:5%}
+.profil .infojeu .stats ul li{margin-top:3%}
+.profil .infojeu .table{background-color:whitesmoke;grid-column-start:2;grid-column-end:3;grid-row-start:1;grid-row-end:2}
+.profil .infojeu .table table{margin-left:auto;margin-right:auto;width:90%;border:1px solid #333;border-radius:20px}
+.profil .infojeu .table tr{margin-top:10%}
+.profil .infojeu .table td{margin-top:8%}
+.profil .infojeu .table th{background-color:#7ca1f3;color:white}
+label{font-family:"ErasLightITC"}
+h1{text-align:center}
+.formulaire{margin-top:120px;margin-left:20%;width:60%}
+.np{display:grid;grid-template-columns:1fr 1fr;grid-column-gap:40px}
+.reste{margin-left:10%;width:80%}
+.formulaire .txtp{padding:5px 10px 5px 10px;border-radius:5px;border:1px solid black;display:block;width:100%;margin-top:10px;margin-bottom:30px}
+.connexion{margin-left:50%;-webkit-transform:translate(-50%);transform:translate(-50%);margin-top:20px;background-color:#8fcaa2;padding:10px 20px 10px 20px;border:1px solid black;border-radius:5px;-webkit-transition:.4s;transition:.4s;font-size:20px;font-family:"Anime Ace 2.0 BB",arial}
+.connexion:hover{background-color:#6ea87d}
+.inscrit{text-decoration:none;font-size:14px;color:#000;-webkit-transition:.4s;transition:.4s}
+.inscrit:hover{color:#2f2f2f}
+.formulaire p{font-size:10px;text-align:center;margin-top:20px}
+@media(max-width:952px){header label.logo{font-size:30px;padding-left:50px}
+header .logo:hover{padding-left:55px}
+header nav ul li a{font-size:14px}
+h1{padding-top:10%}
+p{font-size:80%}
+footer{background-color:black;height:40vh;width:100%}
+footer .contenu_ftr .info ul li{font-size:80%;color:white;font-family:"Anime Ace 2.0 BB";margin-top:10%}
+footer .contenu_ftr .info ul li a{color:white;text-decoration:none}
+footer .contenu_ftr .info ul li a a :hover{color:red}
+footer .contenu_ftr .contact ul li{color:white;font-size:80%;margin-top:12%;font-family:"Anime Ace 2.0 BB"}
+}@media(max-width:858px){header .checkbtn{display:block}
+header ul{position:fixed;width:100%;height:100vh;background:#7ca1f3;top:80px;left:-100%;text-align:center;-webkit-transition:all .5s;transition:all .5s}
+header nav ul li{display:block;margin:50px 0;line-height:30px}
+header nav ul li a{font-size:20px}
+header a:hover,header a.active{background:0;color:black}
+header #check:checked ~ ul{left:0}
+}@media screen and (max-width:700px){.box{width:70%}
+.popup{width:70%}
+}
