@@ -2,8 +2,8 @@
 
 @font-face {
     font-family: 'Gigame';
-    src: url('../fonts/Gigame.woff') format('woff'),
-    url('../fonts/Gigame.woff2') format('woff2');
+    src: url('../font/Gigame.woff') format('woff'),
+    url('../font/Gigame.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
