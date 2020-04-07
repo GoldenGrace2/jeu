@@ -87,16 +87,11 @@ class User implements UserInterface
      */
     private $ia;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Chat", mappedBy="user")
-     */
-    private $chats;
-
+ 
 
     public function __construct()
     {
         $this->jouers = new ArrayCollection();
-        $this->chats = new ArrayCollection();
     }
       
     public function __toString()
@@ -312,37 +307,6 @@ class User implements UserInterface
     public function setGenre(?string $genre): self
     {
         $this->genre = $genre;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Chat[]
-     */
-    public function getChats(): Collection
-    {
-        return $this->chats;
-    }
-
-    public function addChat(Chat $chat): self
-    {
-        if (!$this->chats->contains($chat)) {
-            $this->chats[] = $chat;
-            $chat->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChat(Chat $chat): self
-    {
-        if ($this->chats->contains($chat)) {
-            $this->chats->removeElement($chat);
-            // set the owning side to null (unless already changed)
-            if ($chat->getUser() === $this) {
-                $chat->setUser(null);
-            }
-        }
 
         return $this;
     }
