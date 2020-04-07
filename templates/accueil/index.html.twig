@@ -3,12 +3,13 @@
 {% block title %}Trash Project - Page d'accueil{% endblock %}
 
 {% block body %}
+<div class="banniere"></div>
 
  <div class="mid">
         <h1>Trash Project</h1>
         <div class="contenu">
             <div class="plateau">
-                <img src="assets/img/plateau carré-mockup.png">
+                <img src="{{asset('img/plateaucarr-mockup.png')}}" >
             </div>
             <div class="expl">
                 <p>On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de
@@ -19,7 +20,7 @@
                     logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut,
                     et une recherche pour 'etits clins d'oeil, voire des phrases embarassantes).
                     <br>
-                    <a href="assets/regles.pdf" download="Règles_Trah_Project">
+                    <a href="{{asset('assets/regles.pdf')}}" download="Règles_Trah_Project">
                         <button>JOUER</button>
                     </a>
                 </p>
@@ -40,8 +41,7 @@
                     feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des
                     applications de mise en page de texte, comme Aldus PageMaker.
                     <br>
-                    <a href="assets/regles.pdf"
-                       download="Règles_Trah_Project">
+                    <a href="{{asset('assets/regles.pdf')}}" download="Règles_Trah_Project">
                         <button>RÈGLES</button>
                     </a>
 
