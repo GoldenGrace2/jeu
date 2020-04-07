@@ -1,7 +1,9 @@
 easy_admin:
     site_name: 'Trash Project'
     entities:
-        - App\Entity\Carte
-        - App\Entity\Cases
         - App\Entity\Partie
         - App\Entity\Jouer
+        - App\Entity\Carte
+        - App\Entity\Cases
+        - App\Entity\User
+    
