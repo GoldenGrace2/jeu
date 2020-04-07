@@ -62,9 +62,9 @@ class Jouer
     private $JPO;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $Log;
+    private $log;
 
     public function __toString()
     {
