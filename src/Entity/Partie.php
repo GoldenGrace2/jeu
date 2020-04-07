@@ -64,16 +64,10 @@ class Partie
      */
     private $jouers;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Chat", mappedBy="partie")
-     */
-    private $chats;
-
     public function __construct()
     {
         $this->jouers = new ArrayCollection();
         $this->dateDebut = new DateTime('now');
-        $this->chats = new ArrayCollection();
     }
 
     public function __toString()
@@ -214,34 +208,5 @@ class Partie
         return $this;
     }
 
-    /**
-     * @return Collection|Chat[]
-     */
-    public function getChats(): Collection
-    {
-        return $this->chats;
-    }
 
-    public function addChat(Chat $chat): self
-    {
-        if (!$this->chats->contains($chat)) {
-            $this->chats[] = $chat;
-            $chat->setPartie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChat(Chat $chat): self
-    {
-        if ($this->chats->contains($chat)) {
-            $this->chats->removeElement($chat);
-            // set the owning side to null (unless already changed)
-            if ($chat->getPartie() === $this) {
-                $chat->setPartie(null);
-            }
-        }
-
-        return $this;
-    }
 }

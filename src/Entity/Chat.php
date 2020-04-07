@@ -26,16 +26,6 @@ class Chat
      */
     private $date;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\partie", inversedBy="chats")
-     */
-    private $partie;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\user", inversedBy="chats")
-     */
-    private $user;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -65,28 +55,5 @@ class Chat
         return $this;
     }
 
-    public function getPartie(): ?partie
-    {
-        return $this->partie;
-    }
-
-    public function setPartie(?partie $partie): self
-    {
-        $this->partie = $partie;
-
-        return $this;
-    }
-
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(?user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
 }
