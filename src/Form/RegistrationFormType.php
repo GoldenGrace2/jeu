@@ -42,7 +42,7 @@ class RegistrationFormType extends AbstractType
                 ]),
             ],
         ])
-        ->add('email', TextType::class, ['label' => 'E-mail*'])
+        ->add('email', EmailType::class, ['label' => 'E-mail*'])
         ->add('nom', TextType::class, ['label' => 'Nom'])
         ->add('prenom', TextType::class, ['label' => 'Prénom'])
         ->add('tel', TextType::class, ['label' => 'Téléphone'])
