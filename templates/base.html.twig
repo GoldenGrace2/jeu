@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <title>{% block title %}Trash Project - Accueil{% endblock %}</title>
         {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('scss/style.scss') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/scss/style.scss') }}">
 
         {% endblock %}
 
@@ -83,8 +83,8 @@
                 </div>
                 <div class="info">
                     <ul>
-                        <li><a href="">Conditions génerales</a></li>
-                        <li><a href="">Mentions légales</a></li>
+                        <li><a href="{{path('app_cgu')}}">Conditions génerales</a></li>
+                        <li><a href="{{path('app_mention')}}">Mentions légales</a></li>
                         <li><a href="">Forum</a></li>
                     </ul>
 
