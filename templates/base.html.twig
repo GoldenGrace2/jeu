@@ -58,8 +58,9 @@
                       <label class="mdpl">Mot de passe</label>
                       <input type="password" class="txtp" placeholder="Entrer le mot de passe" name="password" id="password" required>
                       <a href="{{ path('app_inscription') }}" class="inscrit">Pas encore inscrit? inscrit toi!</a>
-
-                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                      <a href="{{ path('app_forgotten_password')}}" class="inscrit">Mot de passe oublié?</a>
+                      
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                       <input type="submit" id="submit" value="Connexion" class="connexion">
                   </form>

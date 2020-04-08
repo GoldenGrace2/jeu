@@ -10,12 +10,18 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+  {% for message in app.flashes('danger') %}
+    <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
      <div class="formulaire">
     <h1>Connexion</h1>
-<form method="post">
+<form method="post" style="text-align: center;">
     {% if error %}
     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+
+  
+
     <div class="reste">
 
     <label for="inputUsername">Pseudo</label>
@@ -36,7 +42,8 @@
     #}
     </div>
     
-    <a href="{{ path('app_inscription') }}" class="inscrit">Pas encore inscrit? inscrit toi!</a>
+    <a href="{{ path('app_inscription') }}" class="inscrit" style="text-align: center;">Pas encore inscrit? inscrit toi!</a> <br><br>
+    <a href="{{ path('app_forgotten_password')}}" class="inscrit">Mot de passe oublié?</a><br><br>
 
     <button class="connexion" type="submit">
         Se connecter
