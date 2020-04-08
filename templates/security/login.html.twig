@@ -15,7 +15,7 @@
         {# display any flash message #}    
     {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="flash-{{ label }}">
+                <div style="text-align:center;" class="flash-{{ label }}">
                     {{ message }}
                 </div>
             {% endfor %}
