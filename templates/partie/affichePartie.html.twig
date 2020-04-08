@@ -95,7 +95,7 @@
             <ul id="B_other_player">
                 {% for jouer in partie.jouers %} 
                <li data-playerId="{{jouer.joueur.id}}" class="score_each">
-                    <img src="{{ asset('img/home/'~ jouer.joueur.img|e) }}" alt="Avatar"/>
+                    <img src="{{ asset('img/home/perso/'~ jouer.joueur.img|e) }}" alt="Avatar"/>
                     <div>
                     <p>{% if jouer.joueur.id == app.user.id %}==>{% endif %}{{ jouer.joueur.username }}</p>
                          <span>
