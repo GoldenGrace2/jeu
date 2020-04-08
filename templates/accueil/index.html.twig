@@ -5,8 +5,8 @@
 {% block body %}
     {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div style="text-align:center;" class="flash-{{ label }}">
-                    <h1 style="text-align:center;">{{ message }}</h1>
+                <div style="text-align:center; margin-top: 80px;" class="flash-{{ label }}">
+                    <h1 style="text-align:center; font-size: 28px;">{{ message }}</h1>
                 </div>
             {% endfor %}
         {% endfor %}
