@@ -65,6 +65,7 @@ class PartieController extends AbstractController
                     $jouer->setPion($request->request->get('pion' . $i)); //a gérer peut être autrement si provient d'une table
                     $jouer->setClassement($i);
                     $jouer->setJoueur($joueur);
+                    $jouer->setQuiJoue($this->getUser()->getId());
                     $jouer->setJPO(-5);
 
                     $em->persist($jouer);
