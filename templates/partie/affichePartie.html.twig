@@ -56,15 +56,13 @@
                     <div class="bloc_msg msg_in" data-id="5"><p class="msg_name">Nate</p><div class="msg"><p>Ah gars plus on est de fous plus on rit</p></div></div><br />
                     <div class="bloc_msg msg_in" data-id="6"><p class="msg_name">Billy</p><div class="msg"><p>Eh ben on va se fendre la poire alors</p></div></div><br />
                     <div class="bloc_msg msg_in" data-id="7"><p class="msg_name">Nate</p><div class="msg"><p>Gros, jviens de me rendre compte d'un truc</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="8"><p class="msg_name">Billy</p><div class="msg"><p>Quoi ?</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="9"><p class="msg_name">Nate</p><div class="msg"><p>Beh c'est impossible d'être dyslexique et schizophrène</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="10"><p class="msg_name">Nate</p><div class="msg"><p>Boh après vue comme ça, c'est impossible pour un dyslexique d'être dyslexique...</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="11"><p class="msg_name">Nate</p><div class="msg"><p>Complexe</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="44"><p class="msg_name">Billy</p><div class="msg"><p>Allez casse toi va</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="45"><p class="msg_name">Nate</p><div class="msg"><p>Vu.</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="46"><p class="msg_name">d</p><div class="msg"><p>:O
-                    </p></div></div>  
+                
 
+                        <!--––––––––––––––––START––––––––––––––––––––––—-->
+                        <p class="action_chat">Ceci est un message type log  le chat</p>
+                         <p class="action_chat">Jose a lancé le dé et fait : 6 !</p>
+
+                        <!--––––––––––––––––FIN––––––––––––––––––––––—-->
                     </section>
                     
                     <div id="new_msg">
@@ -297,7 +295,7 @@
             setTimeout(intitTransition,500);
         });
 
-        $('#pioch').click(function(){
+         $('#pioch').click(function(){
             $('#carte_tas').css('transform','translate(-50%) rotate3d(1, 0, 0, 45deg) translate3d(0,100vh,0)');
             setTimeout(pioch2,500);
         });
@@ -357,10 +355,16 @@
             setTimeout(function(){$('#wrapper_des').css('top','0');},10);
         });
     </script>
-    <script>
+    <script>// MAIN
+        //–––––––––––––––––––––––START––––––––––––––––––––––––––––––––
+        let actionDes=" a lancé les dés et a obtenu ";
+        let actionCarte=" a tiré une carte ";
+        //–––––––––––––––––––––––FIN––––––––––––––––––––––––––––––––
+
+
         function playerFocus(){
             //console.log(score);
-            $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(score)).prop('offsetLeft')-window.innerWidth/2 + $("#caseId"+(score)).width()/2}, 1000);
+            $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(score+1)).prop('offsetLeft')-window.innerWidth/2 + $("#caseId"+(score+1)).width()/2}, 1000);
         }
 
         function changement_check(){
@@ -400,6 +404,18 @@
         $('#players_plateau').css('width',$('#bloc_plateau').prop('scrollWidth')+'px');
         changement_check();
     </script>
+    <!--––––––––––––––––START––––––––––––––––––––––—-->
+    <script>
+        $('.case_mail').click(function(){
+            addcard(mail);
+            console.log('mail');
+
+        });
+        function addcard(type){
+            $('#B_deck').append('<article class="carte_pioche" id="apoal"><img src="img/apoalD.png" alt=""></article>');
+        }
+    </script>
+    <!--–––––––––––––- !-->
 
 {% endblock %}
 

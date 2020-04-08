@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+body{
+    color:#3F596F;
+    font-family: Futura,sans-serif;
+}
+
+#milieu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top:50px;
+}
+#error{
+    position: relative;
+    right:0;
+    border:solid 2px #F7444E;
+    border-radius: 5px;
+    font-size:15px;
+    height:auto;
+    width:500px;
+    color: #de273d;
+    padding:20px 10px;
+    background-color: rgba(247, 68, 78, 0.10);
+    font-family:Futura,Helvetica,arial;
+    margin-bottom: 5px;
+    display: none;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width:auto;
+}
+label{
+    font-family: Futura;
+}
+.bloc_input{
+    position: relative;
+    height:80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin:10px 0;
+}
+input{
+    position: relative;
+    right:0;
+    border:solid 2px #dadada;
+    border-radius: 5px;
+    font-size:15px;
+    height:55px;
+    width:500px;
+    color:#3F596F;
+    padding:5px 10px;
+    background-color: transparent;
+    font-family:Futura,Helvetica,arial;
+    margin-top: 5px;
+    outline:none;
+}
+#mdp{
+    margin-bottom: 0;
+    /*padding-right: 70px;*/
+}
+#see_mdp{
+    position: absolute;
+    top:100%;
+    left:100%;
+    transform: translate(-100%,-100%);
+    height:55px;
+    width:70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#see_mdp img{
+    position: absolute;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+#see {
+    opacity: 0;
+}
+#mdp_valid{
+    margin-bottom: 0;
+    padding-right: 70px;
+}
+#see_valid_mdp{
+    position: absolute;
+    top:100%;
+    left:100%;
+    transform: translate(-100%,-100%);
+    height:55px;
+    width:70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#see_valid_mdp img{
+    position: absolute;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+#see_valid{
+    opacity: 0;
+}
+
+#sub{
+    position: relative;
+    margin-bottom: 50px;
+    height:40px;
+    width:auto;
+    border:none;
+    left:100%;
+    transform: translate(-100%);
+    transition:background-color 0.3s;
+    cursor:pointer;
+    color:#4285F4;
+}
+#sub:hover,#sub_inscript:hover,#inscrire:hover{
+    background-color: #F3F3F3;
+}

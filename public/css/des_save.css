@@ -15,7 +15,6 @@ html,body{
     perspective: 800px;
     perspective-origin: 50% 100px;
     margin: 50px;
-    cursor: pointer;
 }
 .dé_cube {
     position: relative;
@@ -73,7 +72,7 @@ html,body{
     position: absolute;
     width: 200px;
     height: 200px;
-    background-image: radial-gradient(#f4f4f4 70%, #e1e1e1);
+    background-image: radial-gradient(#ebebeb 70%, #d7d7d7);
     display: grid;
     grid-template: 1fr 1fr 1fr 1fr 1fr/ 1fr 1fr 1fr 1fr 1fr;
 }
@@ -116,20 +115,8 @@ html,body{
     position: relative;
     width:100%;
     display: flex;
-    align-items: center;
+    align-content: center;
     justify-content: center;
+    height:300px;
     left:0;
-    top:0;
-}
-#wrapper_des{
-    position: absolute;
-    width:100%;
-    top:100vh;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    height:90vh;
-    transition: top 0.5s;
-    left:0;
-    z-index: 11;
 }
