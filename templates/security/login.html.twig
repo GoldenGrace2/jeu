@@ -10,10 +10,16 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-  {% for message in app.flashes('danger') %}
-    <div class="alert alert-danger" role="alert">{{ message }}</div>
-    {% endfor %}
+
      <div class="formulaire">
+        {# display any flash message #}    
+    {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
     <h1>Connexion</h1>
 <form method="post" style="text-align: center;">
     {% if error %}
