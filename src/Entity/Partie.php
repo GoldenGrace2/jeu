@@ -45,7 +45,7 @@ class Partie
     private $gagnant = 0;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="json")
      */
     private $pioche;
 

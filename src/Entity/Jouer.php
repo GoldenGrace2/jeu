@@ -62,7 +62,7 @@ class Jouer
     private $JPO;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $log;
 
@@ -121,18 +121,6 @@ class Jouer
     public function setClassement(int $classement): self
     {
         $this->classement = $classement;
-
-        return $this;
-    }
-
-    public function getCartes(): ?array
-    {
-        return json_decode($this->cartes, true);
-    }
-
-    public function setCartes(?array $cartes): self
-    {
-        $this->cartes = json_encode($cartes);
 
         return $this;
     }
@@ -196,5 +184,18 @@ class Jouer
 
         return $this;
     }
+
+        public function getCartes(): ?array
+    {
+        return json_decode($this->cartes, true);
+    }
+
+    public function setCartes(?array $cartes): self
+    {
+        $this->cartes = json_encode($cartes);
+
+        return $this;
+    }
+
 
 }
