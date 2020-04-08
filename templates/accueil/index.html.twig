@@ -6,6 +6,13 @@
 <div class="banniere"></div>
 
  <div class="mid">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div style="text-align:center;" class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <h1>Trash Project</h1>
         <div class="contenu">
             <div class="plateau">

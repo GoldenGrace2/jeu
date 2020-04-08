@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->container->get('security.token_storage')->setToken($token);
             $this->container->get('session')->set('_security_main', serialize($token));
-
+            $this->addFlash('message', 'Vous êtes inscrit et connecté, mais ce n\'est pas fini ! Il faut désormais valider votre compte avec l\'email que nous vous avons envoyé.');
             return $this->redirectToRoute('app_accueil');
         }
 

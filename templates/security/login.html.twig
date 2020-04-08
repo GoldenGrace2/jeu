@@ -13,7 +13,7 @@
 
      <div class="formulaire">
         {# display any flash message #}    
-    {% for label, messages in app.flashes %}
+        {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div style="text-align:center;" class="flash-{{ label }}">
                     {{ message }}
