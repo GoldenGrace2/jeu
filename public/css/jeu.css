@@ -2,8 +2,8 @@
 
 @font-face {
     font-family: 'Gigame';
-    src: url('../font/Gigame.woff') format('woff'),
-    url('../font/Gigame.woff2') format('woff2');
+    src: url('../fonts/Gigame.woff') format('woff'),
+    url('../fonts/Gigame.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -69,11 +69,11 @@ header img{
     height:18vw;
     cursor: grab;
 }
-/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”STARTâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
+/*—————————————————————START——————————————————————————*/
 #bloc_plateau:active{
     cursor: grabbing;
 }
-/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”FINâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
+/*——————————————————————FIN————————————————————————————*/
 .bloc_case{
     height:15vw;
     width:15vw;
@@ -208,7 +208,7 @@ header img{
     max-height: 100%;
     box-sizing: border-box;
 }
-/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”STARTâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
+/*—————————————————————START——————————————————————————*/
 .action_chat{
     margin:0;
     text-align: center;
@@ -217,7 +217,7 @@ header img{
     padding: 5px;
     font-family: 'Poppins',sans-serif;
 }
-/*â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”FINâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”*/
+/*——————————————————————FIN————————————————————————————*/
 .bloc_msg, .msg_remove{
     margin:10px 50px 10px 5px;
 }
@@ -293,7 +293,9 @@ header img{
 
 #B_C{
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
 }
 #B_assets{
     display: flex;
@@ -330,18 +332,32 @@ header img{
     display: flex;
     position: absolute;
 }*/
+/*—————————————————————START——————————————————————————*/
 #B_deck{
     top:100%;
-    transform: translate(0,-70%);
+    transform: translate(-6vw,-70%);/*6= moitié largeur de carte*/
     display: flex;
     position: absolute;
+    justify-content: space-around;
 }
+/*——————————————————————FIN————————————————————————————*/
 .carte_pioche{
-
+    width:20px;
+    margin: 0 3px;
+    transition: width 0.3s;
+    transform: translate(0,0);
+    animation: cardIn 0.5s;
+}
+@keyframes cardIn {
+    from{
+        transform: translate(0,100%);
+    }
+    to{
+        transform: translate(0,0);
+    }
 }
 .carte_pioche img{
     width:12vw;
-    margin: 0 3px;
     transform: translate(0,0);
     transition: transform 0.3s;
     cursor:pointer;
