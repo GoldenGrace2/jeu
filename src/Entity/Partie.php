@@ -64,10 +64,22 @@ class Partie
      */
     private $jouers;
 
+    
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $log;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Logs", mappedBy="partie")
+     */
+    private $logs;
+
     public function __construct()
     {
         $this->jouers = new ArrayCollection();
         $this->dateDebut = new DateTime('now');
+        $this->logs = new ArrayCollection();
     }
 
     public function __toString()
@@ -208,6 +220,51 @@ class Partie
 
         return $this;
     }
+
+        
+    public function getLog(): ?array
+    {
+        return json_decode($this->log, true);
+    }
+
+    public function setLog(?array $log): self
+    {
+        $this->log = json_encode($log);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Logs[]
+     */
+    public function getLogs(): Collection
+    {
+        return $this->logs;
+    }
+
+    public function addLog(Logs $log): self
+    {
+        if (!$this->logs->contains($log)) {
+            $this->logs[] = $log;
+            $log->setPartie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLog(Logs $log): self
+    {
+        if ($this->logs->contains($log)) {
+            $this->logs->removeElement($log);
+            // set the owning side to null (unless already changed)
+            if ($log->getPartie() === $this) {
+                $log->setPartie(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 }

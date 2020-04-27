@@ -25,4 +25,17 @@ class JoueurController extends AbstractController
             'parties' => $parties
         ]);
     }
+
+    /**
+     * @Route("/profil/modification/{}", name="app_joueur_modif")
+     */
+    public function modification()
+    {
+        $parties = $partieRepository->findMyParties($this->getUser());
+
+        return $this->render('joueur/profil.html.twig', [
+            'joueur' => $this->getUser(),
+            'parties' => $parties
+        ]);
+    }
 }

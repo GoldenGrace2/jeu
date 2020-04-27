@@ -31,4 +31,6 @@ class PartieRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+  
 }

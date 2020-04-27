@@ -6,11 +6,14 @@ use App\Entity\Jouer;
 use App\Entity\User;
 use App\Entity\Partie;
 use App\Entity\Chat;
+use App\Entity\Logs;
 
 use App\Repository\CarteRepository;
+use App\Repository\PartieRepository;
 use App\Repository\CasesRepository;
 use App\Repository\JouerRepository;
 use App\Repository\UserRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,7 +55,7 @@ class PartieController extends AbstractController
             $partie->setQuiJoue($this->getUser()->getId());
             $em = $this->getDoctrine()->getManager();
             $em->persist($partie);
-
+        
             for ($i = 1; $i <= 6; $i++) {
                 //maximum 6 joueurs
                 $j = $request->request->get('joueur' . $i);
@@ -61,7 +64,6 @@ class PartieController extends AbstractController
                     $jouer = new Jouer();
                     $jouer->setCartes(["I" => [], "A" => [], "M" => []]);
                     $jouer->setPartie($partie);
-                    $jouer->setLog(["L" => []]);
                     $jouer->setPion($request->request->get('pion' . $i)); //a gérer peut être autrement si provient d'une table
                     $jouer->setClassement($i);
                     $jouer->setJoueur($joueur);
@@ -108,6 +110,7 @@ class PartieController extends AbstractController
      * @Route("/affiche-partie/{partie}", name="affiche_partie")
      * @param JouerRepository $jouerRepository
      * @param CasesRepository $casesRepository
+     * @param PartieRepository $partieRepository
      * @param Partie          $partie
      * @param Jouer           $jouer
      *
@@ -116,10 +119,12 @@ class PartieController extends AbstractController
      */
     public function affichePartie(
         CarteRepository $carteRepository,
+        PartieRepository $partieRepository,
         JouerRepository $jouerRepository,
         CasesRepository $casesRepository,
 
         Partie $partie
+
     ) {
         $jouers = $partie->getJouers();
         $positions = [];
@@ -130,12 +135,18 @@ class PartieController extends AbstractController
             $positions[$jouer->getPosition()][] = $jouer;
         }
 
+        $logRep = $this->getDoctrine()->getRepository(Logs::class);
+        $logs = $logRep->findBy(
+            ['partie' => $partie]
+        );
+
         return $this->render('partie/affichePartie.html.twig',
             [
                 'cases'     => $casesRepository->findBy([], ['position' => 'ASC']),
                 'jouer'     => $jouer,
                 'user'      => $this->getUser(),
                 'cartes'    => $carteRepository->findByArray(),
+                'logs'      => $logs,
                 'partie'    => $partie,
                 'positions' => $positions,
                 'mesdatas'  => $jouerRepository->findByJoueurAndPartie($partie, $this->getUser())
@@ -188,7 +199,8 @@ class PartieController extends AbstractController
         CasesRepository $casesRepository,
         CarteRepository $carteRepository,
         JouerRepository $jouerRepository,
-        Partie $partie
+        Partie $partie,
+        Logs $logs
     ) {
         
         $jouer = $jouerRepository->findByJoueurAndPartie($partie, $this->getUser());
@@ -197,7 +209,15 @@ class PartieController extends AbstractController
 
         if ($jouer !== null) {
 
-            $de = $_POST['de'];
+            $de = rand(1, 12);
+            $resultde = ' à lancé(e) le dé et fait ';
+
+            $logs = new Logs();
+            $logs->setText($this->getUser().$resultde.$de);
+            $logs->setPartie($partie);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($logs);
+        
 
             //$de = 1; //rand(0, 6);
             //Fabien, tu pourrais tester lors de ton lancé de dès 
@@ -215,10 +235,12 @@ class PartieController extends AbstractController
                 $jouer->setArgent($jouer->getArgent() +120);//jour de paye
                 $jouer->setJPO(-5); 
                 $jouer->setPosition(1); 
+                $jouer->setTour($jouer->getTour() + 1); 
+
 
                 $mesCartes = $jouer->getCartes();
                 while ($carte = array_pop($mesCartes['M'])) {
-                    $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getCout());//paiement des factures
+                    $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getValeur());//paiement des factures
                 }
                 $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
             }
@@ -437,6 +459,7 @@ class PartieController extends AbstractController
      * @Route("/affiche-plateau/{partie}", name="affiche_plateau")
      * @param JouerRepository $jouerRepository
      * @param CasesRepository $casesRepository
+     * @param PartieRepository $partieRepository
      * @param Partie          $partie
      *
      * @return Response
@@ -444,6 +467,7 @@ class PartieController extends AbstractController
      */
     public function affichePlateau(
         CarteRepository $carteRepository,
+        PartieRepository $partieRepository,
         JouerRepository $jouerRepository,
         CasesRepository $casesRepository,
 
@@ -462,7 +486,7 @@ class PartieController extends AbstractController
             [
                 'cases'     => $casesRepository->findBy([], ['position' => 'ASC']),
                 'jouer'     => $jouer,
-                'user'    => $this->getUser(),
+                'user'      => $this->getUser(),
                 'cartes'    => $carteRepository->findByArray(),
                 'partie'    => $partie,
                 'positions' => $positions,

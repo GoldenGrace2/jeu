@@ -37,6 +37,7 @@
 
     <div id="plateau">
         {{ render(path('affiche_plateau', {partie: partie.id})) }}
+        
     </div>
    <section id="arrows"></section>
 
@@ -49,18 +50,14 @@
                     </div>
                     <section id="messages">
                         <br />
-                    <div class="bloc_msg msg_in" data-id="1"><p class="msg_name">Billy</p><div class="msg"><p>Salut !</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="2"><p class="msg_name">Billy</p><div class="msg"><p>Ça va ?</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="3"><p class="msg_name">Nate</p><div class="msg"><p>Oui et toi ?</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="4"><p class="msg_name">Billy</p><div class="msg"><p>Ben comme d'hab hein la schizophrénie</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="5"><p class="msg_name">Nate</p><div class="msg"><p>Ah gars plus on est de fous plus on rit</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="6"><p class="msg_name">Billy</p><div class="msg"><p>Eh ben on va se fendre la poire alors</p></div></div><br />
-                    <div class="bloc_msg msg_in" data-id="7"><p class="msg_name">Nate</p><div class="msg"><p>Gros, jviens de me rendre compte d'un truc</p></div></div><br />
-                
+                    <!--<div class="bloc_msg msg_in" data-id="1"><p class="msg_name">Billy</p><div class="msg"><p>Salut !</p></div></div><br />
+                    //<div class="bloc_msg msg_in" data-id="2"><p class="msg_name">Billy</p><div class="msg"><p>Ça va ?</p></div></div><br /> -->
+              
 
                         <!--––––––––––––––––START––––––––––––––––––––––—-->
-                        <p class="action_chat">Ceci est un message type log  le chat</p>
-                         <p class="action_chat">Jose a lancé le dé et fait : 6 !</p>
+                        {% for log in logs %}
+                       <p>{{log.text}}</p>
+                        {% endfor %}
 
                         <!--––––––––––––––––FIN––––––––––––––––––––––—-->
                     </section>
@@ -68,6 +65,7 @@
                     <div id="new_msg">
                         <textarea name="" id="text_msg"></textarea>
                         <div id="send_msg">
+                        
                             <svg data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.59 12.73"><title>Envoyer</title><path id="send_path" d="M2.55,15.3,15.64,9.69a.75.75,0,0,0,0-1.38L2.55,2.7a.74.74,0,0,0-1,.68V6.84a.75.75,0,0,0,.65.74L12.75,9,2.15,10.41a.76.76,0,0,0-.65.75v3.46A.74.74,0,0,0,2.55,15.3Z" transform="translate(-1.5 -2.64)"/></svg>
                         </div>
                     </div>
@@ -84,8 +82,14 @@
                     {% endfor  %}
                     <div id="asset_cagnotte"></div>
                 </section>
+                        <a style="transform: translate(0,-250%); color: white;" href="#popupregle">Comment jouer au jeu en ligne?</a>
                 <section id="B_deck">
-                    <article class="carte_pioche" id="mail"><img src="{{ asset('img/mailD.png') }}"></article>
+
+                        {% for carte in mesdatas.cartes['M'] %}
+                            {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
+                            <article class="carte_pioche mail" id="{{cartes[carte].image}}"><img src="{{ asset('img/mailD.png')}}" ></article>
+                        {% endfor %}
+
                     <article class="carte_pioche" id="imp"><img src="{{ asset('img/impD.png') }}"></article>
                     <article class="carte_pioche" id="apoal"><img src="{{ asset('img/apoalD.png') }}"></article>
                     <article class="carte_pioche" id="apoal"><img src="{{ asset('img/apoalD.png') }}"></article>
@@ -217,10 +221,10 @@
     <script src="{{ asset('js/des.js')}}"></script>
 
     <script>
-    $('#asset_de').hide()
       let montour = null
       $(document).ready(function () {
         //toutes les 3 secondes
+        $('#asset_de').hide()
         setInterval(whoPlay, 3000)
       })
 
@@ -235,10 +239,11 @@
             if (data.monTour !== montour) {
               $( "#score_reload" ).load(window.location.href + " #score_reload" );
               $( "#score_each" ).load(window.location.href + " #score_each" );
+              $( "#message" ).load(window.location.href + " #message" );
               console.log('diff on refresh')
               //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
               if (data.monTour == true) {
-                $('#plateau').empty().load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
+                $('#plateau').load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
                   $('#my-game-pause').hide()
                   $('#asset_de').show()
                   montour = true
@@ -261,11 +266,12 @@
             //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
             $('#my-game-pause').show()
             $('#asset_de').hide()
+            location.reload();
           }
         })
       })
 
-      $(document).on('click', '.de_click', function () {
+      $(document).on('click', '.dé_wrap', function () {
         $.ajax({
           url: "{{ path('lance_de', {partie: partie.id}) }}",
           type: "POST",
@@ -273,9 +279,10 @@
           data: {de: score},
           success: function (data) {
             console.log(data);
-            $('#plateau').empty().load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
+            $('#plateau').load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
               $('#my-game-pause').hide()
               $('#my-game-play').show()
+              location.reload();
               montour = true
             })
           }
@@ -284,14 +291,14 @@
     </script>
 
     <script>//CARTE PIOCH
-        let src_id=$(this).attr('id');
-        var assetsBaseDir = "{{asset('img/')}}";
-        $('.carte_pioche').click(function(){
+
+        $('.mail').click(function(){
+            let src_id=$(this).attr('id');
+            var assetsBaseDir = "{{asset('images/mail/')}}";
             $('#wrapper_carte').css('display','block');
-            src_id=$(this).attr('id');
-            $('#src_tasTop').attr('src', assetsBaseDir + src_id+'D_top.png');
-            $('#src_tas').attr('src', assetsBaseDir + src_id+'_tas.png');
-            $('#src_carte').attr('src', assetsBaseDir + src_id+'F.png');
+            $('#src_tasTop').attr('src','{{asset("img/mailD_top.png")}}');
+            $('#src_tas').attr('src', 'img/mail_tas.png');
+            $('#src_carte').attr('src', assetsBaseDir + src_id);
              shdw_in();
             setTimeout(intitTransition,500);
         });

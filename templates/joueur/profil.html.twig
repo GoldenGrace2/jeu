@@ -14,7 +14,7 @@ Profil de joueur
 {% block body %}
         <div class="profil">
                 <div class="div1pro">
-                    <div id="moncercle" style="margin-top: 0;"><img href="{{ asset('img/pdp/'~ joueur.img)}}"/></div>
+                    <div id="moncercle" style="margin-top: 0; background-image:url('{{ asset('img/perso/'~ joueur.img)}}'); background-position: center; background-size: cover;"></div>
                     <div>
                         <div class="informationsp"><p>Nom: {{joueur.nom}} <span>Prénom: {{joueur.prenom}}</span><br /><br />
                             Pseudo: {{joueur.username}} <span>E-mail: {{joueur.email}}</span><br /><br />

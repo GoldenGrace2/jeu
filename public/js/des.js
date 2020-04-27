@@ -41,18 +41,14 @@ function deAnim(){
         $('.dé_wrap:nth-child(2) .dé_cube').css({'transform': 'rotate3d('+1-AnimRandom1+', '+1-AnimRandom2+', '+1-AnimRandom3+',180deg)'});
         setTimeout(deAnim2,100);
     }
-    else{
-        random();
-    }
+
 }
 function deAnim2(){
     if(!deClicked){
         $('.dé_wrap:nth-child(1) .dé_cube').css({'transform': 'rotate3d('+1-AnimRandom1+', '+1-AnimRandom2+', '+1-AnimRandom3+',180deg)'});
         $('.dé_wrap:nth-child(2) .dé_cube').css({'transform': 'rotate3d('+AnimRandom1+', '+AnimRandom2+', '+AnimRandom3+',180deg)'});
     }
-    else{
-        random();
-    }
+
 }
 
 deAnim();
@@ -76,10 +72,7 @@ function random(){
 }
 function clickedTest(){
     if(!deClicked){
-        deClicked=true;
-        setTimeout(function(){clearInterval(deInterval)},200);
-    }
-    else{
+    
         deout();
         //random();
     }

@@ -61,10 +61,6 @@ class Jouer
      */
     private $JPO;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $log;
 
     public function __toString()
     {
@@ -169,18 +165,6 @@ class Jouer
     public function setJPO(?int $JPO): self
     {
         $this->JPO = $JPO;
-
-        return $this;
-    }
-    
-    public function getLog(): ?array
-    {
-        return json_decode($this->log, true);
-    }
-
-    public function setLog(?array $log): self
-    {
-        $this->log = json_encode($log);
 
         return $this;
     }
