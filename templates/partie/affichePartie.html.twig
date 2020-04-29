@@ -8,8 +8,10 @@
         <link rel="stylesheet" href="{{ asset('css/jeu.css') }}" />
         {% endblock %}
         {% block head_js %}
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <link rel="stylesheet" href="{{ asset('css/carte.css') }}">
         <link rel="stylesheet" href="{{ asset('css/des.css') }}">
+        
         {% endblock %}
 
 </head>
@@ -27,7 +29,7 @@
                 <p>{% for jouer in partie.jouers %}{% if jouer.joueur.id == user.id %} {{jouer.argent}} {% endif %}{% endfor %}</p>
                 </li>
             </ul>
-            <h1>Tour 1</h1>
+            <h1 id="tour">{% for jouer in partie.jouers %}{% if jouer.joueur.id == user.id %} Tour {{jouer.tour}} {% endif %}{% endfor %}</h1>
             <ul>
                 <li class="navtxt"><a href="{{ path('app_accueil')}}" target=_blank>Accueil</a></li>
                 <li class="navtxt"><a href="{{ path('joueur_profil')}}" target=_blank>Profil</a></li>
@@ -35,8 +37,49 @@
             </ul>
     </header>
 
+    {% if partie.etatPartie == 'T' %}
+
+
+    <div id="popup" class="overlay">
+          <div class="popup">
+              <h2>Partie terminée!</h2>
+              <div class="content">
+                    <p>Le gagnant est : </p>
+              </div>
+          </div>
+        </div> 
+    {% endif %}
+
     <div id="plateau">
-        {{ render(path('affiche_plateau', {partie: partie.id})) }}
+        
+        
+  <section id="bloc_plateau">
+  
+    <section id="players_plateau">
+
+      {% for jouer in partie.jouers %}
+        <article data-caseId="{{jouer.position - 2}}" data-playerId="{{jouer.joueur.id}}" class="player_plateau" title="{{ jouer.joueur.username }}" style="grid-row:{{ loop.index0 + 1}}/{{ loop.index0 + 2}}">
+                    <img src="{{ asset('img/home/perso.svg') }}" alt="Avatar"/>
+        </article>
+      {% endfor %}
+
+    </section>
+
+       {% for case in cases %}
+            <article class="bloc_case" id="caseId{{ loop.index0 }}">
+                    <section class="case">
+                        <img src="{{ asset('img/home/case/'~ case.image|e) }}" alt="{{case.image}}">
+                        {% if loop.index0 > 0 %}
+                        <div class="calendar_case">
+                            <div class="calendar_header"><p>{{ case.journee }}</p></div>
+                            <p>{{loop.index0}}</p>
+                        </div>
+                        
+                        {% endif %}
+                    </section>
+            </article>
+      {% endfor %}
+    </section>
         
     </div>
    <section id="arrows"></section>
@@ -56,7 +99,7 @@
 
                         <!--––––––––––––––––START––––––––––––––––––––––—-->
                         {% for log in logs %}
-                       <p>{{log.text}}</p>
+                       <p class="action_chat">{{log.text}}</p>
                         {% endfor %}
 
                         <!--––––––––––––––––FIN––––––––––––––––––––––—-->
@@ -82,12 +125,20 @@
                     {% endfor  %}
                     <div id="asset_cagnotte"></div>
                 </section>
-                        <a style="transform: translate(0,-250%); color: white;" href="#popupregle">Comment jouer au jeu en ligne?</a>
+                        <a style="transform: translate(0,-360%); color: white;" href="#popupregle">Comment jouer au jeu en ligne?</a>
                 <section id="B_deck">
 
                         {% for carte in mesdatas.cartes['M'] %}
                             {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
-                            <article class="carte_pioche mail" id="{{cartes[carte].image}}"><img src="{{ asset('img/mailD.png')}}" ></article>
+                            <article class="carte_pioche mail" id="{{cartes[carte].image}}"><img id="mail" src="{{ asset('img/mailD.png')}}" ></article>
+                        {% endfor %}
+                        {% for carte in mesdatas.cartes['I'] %}
+                            {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
+                            <article class="carte_pioche imprevu" id="{{cartes[carte].image}}"><img src="{{ asset('img/impD.png')}}" ></article>
+                        {% endfor %}
+                        {% for carte in mesdatas.cartes['A'] %}
+                            {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
+                            <article class="carte_pioche transaction" id="{{cartes[carte].image}}"><img src="{{ asset('img/apoalD.png')}}" ></article>
                         {% endfor %}
 
                     <article class="carte_pioche" id="imp"><img src="{{ asset('img/impD.png') }}"></article>
@@ -213,6 +264,8 @@
 
 
     <div id="shdw"></div>
+
+      
  
 {% endblock %}
 
@@ -222,10 +275,33 @@
 
     <script>
       let montour = null
+      function afficheDee() {
+                $('#asset_de').hide()
+                 $.ajax({
+                        url: "{{ path('update_game', {partie: partie.id}) }}",
+                        success: function (data) {
+
+                            if (data.monTour == true) {
+                                $('#asset_de').show()
+                                }
+
+                             else {
+                                $('#asset_de').hide()
+                            }
+                            }
+                        })
+                        }
+        afficheDee();
+
+          $(document).on('click', '#dé_wrap', function () {
+              location.reload();
+          });
+
       $(document).ready(function () {
-        //toutes les 3 secondes
-        $('#asset_de').hide()
-        setInterval(whoPlay, 3000)
+        
+        //toutes les 30 secondes
+        setInterval(whoPlay, 30000);
+        
       })
 
       function whoPlay () {
@@ -237,13 +313,12 @@
           success: function (data) {
             console.log(data.monTour + ' ' + montour)
             if (data.monTour !== montour) {
-              $( "#score_reload" ).load(window.location.href + " #score_reload" );
-              $( "#score_each" ).load(window.location.href + " #score_each" );
-              $( "#message" ).load(window.location.href + " #message" );
+                location.reload();
+
               console.log('diff on refresh')
               //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
               if (data.monTour == true) {
-                $('#plateau').load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
+                $('#plateau').load(window.location.href + " #plateau", function (response, status, xhr) {
                   $('#my-game-pause').hide()
                   $('#asset_de').show()
                   montour = true
@@ -263,15 +338,19 @@
         $.ajax({
           url: "{{ path('fin_de_tour', {partie: partie.id}) }}",
           success: function (data) {
+               $( "#score_reload" ).load(window.location.href + " #score_reload" );
+              $( "#score_each" ).load(window.location.href + " #score_each" );
+              $( "#message" ).load(window.location.href + " #message" );
+              location.reload();
             //il y a des données dans data, on pourrait mettre à jour en javascript la partie joueur éventuellement...
             $('#my-game-pause').show()
             $('#asset_de').hide()
-            location.reload();
           }
         })
       })
 
-      $(document).on('click', '.dé_wrap', function () {
+      $(document).on('click', '#asset_de', function () {
+          
         $.ajax({
           url: "{{ path('lance_de', {partie: partie.id}) }}",
           type: "POST",
@@ -279,22 +358,45 @@
           data: {de: score},
           success: function (data) {
             console.log(data);
-            $('#plateau').load("{{ path('affiche_plateau',{partie:partie.id}) }}", function (response, status, xhr) {
-              $('#my-game-pause').hide()
-              $('#my-game-play').show()
-              location.reload();
+
+              $('#asset_de').hide()
+
               montour = true
-            })
+            
           }
         })
       })
     </script>
 
     <script>//CARTE PIOCH
+                let src_id=$(this).attr('id');
 
         $('.mail').click(function(){
             let src_id=$(this).attr('id');
             var assetsBaseDir = "{{asset('images/mail/')}}";
+            $('#wrapper_carte').css('display','block');
+            $('#src_tasTop').attr('src','{{asset("img/mailD_top.png")}}');
+            $('#src_tas').attr('src', '{{asset("img/mail_tas.png")}}');
+            $('#src_carte').attr('src', assetsBaseDir + src_id);
+             shdw_in();
+            setTimeout(intitTransition,500);
+            
+        });
+
+        $('.imprevu').click(function(){
+            let src_id=$(this).attr('id');
+            var assetsBaseDir = "{{asset('images/imprevu/')}}";
+            $('#wrapper_carte').css('display','block');
+            $('#src_tasTop').attr('src','{{asset("img/mailD_top.png")}}');
+            $('#src_tas').attr('src', 'img/mail_tas.png');
+            $('#src_carte').attr('src', assetsBaseDir + src_id);
+             shdw_in();
+            setTimeout(intitTransition,500);
+        });
+
+        $('.transaction').click(function(){
+            let src_id=$(this).attr('id');
+            var assetsBaseDir = "{{asset('images/transaction/')}}";
             $('#wrapper_carte').css('display','block');
             $('#src_tasTop').attr('src','{{asset("img/mailD_top.png")}}');
             $('#src_tas').attr('src', 'img/mail_tas.png');
@@ -314,7 +416,7 @@
         function pioch2(){
             $('#carte').css({'top':'0','transform':'translate(-50%)'});
             $('#shdw_carte').css('animation','ombre 1s');
-            if(src_id=='mail'){
+            if(src_class=='mail'){
                 setTimeout(function(){$('#carte').css('transform','translate(-100%,-0%) rotate(90deg)')},1000);
             }
         }
@@ -384,8 +486,6 @@
         $('.score_each').click(function(){
             $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(parseInt($(".player_plateau[data-playerId='"+$(this).attr('data-playerId')+"']").attr('data-caseId'))+1)).prop('offsetLeft')-window.innerWidth/2 + $(".bloc_case").width()/2}, 1000);
         });
-    </script>
-    <script>//drag —— Script de Ionut Daniel –– Merci <3
         const slider = document.querySelector('#bloc_plateau');
         let isDown = false;
         let startX;
