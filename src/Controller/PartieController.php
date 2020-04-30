@@ -76,6 +76,7 @@ class PartieController extends AbstractController
                     $jouer->setPion($request->request->get('pion' . $i)); //a gérer peut être autrement si provient d'une table
                     $jouer->setClassement($i);
                     $jouer->setJoueur($joueur);
+                    $jouer->setPosition(0);
                     $jouer->setJPO(-5);
 
                     $em->persist($jouer);
@@ -226,7 +227,7 @@ class PartieController extends AbstractController
 
             
 
-            $de = 5;
+            $de = 17;
             $position = $jouer->getPosition() + $de;
 
             //$de = 1; //rand(0, 6);
@@ -408,9 +409,16 @@ class PartieController extends AbstractController
                 case 'Emprunt':
                         $mesCartes = $jouer->getCartes();
                         while ($carte = array_pop($mesCartes['A'])) {
-                            $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
+                            $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur() + $cartes[$carte]->getValeur());//paiement des factures
                         }
-                        $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
+                        $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte à prendre ou à laisser
+
+                        $logsemprunt = $this->getUser().' vient de tomber sur la case emprunt, peut-être que '.$this->getUser().' à des cartes à prendre ou à laisser à vendre?!';
+                                    $logs = new Logs();
+                                    $logs->setText($logsemprunt);
+                                    $logs->setPartie($partie);
+                                    $em = $this->getDoctrine()->getManager();
+                                    $em->persist($logs);
 
                         break;
                 case 'Embrouille':
