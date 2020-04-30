@@ -260,7 +260,11 @@ class PartieController extends AbstractController
 
             $mesCartes = $jouer->getCartes();
             while ($carte = array_pop($mesCartes['M'])) {
-                $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
+                if ($cartes[$carte]->getTitre() == 'jpo') { $jouer->setPosition(3);}
+                else {
+                $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures 
+                }
+
             }
             $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
 
@@ -437,7 +441,7 @@ class PartieController extends AbstractController
                 case 'Glandeur':
                     //Dimanche, rien a faire ;)
                     $logs = new Logs();
-                    $logs->setText('Quelle belle journée pour glander, hein'.$this->getUser().'?');
+                    $logs->setText('Quelle belle journée pour glander, hein '.$this->getUser().'?');
                     $logs->setPartie($partie);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($logs);

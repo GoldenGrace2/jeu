@@ -155,8 +155,11 @@
                 <section id="B_deck">
 
                         {% for carte in mesdatas.cartes['M'] %}
+                            {% if carte is null %} 
+                            {% else %} 
                             {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
                             <article class="carte_pioche mail" id="{{cartes[carte].image}}"><img id="mail" src="{{ asset('img/mailD.png')}}" ></article>
+                            {% endif %}
                         {% endfor %}
                         {% for carte in mesdatas.cartes['I'] %}
                             {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
@@ -166,8 +169,11 @@
                             {% endif %}
                         {% endfor %}
                         {% for carte in mesdatas.cartes['A'] %}
+                            {% if carte is null %} 
+                            {% else %} 
                             {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
                             <article class="carte_pioche transaction" id="{{cartes[carte].image}}"><img src="{{ asset('img/apoalD.png')}}" ></article>
+                            {% endif %}
                         {% endfor %}
 
                 </section>
