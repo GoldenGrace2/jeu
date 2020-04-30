@@ -227,7 +227,7 @@ class PartieController extends AbstractController
 
             
 
-            $de = 17;
+            $de = rand(1,12);
             $position = $jouer->getPosition() + $de;
 
             //$de = 1; //rand(0, 6);
