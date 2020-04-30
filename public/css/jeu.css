@@ -417,7 +417,7 @@ header img{
     background-color:#3f4253;
 }
 
-.popup { margin: 70px auto; padding: 20px; background: #8fcaa2; border-radius: 5px; width: 30%; position: relative; -webkit-transition: all 5s ease-in-out; transition: all 5s ease-in-out; }
+.popup { margin: 70px auto; padding: 20px; background: #8fcaa2;  width: 50%; height: 50%; border-radius: 5px; position: relative; -webkit-transition: all 5s ease-in-out; transition: all 5s ease-in-out; }
 
 .popup h2 { margin-top: 0; text-align: center; color: #333; }
 
@@ -425,7 +425,7 @@ header img{
 
 .popup .close:hover { color: #5e5e5e; }
 
-.popup .content { max-height: 30%; overflow: auto; }
+.popup .content { max-height: 90%; overflow: auto; }
 
 .popup label { display: block; margin-bottom: 5px; }
 
@@ -443,4 +443,14 @@ header img{
 
 
 .overlay { position: fixed; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.7); -webkit-transition: opacity 500ms; transition: opacity 500ms; z-index: 11; font-family: "Anime Ace 2.0 BB", arial; }
+.overlay2 { position: fixed; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.7); -webkit-transition: opacity 500ms; transition: opacity 500ms; visibility: hidden; opacity: 0; z-index: 11; font-family: "Anime Ace 2.0 BB", arial; }
 
+.overlay2:target { visibility: visible; opacity: 1; }
+
+@font-face { font-family: 'ErasLightITC'; src: url("../font/ErasLightITC.ttf"); }
+@font-face { font-family: "Anime Ace 2.0 BB"; src: url("../font/anime-ace-20-bb.ttf"); }
+
+h1 { font-size: 150%; font-family: "Anime Ace 2.0 BB"; }
+h2 { font-size: 125%; font-family: "Anime Ace 2.0 BB"; }
+
+p, .content  { font-family: "ErasLightITC"; }

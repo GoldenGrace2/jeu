@@ -26,6 +26,16 @@ class Chat
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\partie", inversedBy="chats")
+     */
+    private $partie;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pseudo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +61,30 @@ class Chat
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getPartie(): ?partie
+    {
+        return $this->partie;
+    }
+
+    public function setPartie(?partie $partie): self
+    {
+        $this->partie = $partie;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }

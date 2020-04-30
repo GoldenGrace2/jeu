@@ -8,6 +8,7 @@ use App\Entity\Partie;
 use App\Entity\Chat;
 use App\Entity\Logs;
 
+
 use App\Repository\CarteRepository;
 use App\Repository\PartieRepository;
 use App\Repository\CasesRepository;
@@ -49,9 +50,6 @@ class PartieController extends AbstractController
             shuffle($tableauDeCartes['A']);
             shuffle($tableauDeCartes['M']);
 
-            
-            
-
             $partie = new Partie();
             $partie->setPioche($tableauDeCartes);
             $partie->setEtatPartie('EC');
@@ -65,6 +63,7 @@ class PartieController extends AbstractController
             $logs->setPartie($partie);
             $em = $this->getDoctrine()->getManager();
             $em->persist($logs);
+            
         
             for ($i = 1; $i <= 6; $i++) {
                 //maximum 6 joueurs
@@ -147,7 +146,12 @@ class PartieController extends AbstractController
         }
 
         $logRep = $this->getDoctrine()->getRepository(Logs::class);
+        $chatRep = $this->getDoctrine()->getRepository(Chat::class);
+
         $logs = $logRep->findBy(
+            ['partie' => $partie]
+        );
+        $chat = $chatRep->findBy(
             ['partie' => $partie]
         );
 
@@ -158,6 +162,7 @@ class PartieController extends AbstractController
                 'user'      => $this->getUser(),
                 'cartes'    => $carteRepository->findByArray(),
                 'logs'      => $logs,
+                'chat'      => $chat,
                 'partie'    => $partie,
                 'positions' => $positions,
                 'mesdatas'  => $jouerRepository->findByJoueurAndPartie($partie, $this->getUser())
@@ -238,6 +243,7 @@ class PartieController extends AbstractController
             
            if ($jouer->getPosition() == 32 || $jouer->getPosition() == 33 || $jouer->getPosition() == 34 || $jouer->getPosition() == 35 || $jouer->getPosition() == 36 || $jouer->getPosition() == 37 || $jouer->getPosition() == 38 || $jouer->getPosition() == 39 || $jouer->getPosition() == 40 || $jouer->getPosition() == 41 || $jouer->getPosition() == 42 || $jouer->getPosition() == 43) {
             $jouer->setArgent($jouer->getArgent() +120);//jour de paye
+            $this->getUser()->setScore($this->getUser()->getScore() + 120); 
             $jouer->setJPO(-5); 
             $jouer->setPosition(1); 
             $jouer->setTour($jouer->getTour() + 1); 
@@ -264,17 +270,6 @@ class PartieController extends AbstractController
                 $logs->setPartie($partie);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($logs);
-
-                $jouers = $partie->getJouers();
-                $positions = [];
-                foreach ($jouers as $jouer) {
-              
-                        if ($jouer->getJoueur()->getId() === $this->getUser()->getId()) {
-                            $user = $this->getUser();
-                            $user->setScore($jouer->getArgent() + $user->getScore());
-                        }
-                    
-                    }
                 }
 
 
@@ -377,7 +372,7 @@ class PartieController extends AbstractController
                     //récupère toutes les cartes transaction du jour pour qu'il puisse choisir celle(s) à vendre
                     $data = $jouer->getCartes()['A'];
                     break;
-                case 'FinTour':
+                case '':
                     //jour de paye, payer les facture, verser le salaire, les interets eventuels
                     $jouer->setArgent($jouer->getArgent() +120);//jour de paye
                     $jouer->setJPO(-5); 
@@ -535,6 +530,17 @@ class PartieController extends AbstractController
         ];
 
         return $this->json($array);
+    }
+
+    /**
+     * @Route("/update-partie-chat/fin-tour/{partie}", name="chat_update")
+     * @param Partie $partie
+     *
+     * @return Response
+     */
+    public function updateChat(EntityManagerInterface $entityManager, Partie $partie)
+    {
+
     }
 
     /**

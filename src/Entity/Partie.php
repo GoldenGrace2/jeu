@@ -75,11 +75,17 @@ class Partie
      */
     private $logs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Chat", mappedBy="partie")
+     */
+    private $chats;
+
     public function __construct()
     {
         $this->jouers = new ArrayCollection();
         $this->dateDebut = new DateTime('now');
         $this->logs = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function __toString()
@@ -259,6 +265,37 @@ class Partie
             // set the owning side to null (unless already changed)
             if ($log->getPartie() === $this) {
                 $log->setPartie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chat[]
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): self
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats[] = $chat;
+            $chat->setPartie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): self
+    {
+        if ($this->chats->contains($chat)) {
+            $this->chats->removeElement($chat);
+            // set the owning side to null (unless already changed)
+            if ($chat->getPartie() === $this) {
+                $chat->setPartie(null);
             }
         }
 

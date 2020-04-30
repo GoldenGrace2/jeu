@@ -33,7 +33,7 @@
             <ul>
                 <li class="navtxt"><a href="{{ path('app_accueil')}}" target=_blank>Accueil</a></li>
                 <li class="navtxt"><a href="{{ path('joueur_profil')}}" target=_blank>Profil</a></li>
-                <li class="navtxt"><a href="#">Règles</a></li>
+                <li class="navtxt"><a href="#popup2">Règles</a></li>
             </ul>
     </header>
 
@@ -49,6 +49,30 @@
           </div>
         </div> 
     {% endif %}
+ <div id="popup2" class="overlay2">
+          <div class="popup">
+              <h2>Régles online</h2>
+                <a class="close" href="#">&times;</a>
+              <div class="content">
+                    <p>    Pour commencer, nous vous conseillons de lire les règles du jeu de base présente ici : <br>
+                    Si vous les avez déjà, voici comment jouer à Trash Game en ligne !<br>
+                   <h2> Début de partie </h2> 
+                    Vous pourrez retrouvez toutes les actions de la partie de chacun des joueurs dans le chat en bas à gauche. Ce sont les logs de la partie.<br>
+                    La personne qui crée la partie et celle qui commencera en premier. <br><br>
+                    Lorsque c’est votre tour, les dés seront affichés et vous pourrez jouer. Une fois que vous avez lancée les dés, il faut cliquer sur votre pion au milieu de l’écran pour terminer votre tour et permettre au prochain utilisateur de pouvoir jouer.<br>
+                    Vous avez accès à toutes vos cartes en bas de l’écran issues des cases mails, caution ou imprévu.<br><br>
+                    <strong>Carte Mail :</strong> Vous les gardez en main, elles seront toutes utilisées en fin de mois.<br><br>
+                    <strong>Carte Imprévu :</strong> Elles sont activées dès votre arrivée sur la case.<br><br>
+                    <strong>Carte à prendre ou à laisser :</strong> elles sont achetées automatiquement sur les cases cautions et revendu automatiquement (si vous en avez) sur la case emprunt.<br><br>
+                    Pour permettre de récompenser ceux qui joue le plus, chaque tour complété lors d’une partie donne 120 points à l’utilisateur dans son score. <br>
+                    <h2> Fin de partie </h2> 
+                    
+                    Lorsqu’un joueur atteint le cinquième tour, la partie s’arrête pour tout le monde ! 
+
+                    </p>
+              </div>
+          </div>
+        </div> 
 
     <div id="plateau">
         
@@ -93,9 +117,12 @@
                     </div>
                     <section id="messages">
                         <br />
-                    <!--<div class="bloc_msg msg_in" data-id="1"><p class="msg_name">Billy</p><div class="msg"><p>Salut !</p></div></div><br />
-                    //<div class="bloc_msg msg_in" data-id="2"><p class="msg_name">Billy</p><div class="msg"><p>Ça va ?</p></div></div><br /> -->
+
+                        {% for chats in chat %}
+                   
+                        <div class="bloc_msg msg_in" data-id={{loop.index}}><p class="msg_name">{{chat.pseudo}}</p><div class="msg"><p>{{chat.message}}</p></div></div><br />
               
+                        {% endfor %}
 
                         <!--––––––––––––––––START––––––––––––––––––––––—-->
                         {% for log in logs %}
@@ -293,9 +320,10 @@
                         }
         afficheDee();
 
-          $(document).on('click', '#dé_wrap', function () {
+        function reload() {
               location.reload();
-          });
+
+        }
 
       $(document).ready(function () {
         
@@ -360,12 +388,32 @@
             console.log(data);
 
               $('#asset_de').hide()
-
+                location.reload();
               montour = true
             
           }
         })
       })
+
+
+          $(document).on('click', '#sent_msg', function () {
+                $.ajax({
+                    url: "{{ path('chat_update', {partie: partie.id}) }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {de: score},
+                    success: function (data) {
+                        console.log(data);
+
+                        $('#asset_de').hide()
+
+                        montour = true
+                        
+                    }
+                    })
+          });
+
+      
     </script>
 
     <script>//CARTE PIOCH

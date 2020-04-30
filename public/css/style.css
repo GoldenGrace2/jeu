@@ -48,7 +48,7 @@ header #check { display: none; }
 
 .overlay:target { visibility: visible; opacity: 1; }
 
-.popup { margin: 70px auto; padding: 20px; background: #8fcaa2; border-radius: 5px; width: 30%; position: relative; -webkit-transition: all 5s ease-in-out; transition: all 5s ease-in-out; }
+.popup { margin: 70px auto; padding: 20px; background: #8fcaa2; border-radius: 5px; position: relative; -webkit-transition: all 5s ease-in-out; transition: all 5s ease-in-out; }
 
 .popup h2 { margin-top: 0; text-align: center; color: #333; }
 
