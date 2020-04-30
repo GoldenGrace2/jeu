@@ -172,9 +172,9 @@
 
                 </section>
             </section>
-            <ul id="B_other_player">
+            <ul id="B_other_player" >
                 {% for jouer in partie.jouers %} 
-               <li data-playerId="{{jouer.joueur.id}}" class="score_each">
+               <li data-playerId="{{jouer.joueur.id}}" class="score_each" style="font-size: 16px;">
                     <img src="{{ asset('img/perso/'~ jouer.joueur.img|e) }}" alt="Avatar"/>
                     <div>
                     <p>{% if jouer.joueur.id == app.user.id %}{% endif %}{{ jouer.joueur.username }}</p>
@@ -386,10 +386,12 @@
           data: {de: score},
           success: function (data) {
             console.log(data);
-            location.reload();
-              $('#asset_de').hide()
+            setTimeout(function() {   //calls click event after a certain time
+               location.reload();
+            }, 1000);
               montour = true
-            
+              $('#asset_de').hide()
+
           }
         })
       })
