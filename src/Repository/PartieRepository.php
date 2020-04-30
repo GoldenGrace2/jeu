@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Jouer;
+use App\Entity\Logs;
+
 use App\Entity\Partie;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

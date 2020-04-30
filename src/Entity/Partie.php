@@ -66,11 +66,6 @@ class Partie
 
     
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $log;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Logs", mappedBy="partie")
      */
     private $logs;
@@ -92,6 +87,7 @@ class Partie
     {
         //cette méthode permet de retourner du texte dans easyadmin, pour les relations.
         return $this->getDateDebut()->format('d/m/Y'); //je retourne la date de début.
+        
     }
 
     public function getId(): ?int
@@ -227,18 +223,6 @@ class Partie
         return $this;
     }
 
-        
-    public function getLog(): ?array
-    {
-        return json_decode($this->log, true);
-    }
-
-    public function setLog(?array $log): self
-    {
-        $this->log = json_encode($log);
-
-        return $this;
-    }
 
     /**
      * @return Collection|Logs[]
