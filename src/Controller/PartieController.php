@@ -268,9 +268,9 @@ class PartieController extends AbstractController
             }
             $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
 
-            $jourdepaye = 'Ohohoh! Le point projet à rapporté 120 points pour ';
+            $jourdepaye = 'Ohohoh! Le point projet à rapporté 120 points pour '.$this->getUser().'. Il est temps pour ce joueur de retourner à la case départ!';
             $logs = new Logs();
-            $logs->setText($jourdepaye.$this->getUser());
+            $logs->setText($jourdepaye);
             $logs->setPartie($partie);
             $em = $this->getDoctrine()->getManager();
             $em->persist($logs);
