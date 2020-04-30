@@ -226,7 +226,7 @@ class PartieController extends AbstractController
 
             
 
-            $de = rand(1, 12);
+            $de = 5;
             $position = $jouer->getPosition() + $de;
 
             //$de = 1; //rand(0, 6);
@@ -240,12 +240,20 @@ class PartieController extends AbstractController
                 $finTour = true;
             }
            $jouer->setPosition($position);
+
+           $resultde = ' à lancé(e) le dé et fait ';
+           $positionfin = ' '.$this->getUser().' est désormais à la position'.$jouer->getPosition().' !';
+           $logs = new Logs();
+           $logs->setText($this->getUser().$resultde.$de.$positionfin);
+           $logs->setPartie($partie);
+           $em = $this->getDoctrine()->getManager();
+           $em->persist($logs);
             
-           if ($jouer->getPosition() == 32 || $jouer->getPosition() == 33 || $jouer->getPosition() == 34 || $jouer->getPosition() == 35 || $jouer->getPosition() == 36 || $jouer->getPosition() == 37 || $jouer->getPosition() == 38 || $jouer->getPosition() == 39 || $jouer->getPosition() == 40 || $jouer->getPosition() == 41 || $jouer->getPosition() == 42 || $jouer->getPosition() == 43) {
+           if ($jouer->getPosition() > 31 || $jouer->getPosition() == 31) {
             $jouer->setArgent($jouer->getArgent() +120);//jour de paye
             $this->getUser()->setScore($this->getUser()->getScore() + 120); 
             $jouer->setJPO(-5); 
-            $jouer->setPosition(1); 
+            $jouer->setPosition(0); 
             $jouer->setTour($jouer->getTour() + 1); 
 
 
@@ -274,18 +282,13 @@ class PartieController extends AbstractController
 
 
             } //Fin du script fin de tour //
-            $resultde = ' à lancé(e) le dé et fait ';
-            $positionfin = ' '.$this->getUser().' est désormais à la position'.$jouer->getPosition().' !';
-            $logs = new Logs();
-            $logs->setText($this->getUser().$resultde.$de.$positionfin);
-            $logs->setPartie($partie);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($logs);
+       
         
-
+            else {
             $case = $casesRepository->getDataCase($position); //on récupère les infos de la case
             //Il faut traiter l'action de la case et mettre à jour JOUER en fonction.
             //il faudrait s'assurer que la case n'est pas null, mais on va considérer que tout est OK ici
+         
             switch ($case->getEffet()) {
                 //le champs effet doit permettre de savoir quoi faire sur la case
                 //j'ai ajouté un champs "complement" pour avoir des infos sur la valeur de l'action de la case: exemple 2 cartes courriers
@@ -305,6 +308,14 @@ class PartieController extends AbstractController
                     //mise à jour de partie pour la pioche, et de jouer pour mes cartes
                     $partie->setPioche($tabCartes);
                     $jouer->setCartes($mesCartes);
+
+                    $logmail = $this->getUser().' Vient de piocher '.$case->getComplement(). ' cartes mail(s).';
+                    $logs = new Logs();
+                    $logs->setText($logmail);
+                    $logs->setPartie($partie);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($logs);
+                    
                     break;
                 case 'Rapport':
                     //cette case preleve directement le montant au joueur
@@ -331,11 +342,76 @@ class PartieController extends AbstractController
                     }
                     //je sauvegarde rien de particulier pour le JS, toutes les infos sont dans la case
                     break;
-                case 'Emprunt':
-                    //lancement de la loterie entre joueur
+                case 'Imprevu':
+                                   //il faut piocher des cartes mails et les mettre dans la main du joueur
+                                   $tabCartes = $partie->getPioche(); //je récupère les cartes courriers de la pioche
+                                   $mesCartes = $jouer->getCartes(); //je récupère mes cartes
+                                   $data = [];
+                                   //todo: il faudrait tester si j'ai assez de carte...
+                                   for ($i = 0; $i < 1; $i++) {
+                                       //on dépile le nombre de carte de la pioche, et on empile dans joueur.
+                                       //pour l'affichage,
+                                       $carte = array_pop($tabCartes['I']);
+                                       $mesCartes['I'][] = $carte;
+                                       $data[] = $carte; //je sauvegarde aussi dans un tableau intermédiaire pour afficher en JS plus facilement
+                                   }
+                                   //mise à jour de partie pour la pioche, et de jouer pour mes cartes
+                                   $partie->setPioche($tabCartes);
+                                   $jouer->setCartes($mesCartes);
+
+                                    $carte = array_pop($mesCartes['I']);
+
+                                    if (empty($carte)) {
+                                        $logimprevu = $this->getUser().' vient de piocher rien du tout car la pioche imprévu est vide!';
+                                        $logs = new Logs();
+                                        $logs->setText($logimprevu);
+                                        $logs->setPartie($partie);
+                                        $em = $this->getDoctrine()->getManager();
+                                        $em->persist($logs);
+                                   }
+
+                                   else {
+
+                                    $logimprevu = $this->getUser().' Vient de piocher une carte imprévu! Son score est passée de '.strval($jouer->getArgent());
+                                    $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
+                                    $logimprevufin = ' à '.strval($jouer->getArgent()).'.';
+                                    $logs = new Logs();
+                                    $logs->setText($logimprevu.$logimprevufin);
+                                    $logs->setPartie($partie);
+                                    $em = $this->getDoctrine()->getManager();
+                                    $em->persist($logs);
+                                }
                     break;
+                case 'Caution':
+                        $tabCartes = $partie->getPioche(); //je récupère les cartes courriers de la pioche
+                        $mesCartes = $jouer->getCartes(); //je récupère mes cartes
+                        $data = [];
+                        //todo: il faudrait tester si j'ai assez de carte...
+                        for ($i = 0; $i < 1; $i++) {
+                            //on dépile le nombre de carte de la pioche, et on empile dans joueur.
+                            //pour l'affichage,
+                            $carte = array_pop($tabCartes['A']);
+                            $mesCartes['A'][] = $carte;
+                            $data[] = $carte; //je sauvegarde aussi dans un tableau intermédiaire pour afficher en JS plus facilement
+                        }
+                        //mise à jour de partie pour la pioche, et de jouer pour mes cartes
+                        $partie->setPioche($tabCartes);
+                        $jouer->setCartes($mesCartes);
+
+                        $logmail = $this->getUser().' Vient de piocher une carte à prendre ou à laisser.';
+                        $logs = new Logs();
+                        $logs->setText($logmail);
+                        $logs->setPartie($partie);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($logs);
+                        break;
                 case 'Emprunt':
-                        //lancement de la loterie entre joueur
+                        $mesCartes = $jouer->getCartes();
+                        while ($carte = array_pop($mesCartes['A'])) {
+                            $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
+                        }
+                        $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
+
                         break;
                 case 'Embrouille':
                     $logs = new Logs();
@@ -350,77 +426,35 @@ class PartieController extends AbstractController
                
                     //$jouer->setArgent($jouer->getArgent() + $case->getComplement());
                      break;
-                case 'Caution':
-                    //on pioche une carte transaction qu'on propose au joueur
-                    //il faut piocher des cartes courriers et les mettre dans la main du joueur
-                    $tabCartes = $partie->getPioche(); //je récupère les cartes courriers de la pioche
-                    $mesCartes = $jouer->getCartes(); //je récupère mes cartes
-                    //todo: il faudrait tester si j'ai assez de carte...
-                        //on dépile la carte transaction de la pioche, et on empile dans joueur.
-                        $carte = array_pop($tabCartes['A']);
-                        $mesCartes['A'][] = $carte;
-                        $data = $carte; //je sauvegarde aussi dans un tableau intermédiaire pour afficher en JS plus facilement
-                    //mise à jour de partie pour la pioche, et de jouer pour mes cartes
-                    $partie->setPioche($tabCartes);
-                    $jouer->setCartes($mesCartes);
-                    break;
                 case 'Glandeur':
                     //Dimanche, rien a faire ;)
-                    break;
-                case '':
-                    //Vente possible des transactions
-                    //récupère toutes les cartes transaction du jour pour qu'il puisse choisir celle(s) à vendre
-                    $data = $jouer->getCartes()['A'];
-                    break;
-                case '':
-                    //jour de paye, payer les facture, verser le salaire, les interets eventuels
-                    $jouer->setArgent($jouer->getArgent() +120);//jour de paye
-                    $jouer->setJPO(-5); 
-                    $jouer->setPosition(1); 
-                    $jouer->setTour($jouer->getTour() + 1); 
-    
-    
-                    $mesCartes = $jouer->getCartes();
-                    while ($carte = array_pop($mesCartes['M'])) {
-                        $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
-                    }
-                    $jouer->setCartes($mesCartes);//on remets pour vider le tableau de carte courrier
-    
-                    $jourdepaye = 'Ohohoh! Le point projet à rapporté 120 points pour ';
-                    $finjourdepaye = '. Après la perte ou le gain de points suite à la réception des cartes mails,'.$this->getUser().' s\'en sort avec '.$jouer->getArgent();
                     $logs = new Logs();
-                    $logs->setText($jourdepaye.$this->getUser().$finjourdepaye);
+                    $logs->setText('Quelle belle journée pour glander, hein'.$this->getUser().'?');
                     $logs->setPartie($partie);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($logs);
-
-                        if ($jouer->getTour() == 5) {
-                            $partie->setEtatPartie('T');
-                            $fin = 'C\'est terminée! '.$this->getUser().' à atteint le cinquième tour.';
-                            $logs = new Logs();
-                            $logs->setText($jourdepaye.$this->getUser());
-                            $logs->setPartie($partie);
-                            $em = $this->getDoctrine()->getManager();
-                            $em->persist($logs);
-
-                            $jouers = $partie->getJouers();
-                            $positions = [];
-                            foreach ($jouers as $jouer) {
-                          
-                                    if ($jouer->getJoueur()->getId() === $this->getUser()->getId()) {
-                                        $user = $this->getUser();
-                                        $user->setScore($jouer->getArgent() + $user->getScore());
-                                    }
-                                
-                            }
-                        }
                     break;
+                case 'FinTour':
+                    //jour de paye, payer les facture, verser le salaire, les interets eventuels
+                 
+                    break;
+                case 'Depart':
+                    break;
+               
+
             }
+
+
+    }  //Fin du else
             
             //Test pour la case JPO
             switch ($jouer->getJPO()) {
                 case '-5':
                         switch ($jouer->getPosition()) {
+                        case '4':
+                        $jouer->setArgent($jouer->getArgent() - 5); 
+                        $jouer->setJPO(0); 
+                        break;
                         case '5':
                         $jouer->setArgent($jouer->getArgent() - 5); 
                         $jouer->setJPO(0); 
@@ -431,11 +465,11 @@ class PartieController extends AbstractController
                         break;
                         case '7':
                         $jouer->setArgent($jouer->getArgent() - 5); 
-                        $jouer->setJPO(0); 
+                        $jouer->setJPO(0);
                         break;
                         case '8':
-                        $jouer->setArgent($jouer->getArgent() - 5); 
-                        $jouer->setJPO(0);
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0);
                         break;
                         case '9':
                             $jouer->setArgent($jouer->getArgent() - 5); 
@@ -462,10 +496,6 @@ class PartieController extends AbstractController
                             $jouer->setJPO(0);
                         break;
                         case '15':
-                            $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
-                        break;
-                        case '16':
                             $jouer->setArgent($jouer->getArgent() - 5); 
                             $jouer->setJPO(0);
                         break;

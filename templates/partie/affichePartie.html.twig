@@ -83,7 +83,7 @@
 
       {% for jouer in partie.jouers %}
         <article data-caseId="{{jouer.position - 2}}" data-playerId="{{jouer.joueur.id}}" class="player_plateau" title="{{ jouer.joueur.username }}" style="grid-row:{{ loop.index0 + 1}}/{{ loop.index0 + 2}}">
-                    <img src="{{ asset('img/home/perso.svg') }}" alt="Avatar"/>
+                    <img src="{{ asset('img/home/pions/' ~ jouer.pion ~ '.png') }}" alt="Avatar"/>
         </article>
       {% endfor %}
 
@@ -152,7 +152,6 @@
                     {% endfor  %}
                     <div id="asset_cagnotte"></div>
                 </section>
-                        <a style="transform: translate(0,-360%); color: white;" href="#popupregle">Comment jouer au jeu en ligne?</a>
                 <section id="B_deck">
 
                         {% for carte in mesdatas.cartes['M'] %}
@@ -161,16 +160,16 @@
                         {% endfor %}
                         {% for carte in mesdatas.cartes['I'] %}
                             {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
+                            {% if carte is null %} 
+                            {% else %} 
                             <article class="carte_pioche imprevu" id="{{cartes[carte].image}}"><img src="{{ asset('img/impD.png')}}" ></article>
+                            {% endif %}
                         {% endfor %}
                         {% for carte in mesdatas.cartes['A'] %}
                             {# <article class="carte_pioche" id="mail"><img src="{{ asset('images/mail/' ~ cartes[carte].image) }}"></article> #}  
                             <article class="carte_pioche transaction" id="{{cartes[carte].image}}"><img src="{{ asset('img/apoalD.png')}}" ></article>
                         {% endfor %}
 
-                    <article class="carte_pioche" id="imp"><img src="{{ asset('img/impD.png') }}"></article>
-                    <article class="carte_pioche" id="apoal"><img src="{{ asset('img/apoalD.png') }}"></article>
-                    <article class="carte_pioche" id="apoal"><img src="{{ asset('img/apoalD.png') }}"></article>
                 </section>
             </section>
             <ul id="B_other_player">
@@ -178,10 +177,12 @@
                <li data-playerId="{{jouer.joueur.id}}" class="score_each">
                     <img src="{{ asset('img/perso/'~ jouer.joueur.img|e) }}" alt="Avatar"/>
                     <div>
-                    <p>{% if jouer.joueur.id == app.user.id %}==>{% endif %}{{ jouer.joueur.username }}</p>
+                    <p>{% if jouer.joueur.id == app.user.id %}{% endif %}{{ jouer.joueur.username }}</p>
                          <span>
-                            <img src="{{asset('img/home/piece.svg')}}" alt="Pièce">
-                            <p>{{ jouer.argent }}</p>
+                            <img src="{{asset('img/home/pions/' ~ jouer.pion ~ '.png')}}" alt="Pièce">
+                            <p>{{ jouer.argent }}</p><br><br>
+                            <p>, tour {{ jouer.tour }}</p>
+
                         </span>
                     </div>
                 </li>
@@ -378,7 +379,6 @@
       })
 
       $(document).on('click', '#asset_de', function () {
-          
         $.ajax({
           url: "{{ path('lance_de', {partie: partie.id}) }}",
           type: "POST",
@@ -386,9 +386,8 @@
           data: {de: score},
           success: function (data) {
             console.log(data);
-
+            location.reload();
               $('#asset_de').hide()
-                location.reload();
               montour = true
             
           }
@@ -435,8 +434,8 @@
             let src_id=$(this).attr('id');
             var assetsBaseDir = "{{asset('images/imprevu/')}}";
             $('#wrapper_carte').css('display','block');
-            $('#src_tasTop').attr('src','{{asset("img/mailD_top.png")}}');
-            $('#src_tas').attr('src', 'img/mail_tas.png');
+            $('#src_tasTop').attr('src','{{asset("img/impD_top.png")}}');
+            $('#src_tas').attr('src', '{{asset("img/imp_tas.png")}}');
             $('#src_carte').attr('src', assetsBaseDir + src_id);
              shdw_in();
             setTimeout(intitTransition,500);
@@ -444,10 +443,10 @@
 
         $('.transaction').click(function(){
             let src_id=$(this).attr('id');
-            var assetsBaseDir = "{{asset('images/transaction/')}}";
+            var assetsBaseDir = "{{asset('images/acquisition/')}}";
             $('#wrapper_carte').css('display','block');
-            $('#src_tasTop').attr('src','{{asset("img/mailD_top.png")}}');
-            $('#src_tas').attr('src', 'img/mail_tas.png');
+            $('#src_tasTop').attr('src','{{asset("img/apoalD_top.png")}}');
+            $('#src_tas').attr('src', '{{asset("img/apoal_tas.png")}}');
             $('#src_carte').attr('src', assetsBaseDir + src_id);
              shdw_in();
             setTimeout(intitTransition,500);
@@ -527,12 +526,12 @@
 
         function changement_check(){
             $('.player_plateau').each(function(){
-                $(this).css('left', $('#caseId'+(parseInt($(this).attr('data-caseId'))+1)).prop('offsetLeft')+$('.bloc_case').width()/2);
+                $(this).css('left', $('#caseId'+(parseInt($(this).attr('data-caseId'))+2)).prop('offsetLeft')+$('.bloc_case').width()/2);
             })
         }
 
         $('.score_each').click(function(){
-            $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(parseInt($(".player_plateau[data-playerId='"+$(this).attr('data-playerId')+"']").attr('data-caseId'))+1)).prop('offsetLeft')-window.innerWidth/2 + $(".bloc_case").width()/2}, 1000);
+            $("#bloc_plateau").animate({ scrollLeft: $("#caseId"+(parseInt($(".player_plateau[data-playerId='"+$(this).attr('data-playerId')+"']").attr('data-caseId'))+2)).prop('offsetLeft')-window.innerWidth/2 + $(".bloc_case").width()/2}, 1000);
         });
         const slider = document.querySelector('#bloc_plateau');
         let isDown = false;
