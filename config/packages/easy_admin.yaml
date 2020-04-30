@@ -5,7 +5,7 @@ easy_admin:
         - App\Entity\Cases
         - App\Entity\User
         - App\Entity\Logs
-        - App\Entity\Chats
+        - App\Entity\Chat
         - App\Entity\Partie
         - App\Entity\Jouer
     
