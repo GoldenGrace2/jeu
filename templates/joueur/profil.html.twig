@@ -35,7 +35,7 @@ Profil de joueur
                         <table>
                             <thead>
                             <tr>
-                                <th colspan="4">Score Board</th>
+                                <th colspan="4">Historique</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -44,10 +44,10 @@ Profil de joueur
                             {% for partie in parties %}
                             <tr><td><a href="{{ path('affiche_partie', {partie:partie.id}) }}">{{ partie.datedebut|date('d/m/Y') }}</a></td></tr>
                             {% endfor %}
-                                <td>10/03/2020</td>
+                               <!-- <td>10/03/2020</td>
                                 <td>21h54</td>
                                 <td>1/6</td>
-                                <td>405 pts</td>
+                                <td>405 pts</td> -->
                             </tr>
                             </tbody>
                         </table>
