@@ -378,11 +378,13 @@ class PartieController extends AbstractController
                                    else {
 
                                     $logimprevu = $this->getUser().' Vient de piocher une carte imprévu! Son score est passée de '.strval($jouer->getArgent());
+                                    $cagnotte = '';
                                     $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
+                                    if ($cartes[$carte]->getTitre() == 'cagnotte') {  $jouer->setArgent($jouer->getArgent() + $partie->getGagnotte()); $cagnotte = ' JACKPOT POUR '.$this->getUser().' qui remporte la cagnotte!'; }
                                     $partie->setCagnotte($partie->getGagnotte() + $cartes[$carte]->getCout());
                                     $logimprevufin = ' à '.strval($jouer->getArgent()).'.';
                                     $logs = new Logs();
-                                    $logs->setText($logimprevu.$logimprevufin);
+                                    $logs->setText($logimprevu.$logimprevufin.$cagnotte);
                                     $logs->setPartie($partie);
                                     $em = $this->getDoctrine()->getManager();
                                     $em->persist($logs);

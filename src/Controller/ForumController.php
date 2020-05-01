@@ -84,6 +84,8 @@ class ForumController extends AbstractController
             $entityManager->flush();
 
             // do anything else you need here, like send an email
+            return $this->redirectToRoute('app_forum');
+
         }
         return $this->render('forum/post.html.twig', [
             'registrationForm' => $form->createView(),
