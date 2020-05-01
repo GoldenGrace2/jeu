@@ -339,15 +339,7 @@
                         }
         afficheDee();
 
-        function reload() {
-              location.reload();
-
-        }
-
-      $(document).ready(function () {
-
-          
-      $(document).on('click', '#asset_de', function () {
+          $(document).on('click', '#asset_de', function () {
         $.ajax({
           url: "{{ path('lance_de', {partie: partie.id}) }}",
           type: "POST",
@@ -364,6 +356,11 @@
           }
         })
       })
+
+      $(document).ready(function () {
+
+          
+    
         
         //toutes les 30 secondes
         setInterval(whoPlay, 30000);
