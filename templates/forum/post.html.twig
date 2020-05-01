@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ForumController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+   <div class="formulaire">
+    <h1>Poster sur le forum</h1>
+    {{ form_start(registrationForm) }}
+     
+        <div class="reste">
+ 
+            {{ form_row(registrationForm.category, { 'attr': {'class': 'txtp'} }) }}    
+            {{ form_row(registrationForm.Message, { 'attr': {'class': 'txtp'} }) }}    
+            {{ form_row(registrationForm.Titre, { 'attr': {'class': 'txtp'} }) }}    
+
+        </div>
+
+        {{ form_row(registrationForm.save, { 'attr': {'class': 'connexion'} }) }}
+
+     {{ form_end(registrationForm)   }}
+    <p>Les champs suivis de * sont obligatoires </p>
+    </div>
+{% endblock %}

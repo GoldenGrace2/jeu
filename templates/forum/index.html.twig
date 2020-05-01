@@ -9,10 +9,14 @@
 </style>
 
 <div class="example-wrapper" style="margin-top: 100px;">
-    <h1 style="font-size: 250%">Forum de communauté</h1>
-    <a href> Poster un topic</a>
-    <h2>Bugs</h2>
+    <h1 style="font-size: 250%">Forum de communauté</h1><br><br>
 
+    <a  href="{{ path('post_topic')}}" class="connexion"> Poster un topic</a> <br><br>
     
+    <h2 style="font-size: 250%">Liste des topics</h2><br><br>
+    {% for forums in forum %}
+    
+        <a href="{{ path('post_unique', {forum: forums.id}) }}">{{forums.titre}}</a><p>, publié le {{forums.date|date("m/d/Y")}} par {{forums.auteur}}</p>
+    {% endfor %}
 </div>
 {% endblock %}

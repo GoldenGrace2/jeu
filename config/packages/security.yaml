@@ -36,6 +36,8 @@ security:
           - { path: ^/admin, roles: ROLE_ADMIN }
           - { path: ^/joueur/profil, roles: ROLE_USER }
           - { path: ^/jouer, roles: ROLE_USER }
+          - { path: ^/forum, roles: ROLE_USER }
+
     encoders:
         # use your user class name here
         App\Entity\User:

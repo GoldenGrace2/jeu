@@ -43,12 +43,18 @@
     <div id="popup" class="overlay">
           <div class="popup">
               <h2>Partie terminée!</h2>
-              <div class="content">
-                    <p>Le gagnant est : </p>
-              </div>
           </div>
         </div> 
+
+         
     {% endif %}
+       <div id="popupcagnotte" class="overlay2" >
+          <div class="popup" style="width: 40%; height: 20%; display: flex; align-content:center; justify-content: center; justify-item: center; align-items: center; text-align:center;">
+              <h2>La cagnotte est de : {{partie.cagnotte}}</h2>
+               <a class="close" href="#">&times;</a>
+        
+          </div>
+        </div>
  <div id="popup2" class="overlay2">
           <div class="popup">
               <h2>Régles online</h2>
@@ -150,7 +156,7 @@
                     <div id="asset_pion" style="background-image:url('{{ asset('img/home/pions/'~ jouer.pion ~ '.png')}}')"></div>
                     {% endif %}
                     {% endfor  %}
-                    <div id="asset_cagnotte"><a href="#popupcagnotte"></a></div>
+                    <a href="#popupcagnotte"> <div id="asset_cagnotte" ></div> </a>
                 </section>
                 <section id="B_deck">
 
