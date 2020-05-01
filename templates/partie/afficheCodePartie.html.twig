@@ -7,7 +7,10 @@
 {% block body %}
 <div style="height: 60vh; text-align: center; margin-top: 300px">
 <h1>Attente de joueur</h1>
-    Code partie : {{ partie.id }}
+
+    Code partie : <strong>{{ partie.id }}</strong>
+    <p>Les règles du jeu en ligne seront présentes en haut à droite dans le menu une fois que vous aurez rejoint la partie!</p>
+
     <p>Joueurs inscrits : </p>
     <ul style="margin-bottom : 60px;">
         {% for jouer in partie.jouers %}
