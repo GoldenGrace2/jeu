@@ -372,7 +372,7 @@ class PartieController extends AbstractController
 
                                    else {
 
-                                    $logimprevu = $this->getUser().' Vient de piocher une carte imprévu! Son score est passée de '.strval($jouer->getArgent());
+                                    $logimprevu = $this->getUser().' vient de piocher une carte imprévu! Son score est passée de '.strval($jouer->getArgent());
                                     $cagnotte = '';
                                     $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
                                     if ($cartes[$carte]->getTitre() == 'cagnotte') {  $jouer->setArgent($jouer->getArgent() + $partie->getGagnotte()); $cagnotte = ' JACKPOT POUR '.$this->getUser().' qui remporte la cagnotte!'; }
@@ -396,12 +396,13 @@ class PartieController extends AbstractController
                             $carte = array_pop($tabCartes['A']);
                             $mesCartes['A'][] = $carte;
                             $data[] = $carte; //je sauvegarde aussi dans un tableau intermédiaire pour afficher en JS plus facilement
+                            $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur() + $cartes[$carte]->getValeur());
                         }
                         //mise à jour de partie pour la pioche, et de jouer pour mes cartes
                         $partie->setPioche($tabCartes);
                         $jouer->setCartes($mesCartes);
 
-                        $logmail = $this->getUser().' Vient de piocher une carte à prendre ou à laisser.';
+                        $logmail = $this->getUser().' vient de piocher une carte à prendre ou à laisser.';
                         $logs = new Logs();
                         $logs->setText($logmail);
                         $logs->setPartie($partie);
@@ -430,6 +431,13 @@ class PartieController extends AbstractController
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($logs);
                      break;
+                case 'Presentation':
+                        $logs = new Logs();
+                        $logs->setText('Il est temps de présenter le meilleur diapo de tout les temps, '.$this->getUser().'.');
+                        $logs->setPartie($partie);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($logs);
+                         break;
                 case 'JPO':
                     //Pour ajouter ou retirer des points avec une case
                     if ( $jouer->getJPO() === -5) {
