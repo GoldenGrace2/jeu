@@ -396,7 +396,7 @@ class PartieController extends AbstractController
                             $carte = array_pop($tabCartes['A']);
                             $mesCartes['A'][] = $carte;
                             $data[] = $carte; //je sauvegarde aussi dans un tableau intermédiaire pour afficher en JS plus facilement
-                            $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur() + $cartes[$carte]->getValeur());
+                            $jouer->setArgent($jouer->getArgent() - $cartes[$carte]->getValeur());
                         }
                         //mise à jour de partie pour la pioche, et de jouer pour mes cartes
                         $partie->setPioche($tabCartes);
