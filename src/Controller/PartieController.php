@@ -314,7 +314,7 @@ class PartieController extends AbstractController
                     $partie->setPioche($tabCartes);
                     $jouer->setCartes($mesCartes);
 
-                    $logmail = $this->getUser().' Vient de piocher '.$case->getComplement(). ' cartes mail(s).';
+                    $logmail = $this->getUser().' vient de piocher '.$case->getComplement(). ' cartes mail(s).';
                     $logs = new Logs();
                     $logs->setText($logmail);
                     $logs->setPartie($partie);
@@ -325,25 +325,20 @@ class PartieController extends AbstractController
                 case 'Rapport':
                     //cette case preleve directement le montant au joueur
                     $de_alea= rand(1,6);
-                    switch ($de_alea) {
-                        case '1':
+                    if ($de_alea == 6) { $lograpport = $this->getUser().' à fait 6, quel boss! '.$this->getUser().' gagne donc 10 points pour son rapport de conception parfait.';
+                        $logs = new Logs();
+                        $logs->setText($lograpport);
+                        $logs->setPartie($partie);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($logs);}
+                    else { 
+                        $lograpport = 'Pas de chance '.$this->getUser().', tu as fait '.$de_alea.' et pas 6. Peut-être une autre fois!';
+                        $logs = new Logs();
+                        $logs->setText($lograpport);
+                        $logs->setPartie($partie);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($logs);
 
-                        break;
-                        case '2':
-
-                        break;
-                        case '3':
-
-                        break;
-                        case '4':
-
-                        break;
-                        case '5':
-
-                        break;
-                        case '6':
-
-                        break;
                     }
                     //je sauvegarde rien de particulier pour le JS, toutes les infos sont dans la case
                     break;
