@@ -3,6 +3,7 @@ easy_admin:
     entities:
         - App\Entity\Carte
         - App\Entity\Cases
+        - App\Entity\Forum
         - App\Entity\User
         - App\Entity\Logs
         - App\Entity\Chat
