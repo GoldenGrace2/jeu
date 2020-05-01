@@ -451,7 +451,7 @@ class PartieController extends AbstractController
                
                     //$jouer->setArgent($jouer->getArgent() + $case->getComplement());
                      break;
-                case 'Débat':
+                case 'Debat':
                     $logdebat = 'Il est l\'heure de débattre, '.$this->getUser().'!';
                         $logs = new Logs();
                         $logs->setText($logdebat);
