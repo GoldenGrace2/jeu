@@ -345,6 +345,25 @@
         }
 
       $(document).ready(function () {
+
+          
+      $(document).on('click', '#asset_de', function () {
+        $.ajax({
+          url: "{{ path('lance_de', {partie: partie.id}) }}",
+          type: "POST",
+          dataType: "json",
+          data: {de: score},
+          success: function (data) {
+            console.log(data);
+            setTimeout(function() {   //calls click event after a certain time
+               location.reload();
+            }, 1000);
+              montour = true
+              $('#asset_de').hide()
+
+          }
+        })
+      })
         
         //toutes les 30 secondes
         setInterval(whoPlay, 30000);
@@ -395,25 +414,6 @@
           }
         })
       })
-
-      $(document).on('click', '#asset_de', function () {
-        $.ajax({
-          url: "{{ path('lance_de', {partie: partie.id}) }}",
-          type: "POST",
-          dataType: "json",
-          data: {de: score},
-          success: function (data) {
-            console.log(data);
-            setTimeout(function() {   //calls click event after a certain time
-               location.reload();
-            }, 1000);
-              montour = true
-              $('#asset_de').hide()
-
-          }
-        })
-      })
-
 
           $(document).on('click', '#sent_msg', function () {
                 $.ajax({
