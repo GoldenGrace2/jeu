@@ -379,6 +379,7 @@ class PartieController extends AbstractController
 
                                     $logimprevu = $this->getUser().' Vient de piocher une carte imprévu! Son score est passée de '.strval($jouer->getArgent());
                                     $jouer->setArgent($jouer->getArgent() + $cartes[$carte]->getValeur());//paiement des factures
+                                    $partie->setCagnotte($partie->getGagnotte() + $cartes[$carte]->getCout());
                                     $logimprevufin = ' à '.strval($jouer->getArgent()).'.';
                                     $logs = new Logs();
                                     $logs->setText($logimprevu.$logimprevufin);
@@ -434,7 +435,14 @@ class PartieController extends AbstractController
                      break;
                 case 'JPO':
                     //Pour ajouter ou retirer des points avec une case
-                    if ( $jouer->getJPO() === -5) {$jouer->setJPO(0);}
+                    if ( $jouer->getJPO() === -5) {
+                        $jouer->setJPO(0);
+                        $logs = new Logs();
+                        $logs->setText('C\'est beau ça... '.$this->getUser().' est venu à la journée porte ouverte, ce joueur ne va donc ne pas subir de pénalité!');
+                        $logs->setPartie($partie);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($logs);
+                    }
                
                     //$jouer->setArgent($jouer->getArgent() + $case->getComplement());
                      break;
@@ -466,18 +474,38 @@ class PartieController extends AbstractController
                         case '4':
                         $jouer->setArgent($jouer->getArgent() - 5); 
                         $jouer->setJPO(0); 
+                        $logs = new Logs();
+                        $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                        $logs->setPartie($partie);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($logs);
                         break;
                         case '5':
-                        $jouer->setArgent($jouer->getArgent() - 5); 
-                        $jouer->setJPO(0); 
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '6':
-                        $jouer->setArgent($jouer->getArgent() - 5); 
-                        $jouer->setJPO(0); 
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '7':
-                        $jouer->setArgent($jouer->getArgent() - 5); 
-                        $jouer->setJPO(0);
+                            $jouer->setArgent($jouer->getArgent() - 5); 
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '8':
                             $jouer->setArgent($jouer->getArgent() - 5); 
@@ -485,31 +513,66 @@ class PartieController extends AbstractController
                         break;
                         case '9':
                             $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '10':
                             $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '11':
                             $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '12':
                             $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '13':
                             $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '14':
                             $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         case '15':
                             $jouer->setArgent($jouer->getArgent() - 5); 
-                            $jouer->setJPO(0);
+                            $jouer->setJPO(0); 
+                            $logs = new Logs();
+                            $logs->setText('Mais quel cancre '.$this->getUser().'! Pour avoir sauté la case journée porte ouverte, tu perds 5 points. Non mais oh!');
+                            $logs->setPartie($partie);
+                            $em = $this->getDoctrine()->getManager();
+                            $em->persist($logs);
                         break;
                         }
                 break;
@@ -540,6 +603,16 @@ class PartieController extends AbstractController
      */
     public function finTour(EntityManagerInterface $entityManager, Partie $partie)
     {
+
+        if ($partie->getQuiJoue() == $this->getUser()->getId()) {
+            $logFinTour = $this->getUser().' vient de terminer son tour.';
+                                        $logs = new Logs();
+                                        $logs->setText($logFinTour);
+                                        $logs->setPartie($partie);
+                                        $em = $this->getDoctrine()->getManager();
+                                        $em->persist($logs);
+        }
+
         $jouers = $partie->getJouers();
         $positions = [];
         foreach ($jouers as $jouer) {
