@@ -325,14 +325,14 @@ class PartieController extends AbstractController
                 case 'Rapport':
                     //cette case preleve directement le montant au joueur
                     $de_alea= rand(1,6);
-                    if ($de_alea == 6) { $lograpport = $this->getUser().' à fait 6, quel boss! '.$this->getUser().' gagne donc 10 points pour son rapport de conception parfait.';
+                    if ($de_alea == 6) { $lograpport = 'Il est l\'heure de rendre le de rapport de conception '.$this->getUser().' et tu as fait 6 avec ton dé, quel boss! '.$this->getUser().' gagne donc 10 points pour son rapport de conception parfait.';
                         $logs = new Logs();
                         $logs->setText($lograpport);
                         $logs->setPartie($partie);
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($logs);}
                     else { 
-                        $lograpport = 'Pas de chance '.$this->getUser().', tu as fait '.$de_alea.' et pas 6. Peut-être une autre fois!';
+                        $lograpport = 'C\'est l\'heure du rapport de conception et... Pas de chance '.$this->getUser().', tu as fait '.$de_alea.' avec ton dé et pas 6. Peut-être une autre fois!';
                         $logs = new Logs();
                         $logs->setText($lograpport);
                         $logs->setPartie($partie);
